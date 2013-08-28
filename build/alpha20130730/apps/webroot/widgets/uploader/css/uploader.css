@@ -1,0 +1,172 @@
+/* Stream upload box */
+    .StreamAttachmentHelper {
+        border: 3px dashed #ccc;
+        background: #fafafa url(../images/icon-upload.png) no-repeat center 10px;
+        padding: 40px 0 15px;
+        text-align: center;
+        font-size: 15px;
+        color: #666;
+        border-radius: 8px;
+        -moz-border-radius: 8px;
+        -webkit-border-radius: 8px;
+        position: relative;
+    }
+    .StreamAttachmentHelperDragOver {
+        border-color: #999;
+    }
+        .StreamAttachmentHelper small {
+            font-size: 11px;
+        }
+    .StreamDialog .StreamUploadBrowse {
+        width: 180px;
+        height: 40px;
+        margin: 10px auto 0;
+        float: none;
+    }
+
+    .StreamDialogConfirmBtn {
+        position: absolute;
+        bottom: 9px;
+        right: 10px;
+    }
+/* END. */
+
+/* Stream attachment list */
+    .StreamAttachmentFilterBox {
+        padding: 10px 0;
+    }
+        .StreamAttachmentFilterBox label {
+            font-size: 12px;
+            font-weight: bolder;
+            margin: 5px 0 0;
+            padding: 0;
+        }
+        .StreamAttachmentFilterBox select {
+            padding: 0;
+            width: 100%;
+            font-size: 14px;
+        }
+    .StreamAttachmentList {
+        width: 100%;
+        overflow: auto;
+        min-height: 100px;
+        padding: 0 0 10px;
+    }
+        .StreamAttachmentList li {
+            position: relative;
+            padding: 5px 0 5px 40px;
+            background-image: url(../images/icon-file-32.png);
+            background-repeat: no-repeat;
+            background-position: 2px center;
+            margin: 1px 0 0;
+            background-color: #F5FFDE;
+        }
+        .StreamAttachmentList li:hover {
+            background-color: #F6FBC9;
+        }
+        .StreamAttachmentList li.StreamUploadError {
+            background-color: #f6b9b9;
+            color: #a33737;
+        }
+
+        /* Icons set 32 */
+            .StreamAttachmentList li.BmpFile {
+                background-image: url(../images/icon-bmp-32.png);
+            }
+            .StreamAttachmentList li.GifFile {
+                background-image: url(../images/icon-gif-32.png);
+            }
+            .StreamAttachmentList li.JpegFile {
+                background-image: url(../images/icon-jpeg-32.png);
+            }
+            .StreamAttachmentList li.PngFile {
+                background-image: url(../images/icon-png-32.png);
+            }
+            .StreamAttachmentList li.SvgFile {
+                background-image: url(../images/icon-svg-32.png);
+            }
+            .StreamAttachmentList li.TiffFile {
+                background-image: url(../images/icon-tiff-32.png);
+            }
+            .StreamAttachmentList li.TxtFile {
+                background-image: url(../images/icon-text-32.png);
+            }
+            .StreamAttachmentList li.CssFile {
+                background-image: url(../images/icon-css-32.png);
+            }
+            .StreamAttachmentList li.HtmlFile {
+                background-image: url(../images/icon-html-32.png);
+            }
+            .StreamAttachmentList li.XmlFile {
+                background-image: url(../images/icon-xml-32.png);
+            }
+            .StreamAttachmentList li.RtfFile {
+                background-image: url(../images/icon-rtf-32.png);
+            }
+            .StreamAttachmentList li.JsFile {
+                background-image: url(../images/icon-js-32.png);
+            }
+            .StreamAttachmentList li.ZipFile {
+                background-image: url(../images/icon-zip-32.png);
+            }
+            .StreamAttachmentList li.AudioFile {
+                background-image: url(../images/icon-audio-32.png);
+            }
+            .StreamAttachmentList li.VideoFile {
+                background-image: url(../images/icon-video-32.png);
+            }
+            .StreamAttachmentList li.EpsFile {
+                background-image: url(../images/icon-eps-32.png);
+            }
+            .StreamAttachmentList li.PsFile {
+                background-image: url(../images/icon-ps-32.png);
+            }
+            .StreamAttachmentList li.PsdFile {
+                background-image: url(../images/icon-psd-32.png);
+            }
+            .StreamAttachmentList li.AiFile {
+                background-image: url(../images/icon-ai-32.png);
+            }
+            .StreamAttachmentList li.SwfFile {
+                background-image: url(../images/icon-swf-32.png);
+            }
+            .StreamAttachmentList li.PdfFile {
+                background-image: url(../images/icon-pdf-32.png);
+            }
+            .StreamAttachmentList li.WordFile {
+                background-image: url(../images/icon-word-32.png);
+            }
+            .StreamAttachmentList li.ExcelFile {
+                background-image: url(../images/icon-excel-32.png);
+            }
+            .StreamAttachmentList li.PowerPointFile {
+                background-image: url(../images/icon-ppt-32.png);
+            }
+        /* End. Icons set 32 */
+            .StreamAttachmentList li a {
+                font-size: 12px;
+                text-align: left;
+            }
+            .StreamAttachmentList li a:hover {
+            }
+            .StreamAttachmentList li span {
+                color: #ff0000;
+                font-size: 12px;
+            }
+            .StreamAttachmentList li small {
+                color: #666;
+                font-size: 11px;
+            }
+            .StreamAttachmentTime {
+                font-style: normal;
+                color: #999;
+            }
+            .StreamAttachmentList li a.StreamAttachmentRemoveBtn {
+                top: 4px;
+                right: 4px;
+            }
+            .StreamAttachmentListAlt01 li a.StreamAttachmentRemoveBtn {
+                top: 12px;
+                right: 8px;
+            }
+/* END. */

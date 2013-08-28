@@ -1,0 +1,21 @@
+﻿
+- IP:  10.30.7.73
+            - Database name: wo_onl
+            - DB username:   wo_onl           
+            - Password:  Kd%4HvFsj3jvQ6%
+
+-	Db ims_issues:
+User: ims_issues use for brand
+Password:  KU7AcT5J9*ndXKy
+
+-	Db ims_performances:
+User: ims_performances ==> currently use for IMS 2
+Password: d2K^4DWSphZzFut
+
+-	Db ims_projects:
+User: ims_projects ==> currently use for Wiki
+Password: 32U^Vj6jmzy*BxM
+
+-	Db ims_users
+User: ims_users ==> currently use for WUTT
+Password: UjF3Y4p9$D%DiE7

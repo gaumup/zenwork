@@ -1,0 +1,12 @@
+.Lock {
+    cursor: default;
+}
+.Move {
+    cursor: move;
+}
+.Resize {
+    cursor: w-resize;
+}
+.Disabled {
+    cursor: default !important;
+}

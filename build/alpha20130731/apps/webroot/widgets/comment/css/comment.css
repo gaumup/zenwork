@@ -1,0 +1,311 @@
+/* Stream comments box */
+    .StreamCommentList {
+        width: 100%;
+    }
+        .StreamCommentList li {
+            width: 100%;
+            overflow: hidden;
+            float: left;
+            padding: 8px 0;
+            margin: 1px 0 0;
+            position: relative;
+            background: #F5FFDE;
+        }
+        .StreamCommentList li.Deleting {
+            opacity: 0.5;
+            -moz-opacity: 0.5;
+            filter: alpha(opacity=50);
+        }
+        .StreamCommentList li.OddRow {
+        }
+        .StreamCommentList li.EvenRow {
+        }
+            .StreamCommentList li img {
+                float: left;
+                border: 1px solid #999;
+                padding: 1px;
+                width: 32px;
+                height: 32px;
+                margin: 0 0 0 8px;
+            }
+            .StreamCommentList li p {
+                font-size: 12px;
+                padding: 0 0 0 55px;
+                margin: 2px 0 0;
+                color: #79985A;
+                line-height: 14px;
+            }
+            .StreamCommentList li p.StreamCommentMsg {
+                color: #333;
+                line-height: 19px;
+            }
+                .StreamCommentList li p.StreamCommentMsg a {
+                    color: #6D9F43;
+                    text-decoration: underline;
+                }
+                .StreamCommentList li p.StreamCommentMsg a.SCommentViewFull {
+                    text-decoration: none;
+                    font-size: 11px;
+                }
+                .StreamCommentList li p.StreamCommentMsg a.SCommentViewFull:hover {
+                    text-decoration: underline;
+                }            .StreamCommentTime {
+                font-size: 11px;
+                float: right;
+                margin: 0 30px 0 0;
+            }
+    .StreamAttachmentBoxTrigger {
+        width: 15px;
+        height: 0;
+        padding: 15px 0 0;
+        overflow: hidden;
+        text-indent: -1000em;
+        display: block;
+        float: right;
+        background: url(../images/icon-set-15.png) no-repeat 0 -75px;
+        margin: 9px 8px 0 0;
+    }
+    .StreamAttachmentBoxTrigger:hover {
+        background-position: -15px -75px;
+    }
+    .StreamCommentRemove {
+        right: 5px;
+        top: 8px;
+    }
+    .StreamCommonView {
+        margin: 5px 0 10px 8px;
+        float: left;
+    }
+    .StreamCommentInputBox {
+        width: 100%;
+        overflow: hidden;
+        margin: 0 0 10px;
+    }
+    .StreamTip {
+        float: left;
+        font-size: 11px;
+        color: #333;
+        margin: 2px 0 0 4px;
+    }
+    .StreamDialog .StreamDialogBtn,
+    .StreamDialog .StreamCommentDialogBtn {
+        float: right;
+        margin: 5px 0 0 5px;
+    }
+/* END. */
+
+/* Stream attachment inside */
+    .StreamCommentAttachmentList {
+        width: 100%;
+        overflow: hidden;
+        padding: 0;
+    }
+        .StreamCommentAttachmentList li {
+            width: 100%;
+            box-sizing: border-box;
+            position: relative;
+            padding: 5px 0 5px 80px;
+            background-image: url(../images/icon-file-16.png);
+            background-repeat: no-repeat;
+            background-position: 55px center;
+            margin: 1px 0 0;
+            background-color: #F5FFDE;
+        }
+        .StreamCommentAttachmentList li.OddRow {
+            background-color: #f8f8f8;
+        }
+        .StreamCommentAttachmentList li.EvenRow {
+        }
+        .StreamCommentAttachmentList li:hover {
+            background-color: #F6FBC9;
+        }
+
+        /* Icons set 16 */
+            .StreamCommentAttachmentList li.BmpFile {
+                background-image: url(../images/icon-bmp-16.png);
+            }
+            .StreamCommentAttachmentList li.GifFile {
+                background-image: url(../images/icon-gif-16.png);
+            }
+            .StreamCommentAttachmentList li.JpegFile {
+                background-image: url(../images/icon-jpeg-16.png);
+            }
+            .StreamCommentAttachmentList li.PngFile {
+                background-image: url(../images/icon-png-16.png);
+            }
+            .StreamCommentAttachmentList li.SvgFile {
+                background-image: url(../images/icon-svg-16.png);
+            }
+            .StreamCommentAttachmentList li.TiffFile {
+                background-image: url(../images/icon-tiff-16.png);
+            }
+            .StreamCommentAttachmentList li.TxtFile {
+                background-image: url(../images/icon-text-16.png);
+            }
+            .StreamCommentAttachmentList li.CssFile {
+                background-image: url(../images/icon-css-16.png);
+            }
+            .StreamCommentAttachmentList li.HtmlFile {
+                background-image: url(../images/icon-html-16.png);
+            }
+            .StreamCommentAttachmentList li.XmlFile {
+                background-image: url(../images/icon-xml-16.png);
+            }
+            .StreamCommentAttachmentList li.RtfFile {
+                background-image: url(../images/icon-rtf-16.png);
+            }
+            .StreamCommentAttachmentList li.JsFile {
+                background-image: url(../images/icon-js-16.png);
+            }
+            .StreamCommentAttachmentList li.ZipFile {
+                background-image: url(../images/icon-zip-16.png);
+            }
+            .StreamCommentAttachmentList li.AudioFile {
+                background-image: url(../images/icon-audio-16.png);
+            }
+            .StreamCommentAttachmentList li.VideoFile {
+                background-image: url(../images/icon-video-16.png);
+            }
+            .StreamCommentAttachmentList li.EpsFile {
+                background-image: url(../images/icon-eps-16.png);
+            }
+            .StreamCommentAttachmentList li.PsFile {
+                background-image: url(../images/icon-ps-16.png);
+            }
+            .StreamCommentAttachmentList li.PsdFile {
+                background-image: url(../images/icon-psd-16.png);
+            }
+            .StreamCommentAttachmentList li.AiFile {
+                background-image: url(../images/icon-ai-16.png);
+            }
+            .StreamCommentAttachmentList li.SwfFile {
+                background-image: url(../images/icon-swf-16.png);
+            }
+            .StreamCommentAttachmentList li.PdfFile {
+                background-image: url(../images/icon-pdf-16.png);
+            }
+            .StreamCommentAttachmentList li.WordFile {
+                background-image: url(../images/icon-word-16.png);
+            }
+            .StreamCommentAttachmentList li.ExcelFile {
+                background-image: url(../images/icon-excel-16.png);
+            }
+            .StreamCommentAttachmentList li.PowerPointFile {
+                background-image: url(../images/icon-ppt-16.png);
+            }
+        /* End. Icons set 16 */
+            .StreamCommentAttachmentList li a {
+                font-size: 11px !important;
+                text-align: left;
+            }
+            .StreamCommentAttachmentList li a:hover {
+            }
+            .StreamCommentAttachmentList li a.StreamAttachmentRemoveBtn {
+                top: 4px;
+                right: 5px;
+            }
+/* END. */
+
+.StreamCommentInputBoxWrapper {
+    width: 100%;
+    overflow: hidden;
+    border: 1px solid #BFBFBF;
+    border-radius: 3px;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    box-shadow: 0 0 0 #000000, 0 3px 3px #EEEEEE inset;
+    -moz-box-shadow: 0 0 0 #000000, 0 3px 3px #EEEEEE inset;
+    -webkit-box-shadow: 0 0 0 #000000, 0 3px 3px #EEEEEE inset;
+    padding: 5px;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+}
+.StreamAttachmentHelperDragOver {
+    border: 3px dashed #999;
+}
+    .StreamCommentInputBoxWrapper textarea.Textarea {
+        border: none;
+        box-shadow: none;
+        -moz-box-shadow:  none;
+        -webkit-box-shadow:  none;
+        padding: 0;
+        margin: 0 0 5px;
+        min-height: 50px;
+    }
+        .CommentAttachmentBox {
+            width: 100%;
+            overflow: hidden;
+            background: #f8f8f8;
+            border-top: 1px solid #ccc;
+            padding: 6px 5px;
+            margin: 0 0 -5px -5px;
+        }
+            .CommentAttachmentBtn {
+                width: 26px;
+                height: 0;
+                padding: 26px 0 0;
+                text-indent: -1000em;
+                overflow: hidden;
+                float: left;
+                margin: 0 0 0 5px;
+                background: url(../images/icon-attachment.png) no-repeat center 5px;
+            }
+            .CommentAttachmentBtn:hover {
+                width: 24px;
+                height: 0;
+                padding: 24px 0 0;
+                border: 1px solid #ccc;
+                background-color: #fff;
+                background-position: center 4px;
+                border-radius: 3px;
+                -moz-border-radius: 3px;
+                -webkit-border-radius: 3px;
+            }
+
+            .StreamDialog .CommentAttachmentBox .StreamCommentDialogBtn {
+                margin: 0;
+            }
+
+    .CommentBoxAttachment {
+        width: 100%;
+        overflow: hidden;
+    }
+        .CommentBoxAttachment li {
+            width: 100%;
+            float: left;
+            overflow: hidden;
+            padding: 5px 25px 5px 5px;
+            margin: 0 0 5px;
+            background: #f8f8f8;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            color: #444;
+            position: relative;
+        }
+        .CommentBoxAttachment li.StreamUploadError {
+            background: #f6b9b9;
+            color: #a33737;
+        }
+            .CommentBoxAttachment li a.CommentBoxAttachmentRemoveBtn {
+                width: 15px;
+                height: 0;
+                padding: 15px 0 0;
+                text-indent: -1000em;
+                overflow: hidden;
+                background: url(../images/icon-set-15.png) no-repeat 0 -15px;
+                position: absolute;
+                top: 5px;
+                right: 5px;
+            }
+            .CommentBoxAttachment li a.CommentBoxAttachmentRemoveBtn:hover {
+                background-position: -15px -15px;
+            }
+            .CommentBoxAttachment li.StreamUploadError a.CommentBoxAttachmentRemoveBtn {
+                background-position: -15px -15px;
+            }
+            .CommentBoxAttachment li.StreamUploadError a.CommentBoxAttachmentRemoveBtn:hover {
+                background-position: 0 -15px;
+            }

@@ -1,0 +1,14 @@
+﻿- Plan [default] nên được review lại, vì nếu là plan chung của all users hệ thống thì khi lượng người dùng tăng + task tăng nhiều thì Tree xử lý cho plan này sẽ gặp vấn đề performance, mặc dù 1 user chỉ truy xuất 1 phần của cây này
+
+- Phải xác định ngưỡng chịu đựng của DB khi mà lượng người dùng tăng đến 1 mức nào đó
+
+- Khi user tăng, việc auto-suggest user khi enter username cần phải tối ưu lại
+
+- Khi user tăng, live-update liệu server có chịu nổi hay không?
+
+- Khi user tăng, việc quản lý 'Help' lưu 'uid' thành chuỗi text user sau đó parse ra có hợp lý nữa không. Gợi ý là nếu 1 user 'active' sử dụng hệ thống hơn 1 tháng rồi thì mặc định sẽ không show help chủ động nữa, lúc này không cần lưu ID của user đó trong cột 'uid' của bảng 'zw_helps' nữa
+
+- Cần giới hạn dung lượng sử dụng cho 1 user, nó bao gồm: lượng task được add, lượng plan được tạo, số comments post, số file upload lên... => phần mở rộng sẽ được tính phí, cân nhắc sử dụng dịch vụ lưu trữ file của bên thứ 3 như Dropbox, Box.net, Google Drive...
+
+
+

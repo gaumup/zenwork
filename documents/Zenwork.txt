@@ -1,0 +1,6 @@
+﻿1/ Zenwork.Model.flush(): nên được flush trong 1 action cụ thể, ví dụ: click on completed checkbox, làm n actinos sau đó, flush ngay trong hàm onclick. Nói cách khác, nếu có 'e'(event) thì flush
+
+2/ Timeline bar là element thực tế có trong DB, timeline wrapper == 'li' chỉ có giá trị sử dụng ở client
+
+3/ Sử dụng .data(), không sử dụng 'data-attribute' của HTML 5 vì sẽ bị cache, có thể tham khảo thêm về issue này khi search với từ khóa liên quan
+

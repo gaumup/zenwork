@@ -1,0 +1,105 @@
+body{
+	background: #f2f2f2 url(../images/bg.gif) repeat-x;
+	color: #000;
+}
+
+#outer{
+	width: 980px;
+    margin: 0 auto;
+	overflow: hidden;
+	padding: 0 20px;
+}
+
+#header {
+    float: left;
+	height: 115px;
+	width: 100%;
+	position: relative;
+}
+
+h1 {
+    width: 91px;
+    margin: 60px auto 0;
+}
+    h1 a.Logo {
+        display: block;
+        width: 100%;
+    }
+    h1 a.Logo:hover {
+    }
+
+h2 {
+    font-size: 22px;
+    font-weight: bold;
+    color: #617F45;
+    margin: 0 0 20px;
+    text-align: center;
+}
+
+.BoxContact{
+	font-size: 11px;
+	text-align: right;
+	padding: 6px 0 0 0;
+	color: #fff;
+	width: 200px;
+	position: absolute;
+	top:0;
+    right:0;
+}
+.BoxContact a:link,
+.BoxContact a:visited {
+	color: #fff;
+}
+.BoxContact a:hover{
+	text-decoration: underline;
+}
+
+#content {
+    width: 100%;
+    overflow: hidden;
+    padding: 0 0 20px;
+}
+#loginBox {
+    width: 348px;
+    overflow: hidden;
+    margin: 40px auto 0;
+    padding: 20px;
+    border-radius: 3px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+    -moz-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+    background: #fff;
+}
+#footer {
+    width: 100%;
+    margin: 50px 0 0;
+    padding: 10px 0 40px;
+	color: #000;
+	text-align: center;
+	font-size: 11px;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+}
+
+.CommonBtn {
+    float: right;
+}
+
+label.RememberLogin {
+    color: #444444;
+    font-size: 14px;
+}
+    .RememberLogin input {
+        float: left;
+        margin: 1px 5px 0 0;
+    }
+
+.ForgotPassLnk {
+    float: left;
+    margin: 12px 0 0;
+    text-decoration: none;
+    color: #617F45;
+}

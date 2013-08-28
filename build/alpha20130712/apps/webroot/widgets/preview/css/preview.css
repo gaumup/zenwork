@@ -1,0 +1,16 @@
+#zwPreview {
+	position: absolute;
+    z-index: 999999;
+	border: 2px solid #666;
+    width: 50px;
+    height: 50px;
+    max-width: 300px;
+	background: #fff;
+    padding: 1px;
+}
+#zwPreview.Loading {
+	background: #fff url(../images/icon-loading.gif) no-repeat center center;
+}
+    #zwPreview img {
+        width: 100%;
+    }

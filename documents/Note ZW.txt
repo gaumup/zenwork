@@ -1,0 +1,9 @@
+﻿- chua hien thuc load 1 phan stream trong list, add new lam roi, nhung delete thi chua update tuong ung =>DONE
+- delete stream -> cascade tất cả? =>DONE
+- filter stream khong theo index -> die? =>DONE
+- remove assignee cua timeline group khi tu leaf -> group
+- cho phep dung phim mui ten di chuyen giua cac row
+
+Delivery:
+- mail complete them nut view details va unfollow
+- thêm nút reply message trong mail comment gửi đi

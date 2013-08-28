@@ -1,0 +1,14 @@
+/* Image style */
+#zwScrollUp {
+	bottom: 5px;
+	right: 5px;
+	height: 38px;
+	width: 38px;
+    overflow: hidden;
+    text-indent: -1000em;
+    display: block;
+	background: url(../images/top.png) no-repeat 0 0;
+    opacity: 0.6;
+    -moz-opacity: 0.6;
+    filter: alpha(opacity=80);
+}

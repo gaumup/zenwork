@@ -1,0 +1,19 @@
+@import url(../widgets/uploader/css/uploader.css);
+@import url(../widgets/comment/css/comment.css);
+@import url(../widgets/tagit/css/tagit.css);
+@import url(../widgets/jquery-datepicker/css/jquery-datepicker.css);
+@import url(../widgets/jquery-datepicker/css/jquery-timepicker.css);
+@import url(../widgets/jquery-slider/css/jquery-slider.css);
+@import url(../widgets/stream/css/stream.css);
+@import url(../widgets/planner/css/resizable.css);
+@import url(../widgets/planner/css/planner.css);
+
+.SpacingContainer {
+    padding: 0;
+}
+.StreamList,
+.GanttTimelineClip {
+    opacity: 1 !important;
+    -moz-opacity: 1 !important;
+    filter: alpha(opacity=100) !important;
+}

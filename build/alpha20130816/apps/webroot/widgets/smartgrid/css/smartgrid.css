@@ -1,0 +1,307 @@
+a.ResizeBar {
+    width: 3px;
+    position: absolute;
+    z-index: 9999;
+}
+a.ResizeBarDefault {
+    height: 52px !important;
+}
+a.ResizeBar:hover {
+    cursor: w-resize;
+}
+a.ResizeBarDown {
+    background: url(../images/grid-resize-helper.png) repeat 0 0;
+}
+
+.SmartGridOuter {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    clear: both;
+    overflow: hidden;
+}
+    .SmartGridContainer {
+        width: 100%;
+        overflow: hidden;
+        position: relative;
+    }
+table.SmartGrid {
+    width: 100%;
+    background: #8d969e;
+}
+table.SmartGrid {
+    border-collapse: separate;
+    border-spacing: 1px;
+    border: none;
+}
+table.SmartGrid tr:hover td {
+    background-color: #FBF3E4 !important;
+}
+table.SmartGrid th {
+    background: #DFE3E8;
+    padding: 18px 0 18px 4px;
+    text-align: left;
+}
+table.SmartGrid td {
+    background: #fff;
+}
+table.SmartGrid th.CenterCol,
+table.SmartGrid td.CenterCol {
+    text-align: center;
+    padding: 0;
+}
+        table.SmartGrid tr.EvenRow td {}
+        table.SmartGrid tr.OddRow td {}
+        table.SmartGrid tr.RowSelected td {
+            background: #ebebeb;
+        }
+
+        table.SmartGrid td span.SmartCellContainer {
+            padding: 5px 18px 5px 4px;
+            position: relative;
+            display: block;
+        }
+        table.SmartGrid td span.SmartCellEmpty {
+            padding: 0;
+        }
+        table.SmartGrid td span.SmartCellView {
+            padding: 5px 4px;
+        }
+            textarea.SmartCell,
+            textarea.SmartCellReadOnly,
+            input.LiveEdit {
+                font-size: 12px;
+                text-align: left;
+                vertical-align: top;
+                width: 100%;
+            }
+            td.CenterCol textarea.SmartCell,
+            td.CenterCol textarea.SmartCellReadOnly,
+            td.CenterCol input.LiveEdit {
+                text-align: center !important;
+                padding-left: 0 !important;
+                padding-right: 0 !important;
+            }
+            textarea.SmartCell,
+            textarea.SmartCellReadOnly {
+                border: none;
+                margin: 0;
+                padding: 0;
+                background: none;
+                resize: none;
+                overflow: auto;
+                outline: none;
+            }
+            textarea.LiveEdit,
+            input.LiveEdit {
+                border: 1px solid #8d969e;
+                background: #fff;
+                margin: 0;
+                outline: none;
+                display: block;
+                overflow: hidden;
+                position: absolute;
+                top: 0;
+                left: 0;
+                z-index: 1000;
+            }
+            input.LiveEdit {
+                padding: 4px 18px 4px 3px;
+            }
+            textarea.LiveEdit {
+                padding: 4px 18px 4px 3px;
+                resize: none;
+                background: #fff url(../images/icon-multi-line.png) no-repeat right 3px;
+            }
+            span.DateCell input.LiveEdit {
+                background: #fff url(../images/calendar.gif) no-repeat right 3px;
+            }
+            span.SelectCell input.LiveEdit {
+                background: #fff url(../images/down-triangle.gif) no-repeat right 6px;
+            }
+            span.ReadOnlyCell input.LiveEdit {
+                background: #f8f8f8 url(../images/icon-readonly.png) no-repeat right top;
+            }
+.Group td {
+    padding: 6px 10px 2px;
+    font-size: 16px;
+    font-weight: bolder;
+    background: #dfdfdf !important;
+    color: #000;
+    vertical-align: bottom;
+}
+
+/* Common Tooltip */
+div.CommonTooltip {
+    width: 155px;
+    padding: 0 0 6px;
+    overflow: hidden;
+    position: absolute;
+    z-index: 999999;
+}
+    div.CommonTooltipContainer {
+        background: #333;
+        padding: 5px;
+        overflow: hidden;
+    }
+    div.CommonTooltipBottom {
+        width: 100%;
+        height: 6px;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        z-index: 1;
+        background: url(../images/tooltip-bg.png) no-repeat center bottom;
+    }
+    div.CommonTooltip a.CloseTooltip {
+        background: url(../images/tooltip-close-btn.gif) no-repeat 0 0;
+        width: 6px;
+        height: 0;
+        padding: 5px 0 0;
+        overflow: hidden;
+        text-indent: -1000em;
+        display: block;
+        position: absolute;
+        top: 5px;
+        right: 5px;
+        z-index: 1;
+    }
+    div.CommonTooltip a.CloseTooltip:hover {
+        background-position: 0 -5px;
+    }
+    div.CommonTooltip p {
+        font-size: 11px;
+        color: #fff;
+    }
+    div.CommonTooltip label {
+        font-size: 10px;
+        color: #efefef;
+        display: block;
+        margin: 8px 0 0;
+        vertical-align: middle;
+    }
+/* END. Common Tooltip */
+
+/* Project Toolbar */
+    .ProjectToolbar {
+        width: 100%;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+    }
+    #content .ProjectToolbar {
+        margin: 10px 0 0;
+    }
+        .ProjectInfos {
+            width: 100%;
+            overflow: hidden;
+            padding: 10px 0 0 !important; /*override*/
+            background: url(../images/info-bar-bg.gif) repeat-x 0 bottom;
+        }
+            .ProjectToolbar h2 {
+                background: url(../images/project-title-bg-right.gif) no-repeat scroll right top !important; /*override*/
+                float: left;
+                font-size: 20px;
+                font-weight: bolder;
+                margin: -10px 0 0 !important; /*override*/
+                padding: 0 !important; /*override*/
+            }
+                .ProjectToolbar h2 span {
+                    background: url(../images/project-title-bg-left.gif) no-repeat left top;
+                    float: left;
+                    font-size: 16px;
+                    font-weight: bolder;
+                    margin: 0;
+                    padding: 11px 20px 14px;
+                    text-transform: uppercase;
+                }
+        .Action {
+            width: 100%;
+            overflow: hidden;
+            padding: 11px 0 14px;
+            background: #fdfdfd url(../images/toolbar-bg.png) repeat-x 0 bottom;
+            position: relative;
+        }
+        .ActionGroup {
+            float: left;
+            padding: 0 0 0 10px;
+            margin: 0 0 0 5px;
+            border-left: 1px solid #ccc;
+        }
+        .ActionGroupAlt01 {
+            padding: 0 0 0 15px;
+            border-left: none;
+        }
+            .Action a {
+                float: left;
+                font-size: 11px;
+                color: #333;
+                cursor: pointer;
+                margin: 0 5px 0 0;
+                padding: 0 0 0 25px;
+                background-position: 0 0;
+                background-repeat: no-repeat;
+            }
+            .Action a.Filtered,
+            .Action a:hover {
+                text-decoration: none;
+                background-position: 0 -22px;
+            }
+            .Action a.ProjectHomepageBtn {
+                background-image: url(../images/icon-project-home.png);
+            }
+            .Action a.NewDocBtn {
+                background-image: url(../images/icon-new.png);
+            }
+            .Action a.SaveProjectBtn {
+                background-image: url(../images/icon-save.png);
+            }
+            .Action a.CutBtn {
+                background-image: url(../images/icon-cut.png);
+            }
+            .Action a.CopyBtn {
+                background-image: url(../images/icon-copy.png);
+            }
+            .Action a.PasteBtn {
+                background-image: url(../images/icon-paste.png);
+            }
+            .Action a.RefreshBtn {
+                background-image: url(../images/icon-refresh.png);
+            }
+            .Action a.UndoBtn {
+                background-image: url(../images/icon-undo.png);
+            }
+            .Action a.RedoBtn {
+                background-image: url(../images/icon-redo.png);
+            }
+            .Action a.AddRowBtn {
+                background-image: url(../images/icon-add-task.png);
+            }
+                .Action a span {
+                    cursor: pointer;
+                    display: block;
+                    float: left;
+                    padding: 4px 7px 4px 0;
+                    background: url(../images/btn-bg.png)  no-repeat right 0;
+                }
+                .Action a.Filtered span,
+                .Action a.Filtered:hover span,
+                .Action a:hover span {
+                    background-position: right -22px;
+                }
+            .Action a.ImgBtnDisabled,
+            .Action a.ImgBtnDisabled:hover,
+            .Action a.ImgBtnDisabled:focus {
+                background-position: left 0;
+                cursor: default;
+                opacity: 0.2;
+                -moz-opacity: 0.2;
+                filter: alpha(opacity=20);
+            }
+                .Action a.ImgBtnDisabled span,
+                .Action a.ImgBtnDisabled:hover span,
+                .Action a.ImgBtnDisabled:focus span {
+                    cursor: default;
+                    background-position: right 0;
+                }
+/* END. Project Toolbar */

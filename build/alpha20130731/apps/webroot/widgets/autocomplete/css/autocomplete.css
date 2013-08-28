@@ -1,0 +1,28 @@
+/*! jQuery UI - v1.9.1 - 2012-10-25
+* http://jqueryui.com
+* Includes: jquery.ui.autocomplete.css
+* Copyright 2012 jQuery Foundation and other contributors; Licensed MIT */
+.ui-autocomplete{position:absolute;top:0;cursor:default}* html .ui-autocomplete{width:1px}
+
+.ui-helper-hidden-accessible,
+.ui-autocomplete-disabled {
+    display: none !important;
+}
+
+.ui-autocomplete {
+    max-height: 150px;
+    overflow-y: auto;
+    /* prevent horizontal scrollbar */
+    overflow-x: hidden;
+    z-index: 9999999;
+}
+/* IE 6 doesn't support max-height
+ * we use height instead, but this forces the menu to always be this tall
+ */
+* html .ui-autocomplete {
+    height: 150px;
+}
+
+.ui-autocomplete-loading {
+    background: url(../images/icon-loading-small.gif) no-repeat right center !important;
+}
