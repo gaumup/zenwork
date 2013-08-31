@@ -230,7 +230,6 @@ Zenwork.Comment = { //Singleton
             parent.html($this.find('span.SCommentFullMsg').text().replace(/\n/g, '<br />'));
             return false;
         });
-
         $(document).on('click', '.CommentBoxAttachmentRemoveBtn', function (e) {
             var $target = $(e.target);
             if ( $target.hasClass('CommentBoxAttachmentErrorRemoveBtn') ) {

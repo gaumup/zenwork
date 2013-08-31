@@ -376,18 +376,14 @@
                     }
                     element.on('mousemove.stream', '.'+opts.cssClass.streamRow, function (e) {
                         var stream = $(e.currentTarget);
-                        if ( String(stream.data('creatorID')) === Zenwork.Auth.User.id
-                            || Zenwork.Planner.creatorID === Zenwork.Auth.User.id
-                        ) {
-                            if ( !opts.onSorting && !onScroll ) {
-                                onAddingStream = stream;
-                                onAddingRow = stream.parent();
-                                var currentTargetHeight = stream.height();
-                                var innerOffset = e.pageY - stream.offset().top;
-                                if ( innerOffset >= currentTargetHeight*0.95 ) {
-                                    _showAddingRowHelper_(stream);
-                                    Zenwork.Plugins.Tip.showTip(opts.streamAddingRowHelper);
-                                }
+                        if ( !opts.onSorting && !onScroll ) {
+                            onAddingStream = stream;
+                            onAddingRow = stream.parent();
+                            var currentTargetHeight = stream.height();
+                            var innerOffset = e.pageY - stream.offset().top;
+                            if ( innerOffset >= currentTargetHeight*0.95 ) {
+                                _showAddingRowHelper_(stream);
+                                Zenwork.Plugins.Tip.showTip(opts.streamAddingRowHelper);
                             }
                         }
                     });
@@ -1796,6 +1792,7 @@
                                 Zenwork.Planner.app.planner(
                                     'addStreamTimelineBar', //method name
                                     //params
+                                    $(stream.attr('rel')),
                                     stream, 
                                     [data.json], //timelineConfig: [{...}, {...}]
                                     'timeline', 

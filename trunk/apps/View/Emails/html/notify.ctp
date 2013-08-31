@@ -8,6 +8,13 @@
      */
     echo '<h3 style="font-size:20px;font-weight:bold;">'.htmlspecialchars($title).'</h3>';
     echo '<p><strong>'.$username.'</strong> '.nl2br(htmlspecialchars($action)).'</p>';
+    if ( !empty($link) ) {
+        echo '<ul>';
+        foreach ( $link as $_htmlLnk ) {
+            echo '<li>'.$_htmlLnk.'</li>';
+        }
+        echo '</ul>';
+    }
     echo '<p style="color:#999;font-size:10px;">-&nbsp;'.$this->Time->timeAgoInWords(time()).'</p>';
     if ( !empty($message) ) {
         echo '<p>with a message</p>';

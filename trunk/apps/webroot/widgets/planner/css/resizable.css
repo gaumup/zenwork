@@ -2,7 +2,7 @@
     cursor: default;
 }
 .Move {
-    cursor: move;
+    cursor: url(../images/cursor-open-hand.cur),auto;
 }
 .Resize {
     cursor: w-resize;

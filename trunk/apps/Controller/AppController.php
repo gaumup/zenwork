@@ -276,10 +276,10 @@
                     'sid' => $sid
                 ))) {
                     $cid = $this->Scomment->getLastInsertId();
+                    //load comment data
+                    $this->Scomment->id = $cid;
+                    $comment = $this->Scomment->read();
                     if ( !$postData['attachment'] ) {
-                        //load comment data
-                        $this->Scomment->id = $cid;
-                        $comment = $this->Scomment->read();
                         $this->set(compact('comment'));
 
                         //save log and send email
@@ -310,6 +310,15 @@
                         ));
                     }
                     else {
+                        $uploadingQueue = array();
+                        $uploadingQueue[$cid] = array(
+                            'sid' => $sid,
+                            'time' => $now,
+                            'comment' => 'post a comment "'.$comment['Scomment']['comment'].'" with attachment:', 
+                            'listAttachment' => '', 
+                            'link' => array()
+                        );
+                        $this->Session->write('uploadingQueue', $uploadingQueue);
                         return json_encode(array(
                             'attachment' => true,
                             'data' => '',
@@ -359,6 +368,13 @@
                         );
                         $this->Attachment->create();
                         $this->Attachment->save($attachment);
+
+                        if ( $this->Session->check('uploadingQueue.'.$cid) ) {
+                            $uploadingQueue = $this->Session->read('uploadingQueue.'.$cid);
+                            $uploadingQueue['listAttachment'] .= chr(13).chr(10).'-'.$this->data['name'];
+                            array_push($uploadingQueue['link'], '<a href="'.(Configure::read('root_url').'/'.Configure::read('upload_path').'/'.$filename).'" title="">'.$this->data['name'].'</a>');
+                            $this->Session->write('uploadingQueue.'.$cid, $uploadingQueue);
+                        }
                     }
                 }
             }
@@ -380,6 +396,32 @@
         public function getComment ($cid=null) {
             $this->autoRender = false;
             if ( $this->request->is('ajax') && !is_null($cid) ) {
+                if ( $this->Session->check('uploadingQueue.'.$cid) ) {
+                    $uploadingQueue = $this->Session->read('uploadingQueue.'.$cid);
+                    $sid = $uploadingQueue['sid'];
+                    $time = $uploadingQueue['time'];
+                    $action = $uploadingQueue['comment'];
+                    $listAttachment = $uploadingQueue['listAttachment'];
+                    $link = $uploadingQueue['link'];
+
+                    //save log and send email
+                    $this->loadModel('Stream_log');
+                    $this->Stream_log->saveStreamLog($sid, $action.$listAttachment, $this->Auth->User('id'), $time);
+
+                    //send notify to recipients
+                    $this->loadModel('Stream');
+                    $stream = $this->Stream->findById($sid, array('Stream.name', 'Creator.email'));
+                    $this->notify(
+                        'Post a comment on task "'.$stream['Stream']['name'].'"',
+                        $action,
+                        '',
+                        '',
+                        $this->_recipients($sid, array($stream['Creator']['email'])),
+                        $link
+                    );
+
+                    $this->Session->delete('uploadingQueue.'.$cid);
+                }
                 $this->loadModel('Scomment');
                 $this->Scomment->id = $cid;
                 $comment = $this->Scomment->read();
@@ -804,7 +846,7 @@
             */
         }
 
-        public function notify ($title, $action, $message='', $url='', $recipients='') {
+        public function notify ($title, $action, $message='', $url='', $recipients='', $link=array()) {
             if ( empty($recipients) ) { return false; }
             if ( !is_array($recipients) && $this->Auth->User('email') == $recipients ) {
                 return false;
@@ -825,7 +867,8 @@
                 'title' => $title,
                 'action' => $action,
                 'message' => $message,
-                'url' => $url
+                'url' => $url,
+                'link' => $link
             ));
             $email->send();
             /*------  End Send mail -------------*/

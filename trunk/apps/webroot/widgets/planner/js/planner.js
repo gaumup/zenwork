@@ -893,6 +893,10 @@
 
                     //create selectable timeline bars
                     var onSelecting = false;
+                    var onDraggingCalendar = false;
+                    var x;
+                    var y;
+                    var mouseTimer;
                     opts.calendarGrid.clip.selectable({
                         filter: '.'+opts.cssClass.ganttStream+':not(.'+opts.cssClass.timelineGroup+'):not(.Disabled)',
                         delay: 50,
@@ -909,13 +913,46 @@
                         }
                     });
                     opts.calendarGrid.clip.bind('mousedown', function (e) {
+                        mouseTimer = setTimeout(function () {
+                            opts.calendarGrid.clip.selectable('enable');
+                            onDraggingCalendar = false;
+                        }, 100);
+                        opts.calendarGrid.clip.selectable('disable');
+                        onDraggingCalendar = true;
+                        x = e.pageX;
+                        y = e.pageY;
                         Zenwork.StreamPopup.close();
                         self._clearTimelineGroup();
                         return false;
                     });
+                    opts.calendarGrid.clip.bind('mouseup', function (e) {
+                        opts.calendarGrid.clip.css({
+                            cursor: 'default'
+                        });
+                        opts.calendarGrid.clip.selectable('enable');
+                        onDraggingCalendar = false;
+                        x = e.pageX;
+                    });
                     opts.calendarGrid.clip.bind('mousemove', function (e) {
                         if ( onSelecting ) {
                             opts.fakeScroll.addClass('Hidden');
+                        }
+                        if ( onDraggingCalendar ) {
+                            if ( mouseTimer !== undefined ) { clearTimeout(mouseTimer); }
+                            opts.calendarGrid.clip.css({
+                                cursor: 'url(widgets/planner/images/cursor-close-hand.cur),auto'
+                            });
+                            var deltaX = e.pageX - x;
+                            if ( Math.abs(deltaX) > 10 ) {
+                                opts.calendarGrid.container.scrollLeft(opts.calendarGrid.container.scrollLeft()-deltaX);
+                                x = e.pageX;
+                            }
+
+                            var deltaY = e.pageY - y;
+                            if ( Math.abs(deltaY) > 10 ) {
+                                opts.fakeScroll.scrollTop(opts.fakeScroll.scrollTop()-deltaY);
+                                y = e.pageY;
+                            }
                         }
                     });
 

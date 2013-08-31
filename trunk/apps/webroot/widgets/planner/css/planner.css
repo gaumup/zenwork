@@ -420,6 +420,10 @@
         .Select:hover {
             background: #aaa;
         }
+        .Select,
+        .Select:hover {
+            cursor: url(../images/cursor-close-hand.cur),auto;
+        }
         .Disabled,
         .Disabled:hover {
             background: #999;
