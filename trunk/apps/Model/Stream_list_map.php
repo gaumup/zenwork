@@ -59,18 +59,6 @@
                             $data['Stream_list_map']['parentSlmID'] = '';
                         }
                     }
-                    
-                    if ( $this->id 
-                        && isset($data['Stream_list_map']['offset']) 
-                        && $data['Stream_list_map']['offset'] != 0
-                    ) { //index changes
-                        if ( $data['Stream_list_map']['offset'] > 0 ) {
-                            $this->moveDown($this->id, abs($data['Stream_list_map']['offset']));
-                        }
-                        else {
-                            $this->moveUp($this->id, abs($data['Stream_list_map']['offset']));
-                        }
-                    }
                 }
             }
             
