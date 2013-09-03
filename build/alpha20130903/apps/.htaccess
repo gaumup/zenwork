@@ -1,0 +1,38 @@
+<filesMatch "\.(html|htm|js|css|php)$">
+    FileETag None
+    <ifModule mod_headers.c>
+        Header unset ETag
+        Header set Cache-Control "max-age=0, no-cache, no-store, must-revalidate"
+        Header set Pragma "no-cache"
+        Header set Expires "Mon, 31 Dec 2013 23:59:59 GMT+7"
+    </ifModule>
+</filesMatch>
+
+<IfModule mod_rewrite.c>
+    RewriteEngine on
+
+    RewriteCond %{HTTPS} off
+    RewriteRule ^(.*)$ https://%{SERVER_NAME}%{REQUEST_URI} [R=301,L]
+
+    RewriteRule    ^$    webroot/    [L]
+    RewriteRule    (.*) webroot/$1    [L]
+ </IfModule>
+
+ <IfModule mod_speling.c>
+    CheckCaseOnly On
+    CheckSpelling On
+</IfModule>
+
+php_value memory_limit 64M
+
+#Set the Maximum Input time
+php_value max_input_time 1000
+
+#Maximum size allowed in Post method
+php_value post_max_size 64M
+
+#Set the Maximum Execution Time for Script
+php_value max_execution_time 1000
+
+#Set the Maximum Upload Filesize
+php_value upload_max_filesize 64M
