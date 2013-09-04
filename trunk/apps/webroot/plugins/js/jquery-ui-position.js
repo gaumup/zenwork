@@ -69,8 +69,9 @@ $.position = {
 		if ( cachedScrollbarWidth !== undefined ) {
 			return cachedScrollbarWidth;
 		}
-		var w1, w2,
-			div = $( "<div style='display:block;width:50px;height:50px;overflow:hidden;'><div style='height:100px;width:auto;'></div></div>" ),
+		//ukhome@gmail.com: add 'position:absolute;left:0;top:0' to fix bug(see http://bugs.jqueryui.com/ticket/9291 for more details)
+        var w1, w2,
+			div = $( "<div style='position:absolute;left:0;top:0;display:block;width:50px;height:50px;overflow:hidden;'><div style='height:100px;width:auto;'></div></div>" ),
 			innerDiv = div.children()[0];
 
 		$( "body" ).append( div );

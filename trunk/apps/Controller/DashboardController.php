@@ -76,7 +76,7 @@
             if ( $this->request->isAjax() ) {
                 $postData = $this->request->input('json_decode', true);
                 $this->loadModel('Users_timeline');
-                $tasks = $this->Users_timeline->getUsersTaskList($this->Auth->User('id'));
+                $tasks = $this->Users_timeline->getUserTaskList($this->Auth->User('id'));
                 $filter = $this->_filter($tasks, array('today', 'completed', 'todayCompleted'));
 
                 //TODO: get my created task which not assign to anybody or move into any plan
@@ -398,6 +398,40 @@
                         'assignee' => $this->User->findById($uid, array('User.username'))
                     ), JSON_NUMERIC_CHECK);
                 }
+            }
+        }
+        public function getFollowedTaskList () {
+            /* return json
+             *    [ //array of 'Stream'
+             *        {
+             *            'Stream': { //stream info
+             *                'id': value,
+             *                'completed': value,
+             *                'countAttachment': value,
+             *                'countComment': value,
+             *                'creatorID': value,
+             *                'createdOn': value
+             *                'description': value,
+             *                'name': value,
+             *                'streamExtendModel': value
+             *            },
+             *            'Users_timeline': { //creator of this stream
+             *                'completed': value,
+             *                'effort': value
+             *            },
+             *            'Timeline': [ //array of timeline
+             *                {
+             *                    'start': value,
+             *                    'end': value
+             *                }, {...}, {...}
+             *            ]
+             *        }, {...}, {...}
+             *    ]
+             */
+            $this->autoRender = false;
+            if ( $this->request->isAjax() ) {
+                $this->loadModel('Users_timeline');
+                return json_encode($this->Users_timeline->getUsersFollowedTaskList($this->Auth->User('id')));
             }
         }
 

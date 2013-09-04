@@ -1904,9 +1904,12 @@ Zenwork.Popup = {
         wrapperID: '#zwDialog',
         contentID: '#zwDialogContent'
     },
+    isInit: false,
     wrapper: null,
     content: null,
     init: function (opts) {
+        if ( this.isInit ) { return this; }
+console.log(this.isInit, 'init Popup')
         opts = $.extend(true, this.options, opts);
         this.wrapper = $(opts.wrapperID);
         this.content = $(opts.contentID);
@@ -1931,6 +1934,8 @@ Zenwork.Popup = {
         this.wrapper.on(Zenwork.Overlays.EVENT.CLOSE, function (e) {
             self.close(true);
         });
+
+        this.isInit = true;
     },
     close: function (animate) {
         var self = this;
@@ -1955,7 +1960,7 @@ Zenwork.Popup = {
         }
     },
     preProcess: function (/*object {}*/pos, showOverlays) {
-        Core.Mediator.pub('beforeShowStreamPopup.Help.Dashboard');
+        Core.Mediator.pub('beforeShowPopup.Popup');
 
         this.content.empty();
         this.wrapper
@@ -1996,6 +2001,7 @@ Zenwork.StreamPopup = $.extend(true, {}, Zenwork.Popup, {
         wrapperID: '#streamDialog',
         contentID: '#streamDialogContent'
     },
+    isInit: false,
     EVENT: {
         VIEW_COMMENT: 'viewComment',
         VIEW_ATTACHMENT: 'viewAttachment'
@@ -2003,8 +2009,9 @@ Zenwork.StreamPopup = $.extend(true, {}, Zenwork.Popup, {
     observer: null,
     aside: null,
     init: function () {
-        this._super.init.call(this);
-
+        if ( this.isInit ) { return this; }
+        if ( !this._super.isInit ) { this._super.init.call(this); }
+console.log(this.isInit, 'init StreamPopup')
         var self = this;
         this.aside = $('#streamDialogAside');
         this.wrapper.on('click', '.StreamDialogViewComment', function (e) {
@@ -2062,13 +2069,15 @@ Zenwork.StreamPopup = $.extend(true, {}, Zenwork.Popup, {
             });
             return false;
         });
+
+        this.isInit = true;
     },
     close: function () {
         if ( !this.wrapper.hasClass('Hidden') ) {
-            Core.Mediator.pub('beforeCloseStreamPopup.Help.Dashboard');
+            Core.Mediator.pub('beforeCloseStreamPopup.StreamPopup');
             this._super.close.call(this);
             this.observer = null;
-            Core.Mediator.pub('afterCloseStreamPopup.Help.Dashboard');
+            Core.Mediator.pub('afterCloseStreamPopup.StreamPopup');
         }
     },
     preAsideProcess: function () {

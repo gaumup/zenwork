@@ -216,7 +216,6 @@ jQuery(document).ready(function () {
                                     return false; //break;
                                 }
                             });
-                            
                         });
                     });
                 }
@@ -353,6 +352,100 @@ jQuery(document).ready(function () {
             return { 'Users_timeline': $.extend({}, data) };
         });
     /* End. Today block js code */
+
+    /* Followed task block js code */
+        var followedTaskListjsp = $('#followedTaskListJScrollPane');
+        var followedTaskList = $('#followedTaskList');
+        //load today task list data
+        $.ajax({
+            type: 'POST',
+            url: Zenwork.Root+'/dashboard/getFollowedTaskList',
+            dataType: 'json', //receive from server
+            contentType: 'json', //send to server
+            data: JSON.stringify({}),
+            success: function (data, textStatus, jqXHR) {
+                if ( data.length > 0 ) {
+                    //render today task list
+                    $.each(data, function (index, value) {
+                        followedTaskList.tasklist('addNewStream', value.Stream, false, 'bottom', function (stream) {});
+                    });
+                }
+                else {
+                    $('#followedTaskListEmptyBlock').removeClass('Hidden');
+                }
+                followedTaskListjsp.removeClass('ZWPending').data('jsp').reinitialise();
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                if ( textStatus !== 'abort' ) {
+                    alert('Really sorry for this, network error! Please try again!');
+                }
+            }
+        });
+
+        Zenwork.Plugins.jScrollPane.call(followedTaskListjsp, {verticalGutter: 0}); //init jscrollpane for todayTaskList
+        followedTaskList.tasklist({ //init tasklist widget
+            //options
+            baseIndex: 0,
+            customFieldsList: {},
+            listPrefix: 'followed_',
+
+            //event callback
+            add: function (e, stream, callback) {
+                //no thing todo
+            },
+            completed: function (e, stream) {
+                //no thing todo
+            },
+            uncompleted: function (e, stream) {
+                //no thing todo
+            },
+            deleted: function (e, stream) {
+                //no thing todo
+            },
+            deletedAll: function (e, stream) {
+                //no thing todo
+            },
+            selecting: function (e, stream) {
+                //no thing todo
+            },
+            selected: function (e, stream) {
+                //no thing todo
+            },
+            unselecting: function (e, stream) {
+                //no thing todo
+            },
+            unselected: function (e, stream) {
+                //no thing todo
+            },
+            collapsed: function (e, stream) {
+                //no thing todo
+            },
+            expanded: function (e, stream) {
+                //no thing todo
+            },
+            collapsedAll: function (e) {
+                //no thing todo
+            },
+            expandedAll: function (e) {
+                //no thing todo
+            },
+            indented: function (e, stream) {
+                //no thing todo
+            },
+            outdented: function (e, stream, oldParentStream, oldIndex, newIndex) {
+                //no thing todo
+            },
+            singleCompleted: function (e, stream) {
+                //no thing todo
+            },
+            singleUnCompleted: function (e, stream) {
+                //no thing todo
+            },
+            sorting: function (e, stream, oldIndex, newIndex, oldParentStreamID, newParentStreamID, oldParentStream) {
+                //no thing todo
+            }
+        });
+    /* End. Followed task block js code */
 
     /* Resource usage block js code */
         var teamResourceStatistic = $('#teamResourceStatistic');
@@ -643,6 +736,7 @@ jQuery(document).ready(function () {
                     streamExtendModelTask: 'StreamExtendModelTask',
                     unassignedTask: 'UnassignedTask'
                 },
+                listPrefix: '',
                 selectable: false,
                 isUserScroll: true
             },
@@ -662,7 +756,7 @@ jQuery(document).ready(function () {
                     });
                 var disableWindowScrolling = false;
 
-                var listjsp =  $('#todayTaskListJScrollPane');
+                var listjsp =  $('#'+this.element.attr('data-jsp-container'));
                 var jspApi = listjsp.data('jsp');
                 var currListScollTop = jspApi.getContentPositionY();
                 listjsp.bind('jsp-scroll-y', function(e, scrollPositionY, isAtTop, isAtBottom) {
@@ -671,7 +765,9 @@ jQuery(document).ready(function () {
                     //            'isAtTop=', isAtTop,
                     //            'isAtBottom=', isAtBottom);
                     if ( currListScollTop !== scrollPositionY ) {
-                        Zenwork.StreamPopup.close();
+                        if ( !$(self.element.attr('rel')).hasClass('ZWSectionPullLeft') ) {
+                            Zenwork.StreamPopup.close();
+                        }
                     }
                 });
                 this.element.hover(
@@ -688,11 +784,15 @@ jQuery(document).ready(function () {
 
                 var currWindowScollTop = $(window).scrollTop();
                 $(window).bind('scroll', function (e) {
-                    if ( opts.isUserScroll && currWindowScollTop !== $(window).scrollTop() ) {
+                    if ( e.originalEvent !== undefined && currWindowScollTop !== $(window).scrollTop() ) {
                         Zenwork.StreamPopup.close();
                     }
                 });
                 this.element.on('mousedown.stream', '.'+opts.cssClass.streamDetailsBtn, function (e) {
+                    var taskListSection = $(self.element.attr('rel'));
+                    if( taskListSection.length > 0 && taskListSection.hasClass('ZWSectionPullLeft') ) {
+                        taskListSection.addClass('ZWSectionPullLeftPermanent');
+                    }
                     currListScollTop = jspApi.getContentPositionY();
                     currWindowScollTop = $(window).scrollTop();
                     jspApi.scrollToElement($($(e.currentTarget).attr('href')));
@@ -749,10 +849,10 @@ jQuery(document).ready(function () {
 
         //private method
             _addNewStream: function (data, isAjax, position, callback) {
-                if ( $('#'+this.PREFIX+data.id).length > 0 ) { return; }
-                isAjax = isAjax || false;
                 var self = this;
                 var opts = this.options;
+                if ( $('#'+opts.listPrefix+this.PREFIX+data.id).length > 0 ) { return; }
+                isAjax = isAjax || false;
                 var index = 1+opts.baseIndex;
                 if ( position === 'bottom' ) {
                     index += this.element.find('li').length;
@@ -766,7 +866,7 @@ jQuery(document).ready(function () {
                 }, data);
                 var _util_ = function (data) {
                     var isCreator = String(data.creatorID) === Zenwork.Auth.User.id;
-                    var sid = self.PREFIX+data.id;
+                    var sid = opts.listPrefix+self.PREFIX+data.id;
                     //DOM
                     var streamElement = $(
                         '<li class="'+opts.cssClass.streamElement+' '+opts.cssClass.streamLeaf+' '+(isCreator ? opts.cssClass.streamCreator : '')+' '+(isAjax ? opts.cssClass.unassignedTask : '')+'">'+
@@ -1364,6 +1464,21 @@ jQuery(document).ready(function () {
             _openStreamDetails: function (e, stream, aside, callback) {
                 var self = this;
                 var opts = this.options;
+                var taskListSection = $(this.element.attr('rel'));
+                if ( taskListSection.length > 0 ) {
+                    taskListSection.removeClass('ZWSectionPullLeftPermanent');
+                    if ( !taskListSection.hasClass('ZWSectionPullLeft') ) {
+                        taskListSection.addClass('ZWSectionPullLeft');
+                        if ( !taskListSection.hasClass('SubscribedClosePopup') ) {
+                            taskListSection.addClass('SubscribedClosePopup')
+                            Core.Mediator.sub('beforeCloseStreamPopup.StreamPopup', function () {
+                                if ( !taskListSection.hasClass('ZWSectionPullLeftPermanent') ) {
+                                    taskListSection.removeClass('ZWSectionPullLeft');
+                                }
+                            });
+                        }
+                    }
+                }
                 Zenwork.StreamPopup.observer = stream;
                 Zenwork.StreamPopup.preProcess({}, false);
                 this._dialogUtil(stream);

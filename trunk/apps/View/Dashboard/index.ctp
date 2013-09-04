@@ -39,7 +39,7 @@
 <div id="dashboard" class="ZWDashboard">
     <div id="todayTaskBlock" class="ZWBlock ZWBlockFullExpand">
         <div class="ZWBlockInner">
-            <div class="ZWSection">
+            <div class="ZWSection ZWSectionTriple">
                 <div class="ZWBlockHeader">
                     <h2>Today task list</h2><span class="ZWHelpPopup ZWHelpPopupAlt01 QTip QTipPermanent" title="For sirst time page loading(F5) today task list only display tasks assigned to you which not completed and start day earlier than today<br /><br />When you create a new task(which not start today) or update a task as completed, it will show in the list until you refresh the page(F5)" data-qtip-my="left top" data-qtip-at="right top">help</span>
 
@@ -48,7 +48,7 @@
 
                 <div class="TodayTaskListWrapper">
                     <div id="todayTaskListJScrollPane" class="TodayTaskListJScrollPane ZWPending">
-                        <ul id="todayTaskList" class="TodayTaskList">
+                        <ul id="todayTaskList" class="TodayTaskList" data-jsp-container="todayTaskListJScrollPane">
                             <!-- Dynamically add -->
                         </ul>
                         <div id="todayTaskListEmptyBlock" class="TodayEmptyListBlock Hidden">
@@ -59,7 +59,7 @@
                 </div>
             </div>
 
-            <div class="ZWSection">
+            <div class="ZWSection ZWSectionTriple ZWSectionTripleAlt01">
                 <div class="ZWBlockHeader">
                     <h2>Your monthly workload</h2><span class="ZWHelpPopup ZWHelpPopupAlt01 QTip QTipPermanent" title="This chart will show your monthly workload. It contains 2 lines: 'planning' and 'completed'. It auto update every 5 minutes" data-qtip-my="left top" data-qtip-at="right top">help</span>
                 </div>
@@ -70,6 +70,23 @@
                         <li class="ZWUserStatisticLabelItem02"><span class="ZWUserStatisticLabelImg">&nbsp;</span> <em>completed</em> <span class="ZWHelpPopup QTip QTipPermanent" title="Total workload of all tasks <strong>assigned to you</strong> and <strong>completed</strong>">help</span></li>
                     </ul>
                     <canvas id="myTaskStatistic" height="335"></canvas>
+                </div>
+            </div>
+
+            <div id="followedTaskListSection" class="ZWSection ZWSectionTriple">
+                <div class="ZWBlockHeader">
+                    <h2>My followed task</h2>
+                </div>
+
+                <div class="TodayTaskListWrapper">
+                    <div id="followedTaskListJScrollPane" class="TodayTaskListJScrollPane ZWPending">
+                        <ul id="followedTaskList" class="TodayTaskList" data-jsp-container="followedTaskListJScrollPane" rel="#followedTaskListSection">
+                            <!-- Dynamically add -->
+                        </ul>
+                        <div id="followedTaskListEmptyBlock" class="TodayEmptyListBlock Hidden">
+                            <p>You have not followed any task</p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

@@ -236,15 +236,15 @@ jQuery(document).ready(function () {
 
 
         //popup event subscribe
-        Zenwork.Dashboard.sub('beforeCloseStreamPopup.Help.Dashboard', function () {
+        Zenwork.Dashboard.sub('beforeCloseStreamPopup.StreamPopup', function () {
             _dismiss_('dashboardViewAddedFirstTask.Help.Dashboard');
             _dismiss_('startWorkingTask.Help.Dashboard');
             _dismiss_('finishTask.Help.Dashboard');
         });
-        Zenwork.Dashboard.sub('afterCloseStreamPopup.Help.Dashboard', function () {
+        Zenwork.Dashboard.sub('afterCloseStreamPopup.StreamPopup', function () {
             Zenwork.Dashboard.pub('dashboardListView.Help.Dashboard', '#todayTaskListJScrollPane');
         });
-        Zenwork.Dashboard.sub('beforeShowStreamPopup.Help.Dashboard', function () {
+        Zenwork.Dashboard.sub('beforeShowPopup.Popup', function () {
             _dismiss_('todayBlockLoad.Help.Dashboard');
             _dismiss_('dashboardListView.Help.Dashboard');
             _dismiss_('startWorkingTask.Help.Dashboard');

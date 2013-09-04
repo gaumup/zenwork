@@ -244,14 +244,14 @@ Zenwork.Comment = { //Singleton
         });
         $(document).on('dragover dragenter', '#streamCommentInputBoxWrapper', function (e) {
             $(e.target).addClass('StreamAttachmentHelperDragOver');
-            e.stopPropgation();
+            e.stopPropagation();
         });
         $(document).on('dragover dragenter', '#streamCommentInputBoxWrapper *', function (e) {
             $('#streamCommentInputBoxWrapper').addClass('StreamAttachmentHelperDragOver');
-            e.stopPropgation();
+            e.stopPropagation();
         });
         $(document).on('drop', '#streamCommentInputBoxWrapper', function (e) {
-            $(e.target).removeClass('StreamAttachmentHelperDragOver');
+            $('#streamCommentInputBoxWrapper').removeClass('StreamAttachmentHelperDragOver');
         });
         $(document).on('dragover', function (e) {
             $('#streamCommentInputBoxWrapper').removeClass('StreamAttachmentHelperDragOver');

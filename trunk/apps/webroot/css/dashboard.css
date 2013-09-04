@@ -75,10 +75,41 @@
                 -moz-box-sizing: border-box;
                 -webkit-box-sizing: border-box;
                 position: relative;
+                border-left: 1px solid #ccc;
             }
             .ZWSection:first-child {
-                border-right: 1px solid #ccc;
+                border-left: none;
             }
+            .ZWSectionTriple {
+                width: 35%;
+            }
+            .ZWSectionTriple.ZWSectionTripleAlt01 {
+                width: 30%;
+            }
+            .ZWSectionPullLeft {
+                position: absolute;
+                top: 0;
+                z-index: 10;
+                background: #fff;
+
+                box-shadow: -1px 0 2px rgba(0, 0, 0, 0.2);
+                -moz-box-shadow: -1px 0 2px rgba(0, 0, 0, 0.2);
+                -webkit-box-shadow: -1px 0 2px rgba(0, 0, 0, 0.2);
+
+                left: 50px;
+                animation: pullleft 0.2s;
+                -webkit-animation: pullleft 0.2s; /* Safari and Chrome */
+            }
+            @keyframes pullleft {
+                0% {left: 65%;}
+                100% {left: 50px;}
+            }
+
+            @-webkit-keyframes pullleft {/* Safari and Chrome */
+                0% {left: 65%;}
+                100% {left: 50px;}
+            }
+
     .TodayTaskListWrapper {
         padding: 0;
     }
@@ -315,6 +346,9 @@
             background: url(../images/stream-dialog-arrow.png) no-repeat 0 0;
             padding: 0 0 0 7px;
             margin: 0 0 0 -7px;
+        }
+        .StreamDialogDecor.NoBg {
+            background: none;
         }
 
     .AssigneeListWrapper {
