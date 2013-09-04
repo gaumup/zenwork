@@ -1909,7 +1909,7 @@ Zenwork.Popup = {
     content: null,
     init: function (opts) {
         if ( this.isInit ) { return this; }
-console.log(this.isInit, 'init Popup')
+
         opts = $.extend(true, this.options, opts);
         this.wrapper = $(opts.wrapperID);
         this.content = $(opts.contentID);
@@ -1928,6 +1928,7 @@ console.log(this.isInit, 'init Popup')
             Zenwork.Window.toggleWindowScrolling(true);
         });
         this.wrapper.on('click', '.ZWDialogCloseBtn', function (e) {
+            console.log('close');
             self.close.call(self, true);
             e.preventDefault();
         });
@@ -2011,7 +2012,7 @@ Zenwork.StreamPopup = $.extend(true, {}, Zenwork.Popup, {
     init: function () {
         if ( this.isInit ) { return this; }
         if ( !this._super.isInit ) { this._super.init.call(this); }
-console.log(this.isInit, 'init StreamPopup')
+        
         var self = this;
         this.aside = $('#streamDialogAside');
         this.wrapper.on('click', '.StreamDialogViewComment', function (e) {
