@@ -101,6 +101,7 @@ jQuery(document).ready(function () {
                     else {
                         dailyTasks[i] += dailyEffortInPercent;
                     }
+                    dailyTasks[i] = Math.round(dailyTasks[i]*100)/100;
 
                     //totals completed workload
                     if ( value.Users_timeline.completed > 2 ) {
@@ -111,6 +112,7 @@ jQuery(document).ready(function () {
                             dailyCompletedTasks[i] += dailyEffortInPercent;
                         }
                     }
+                    dailyCompletedTasks[i] = Math.round(dailyCompletedTasks[i]*100)/100;
                 }
             });
 
@@ -139,6 +141,7 @@ jQuery(document).ready(function () {
                 monthlyTasks[month] = monthlyTasks[month] === undefined
                     ? workloadInMonth
                     : monthlyTasks[month] + workloadInMonth;
+                monthlyTasks[month] = Math.round(monthlyTasks[month]*100)/100;
                 if ( value.Users_timeline.completed > 2 ) {
                     monthlyCompletedTasks[month] = monthlyCompletedTasks[month] === undefined
                         ? workloadInMonth
@@ -156,6 +159,7 @@ jQuery(document).ready(function () {
                     monthlyTasks[nextMonth] = monthlyTasks[nextMonth] === undefined
                         ? _workload_
                         : monthlyTasks[nextMonth] + _workload_;
+                    monthlyTasks[nextMonth] = Math.round(monthlyTasks[nextMonth]*100)/100;
                     if ( value.Users_timeline.completed > 2 ) {
                         monthlyCompletedTasks[nextMonth] = monthlyCompletedTasks[nextMonth] === undefined
                             ? _workload_
@@ -472,6 +476,7 @@ jQuery(document).ready(function () {
             teamMemberWorkloadChartBlock.removeClass('ZWPending');
             var teamMemberWorkloadStatisticModel = new Zenwork.Dashboard.LineChartModel(teamMemberWorkloadStatistic);
             teamMemberWorkloadStatisticModel.config({
+                pointValue: true,
                 bezierCurve: false,
                 scaleOverride: true,
                 scaleSteps: 15,
