@@ -46,7 +46,8 @@
                 OUTDENTED: 'outdented',
                 SINGLE_COMPLETED: 'singleCompleted',
                 SINGLE_UNCOMPLETED: 'singleUnCompleted',
-                SORTING: 'sorting'
+                SORTING: 'sorting',
+                SCROLL: 'scroll'
             },
             indexTable: {}, //pair of key/value = index/id(server id)
 
@@ -170,6 +171,10 @@
 
                 //create selectable(stream item) on stream list
                 if ( opts.selectable ) {
+                    var onDraggingList = true;
+                    var mouseTimer;
+                    var y;
+
                     element.selectable({
                         filter: '.'+opts.cssClass.streamRow,
                         delay: 50,
@@ -192,6 +197,37 @@
                         },
                         unselected: function (e, ui) {
                             self._trigger(self.EVENT.UNSELECTED, e, ui.unselected);
+                        }
+                    });
+                    element.on('mousedown', function (e) {
+                        mouseTimer = setTimeout(function () {
+                            element.selectable('enable');
+                            onDraggingList = false;
+                        }, 100);
+                        element.selectable('disable');
+                        onDraggingList = true;
+                        y = e.pageY;
+                        return false;
+                    });
+                    element.on('mouseup', function (e) {
+                        element.css({
+                            cursor: 'default'
+                        });
+                        element.selectable('enable');
+                        onDraggingList = false;
+                        y = e.pageY;
+                    });
+                    element.on('mousemove', function (e) {
+                        if ( onDraggingList ) {
+                            if ( mouseTimer !== undefined ) { clearTimeout(mouseTimer); }
+                            element.css({
+                                cursor: 'url(widgets/stream/images/cursor-close-hand.cur),auto'
+                            });
+                            var deltaY = e.pageY - y;
+                            if ( Math.abs(deltaY) > 10 ) {
+                                self._trigger(self.EVENT.SCROLL, e, deltaY);
+                                y = e.pageY;
+                            }
                         }
                     });
                 }
@@ -1280,7 +1316,7 @@
                                 }
                                 else {
                                     //after indented, data buffer added in '_postIndentStream' function
-                                    self._postIndentStream(e, reorderedStream, droppedElement);
+                                    self._postIndentStream(e, reorderedStream, droppedElement, true/*do not flush data*/);
                                 }
                             }
                         });
@@ -2189,7 +2225,7 @@
                 });
             },
 
-            _postIndentStream: function (e, stream, parentStreamElement) {
+            _postIndentStream: function (e, stream, parentStreamElement, noFlush) {
                 var _streamData_ = stream.data();
                 //add data to model buffer
                 Zenwork.Model.addBuffer({
@@ -2204,7 +2240,8 @@
                 this._trigger(this.EVENT.INDENTED, e, stream);
 
                 //flush data from model buffer
-                Zenwork.Model.flush();
+                noFlush = noFlush === undefined ? false : noFlush;
+                if ( !noFlush ) { Zenwork.Model.flush(); }
             },
 
             _postOutdentStream: function (e, stream, streamElement, oldIndex, oldParentID, oldParentStream, oldParentStreamElement) {
