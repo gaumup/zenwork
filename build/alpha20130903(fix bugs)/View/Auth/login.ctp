@@ -50,15 +50,6 @@
                             <button class="CommonBtn" title="Sign in" tabindex="4"><span>Sign in</span></button>
                         </div>
                     </div>
-
-                    <div class="FormRow FormRowLineThrough">
-                        <p class="AlternativeLoginText">or sign in using</p>
-                    </div>
-
-                    <ul class="OpenIDLoginProvider">
-                        <li><a href="#" title="" class="CommonButtonLnk GoogleID">Google account</a></li>
-                        <li><a href="#" title="" class="CommonButtonLnk YahooID">Yahoo account</a></li>
-                    </ul>
                 </fieldset>
             </form>
         </div>
