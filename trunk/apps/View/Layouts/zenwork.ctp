@@ -223,27 +223,5 @@
     <?php echo $scripts_for_layout ?>
 
     <script type="text/javascript" src="<?php echo Configure::read('root_url'); ?>/js/override.js"></script>
-<?php
-/*
-    <!-- UserVoice JavaScript SDK (only needed once on a page) -->
-    <script>(function(){var uv=document.createElement('script');uv.type='text/javascript';uv.async=true;uv.src='//widget.uservoice.com/REK0Yjf5zUmFkzhBlzufA.js';var s=document.getElementsByTagName('script')[0];s.parentNode.insertBefore(uv,s)})()</script>
-
-    <!-- A tab to launch the Classic Widget -->
-    <script>
-    UserVoice = window.UserVoice || [];
-    UserVoice.push(['showTab', 'classic_widget', {
-        mode: 'full',
-        primary_color: '#cc6d00',
-        link_color: '#007dbf',
-        default_mode: 'feedback',
-        forum_id: 215243,
-        tab_label: 'Feedback & Support',
-        tab_color: '#6c9f43',
-        tab_position: 'top-right',
-        tab_inverted: true
-    }]);
-    </script>
-*/
-?>
 </body>
 </html>

@@ -309,7 +309,7 @@
                 $teamTasks = array();
                 $memberTasks = array();
                 foreach ( $members as $_member ) {
-                    $uidTasks = $this->Users_timeline->getUsersTaskList($_member['User']['id'], $timeBounce);
+                    $uidTasks = $this->Users_timeline->getUserTaskList($_member['User']['id'], $timeBounce);
                     $memberTasks[$_member['User']['username']] = $uidTasks;
                     $teamTasks = array_merge($teamTasks, $uidTasks);
                 }
