@@ -297,7 +297,7 @@
                     $this->loadModel('Stream_log');
                     $this->Stream_log->saveStreamLog($timeline['Stream']['id'], $action, $this->Auth->user('id'), time());
 
-                    return true;
+                    return $effort;
                 }
                 return false;
             }

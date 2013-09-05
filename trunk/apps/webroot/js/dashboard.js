@@ -1324,8 +1324,9 @@ jQuery(document).ready(function () {
                         var postUrl = $target.attr('href');
                         postUrl += '/'+completed;
                         postUrl += '/'+effort;
-                        self._updateMyAssignedTimelineCompletion(postUrl, function (data) {
+                        self._updateMyAssignedTimelineCompletion(postUrl, function (response) {
                             var tid = $target.data('timelineId');
+                            $('.MyEffort[data-id="'+tid+'"] strong').text(response);
                             if ( $('#streamTimelineBlock'+tid).data('start') <= Zenwork.Now.valueOf()/1000 ) {
                                 stream.toggleClass('TodayCompleted', completed == 3);
                             }
