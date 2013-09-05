@@ -1,0 +1,498 @@
+.FormRow {
+    width: 100%;
+    float: left;
+    padding: 0 0 5px;
+    overflow: hidden;
+}
+.RadioFormRow {
+    padding: 0 0 20px;
+}
+.TextInput,
+.Textarea {
+    width: 348px;
+    border: 1px solid #BFBFBF;
+    border-radius: 3px;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    box-shadow: 0 0 0 #000000, 0 3px 3px #EEEEEE inset;
+    -moz-box-shadow: 0 0 0 #000000, 0 3px 3px #EEEEEE inset;
+    -webkit-box-shadow: 0 0 0 #000000, 0 3px 3px #EEEEEE inset;
+    font-size: 16px;
+    padding: 5px;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    overflow: hidden;
+    resize: none;
+}
+.TextInput:focus,
+.Textarea:focus {
+    outline: none;
+    border-color: #617F45;
+}
+.TextInputDisabled,
+.TextInputDisabled:focus {
+    background-color: #eee !important;
+}
+input.TextInput,
+textarea.Textarea {
+    padding: 10px 5px;
+}
+input.CalendarInput {
+    cursor: default;
+    background: #fff url(../images/icon-calendar.png) no-repeat right -5px;
+}
+input.CalendarInput:focus {
+    background-position: right -54px;
+}
+input.SelectInput {
+    cursor: default;
+    background: #fff url(../images/icon-select-box.png) no-repeat right -5px;
+}
+input.SelectInput:focus {
+    background-position: right -54px;
+}
+input.Error,
+input.Error:hover,
+input.Error:focus {
+    border-color: #E98B8B;
+}
+select {
+    font-size: 16px;
+    padding: 10px;
+}
+label {
+    font-size: 17px;
+    float: left;
+    color: #666;
+    padding: 0 0 3px;
+}
+label strong {
+    color: #666;
+}
+label.MultiChoiceLabel {
+    margin: 0 10px 0 3px;
+    padding: 0;
+    color: #666;
+    font-weight: bold;
+    width: auto !important;
+}
+.MultiChoiceInput {
+    float: left;
+    margin: 16px 0 0;
+}
+.CommonBtn,
+.CommonButtonLnk {
+    display: block;
+    background: #6D9F43;
+    border: 1px solid #679541;
+    color: #fff;
+    border-radius: 3px;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    cursor: pointer;
+    padding: 9px 10px;
+    text-align: center;
+    font-size: 16px;
+    font-weight: bold;
+    margin: 0 0 0 10px;
+}
+.CommonBtnCentered {
+    margin: auto;
+}
+
+.CommonDeleteBtn {
+    background: #d44937;
+    border: 1px solid #c13828;
+}
+.CommonBtnSmall,
+.CommonButtonLnkSmall {
+    font-size: 12px;
+    padding: 5px 15px;
+}
+.CommonBtn.Pending,
+.CommonBtn.Pending:hover,
+.CommonBtn.Pending:focus,
+.CommonButtonLnk.Pending,
+.CommonButtonLnk.Pending:hover,
+.CommonButtonLnk.Pending:focus {
+    background: #efefef url(../images/icon-loading-tiny.gif) no-repeat 4px center !important;
+    border-color: #c3c3c3 !important;
+    color: #999 !important;
+    cursor: default !important;
+    padding: 9px 5px 9px 25px;
+}
+
+.CommonBtnSmall.Pending,
+.CommonBtnSmall.Pending:hover,
+.CommonBtnSmall.Pending:focus,
+.CommonButtonLnkSmall.Pending,
+.CommonButtonLnkSmall.Pending:hover,
+.CommonButtonLnkSmall.Pending:focus {
+    padding: 5px 5px 5px 25px;
+}
+.CommonBtn:hover,
+.CommonButtonLnk:hover,
+.CommonBtn:focus,
+.CommonButtonLnk:focus {
+    background: #76AD4D;
+}
+.CommonButtonLnk:hover {
+    text-decoration: none;
+}
+.CommonDeleteBtn:hover,
+.CommonDeleteBtn:focus {
+    background: #dc4b39;
+}
+.CommonBtnDisabled,
+.CommonBtnDisabled:hover,
+.CommonBtnDisabled:focus {
+    cursor: default !important;
+    color: #ccc !important;
+    background: #f4f4f4 !important;
+    border: 1px solid #dfdfdf !important;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1), 0 1px 0 #FFFFFF inset !important;
+    -moz-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1), 0 1px 0 #FFFFFF inset !important;
+    -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1), 0 1px 0 #FFFFFF inset !important;
+}
+.CommonButtonLnkCheckbox {
+    padding: 5px 10px 5px 25px;
+    float: right;
+    margin: 0 3px 0 0;
+    color: #444;
+    border-color: #ddd;
+}
+.CommonButtonLnkCheckbox,
+.CommonButtonLnkCheckbox:hover,
+.CommonButtonLnkCheckbox:focus {
+    background: #f4f4f4 url(../images/checkbox.png) no-repeat -377px -381px;
+}
+.CommonButtonLnkCheckbox:hover,
+.CommonButtonLnkCheckbox:focus {
+    background-color: #efefef;
+}
+.CommonButtonLnkCheckboxDisabled {
+    background-position: 8px 6px;
+}
+.CommonButtonLnkCheckboxDisabled:hover,
+.CommonButtonLnkCheckboxDisabled:focus {
+    background-position: -379px 6px;
+}
+
+.CommonBtn:focus,
+.CommonButtonLnk:focus {
+    -webkit-box-shadow: inset 0 0 0 1px #fff, 0 1px 1px rgba(0,0,0,0.1);
+    -moz-box-shadow: inset 0 0 0 1px #fff, 0 1px 1px rgba(0,0,0,0.1);
+    box-shadow: inset 0 0 0 1px #fff, 0 1px 1px rgba(0,0,0,0.1);
+}
+
+.ButtonRow {
+    overflow: hidden;
+}
+    .ButtonRow .CommonBtn,
+    .ButtonRow .CommonButtonLnk {
+        float: right;
+    }
+
+/* User Profile Form */
+    .ProfileWrapper01 {
+        width: 400px;
+        float: left;
+    }
+        .FormContainerAlt .ProfileWrapper01 label {
+            width: auto;
+            text-align: left;
+            padding: 0;
+            font-weight: bolder;
+            font-size: 20px;
+            color: #333;
+        }
+        .ProfileWrapper01 .FieldContainer .MsgBoxWrapper {
+            width: 390px;
+        }
+    .ProfileWrapper02 {
+        padding: 0 0 0 450px;
+    }
+    .FormRow div.AvatarWrapper {
+        width: 160px;
+        height: 160px;
+        float: left;
+        padding: 1px;
+        border: 1px solid #485b6c;
+        overflow: hidden;
+        position: relative;
+        background: #fff url(../images/icon-loading.gif) no-repeat center center;
+        margin: 0 10px 1px 0;
+    }
+        .FormRow div.AvatarWrapper img {
+            display: block;
+            width: 100%;
+        }
+
+    .FormRow a.EditButton {
+        width: 16px;
+        height: 0;
+        padding: 16px 0 0;
+        display: block;
+        text-indent: -1000em;
+        background: #fff url(../images/icon-edit-01.png) no-repeat 0 0;
+        overflow: hidden;
+        position: absolute;
+        top: 0;
+        right: 0;
+        border: 1px solid #fff;
+    }
+    .FormRow a.EditButton:hover {
+        background-position: 0 -16px;
+    }
+    .FormRow a.EditButton:focus {
+        background-position: 0 -16px;
+        outline: none;
+    }
+    .NoticeText01 {
+        font-size: 11px;
+        font-weight: normal;
+        margin: 0 0 20px;
+        color: #666;
+    }
+    .NoticeText02 {
+        font-size: 12px;
+        line-height: 20px;
+        color: #fff;
+    }
+
+    ul.EditAvatarOptions {
+        width: 100%;
+        overflow: hidden;
+    }
+        ul.EditAvatarOptions li {
+            width: 100%;
+            overflow: hidden;
+            float: left;
+        }
+            ul.EditAvatarOptions li a {
+                width: 100%;
+                font-size: 13px;
+                color: #333;
+                padding: 8px 0 8px 30px;
+                display: block;
+                float: left;
+                background-repeat: no-repeat;
+                background-position: 5px 7px;
+                overflow: hidden;
+                position: relative;
+            }
+            ul.EditAvatarOptions li a:hover {
+                text-decoration: none;
+                background-color: #679541;
+                color: #fff;
+            }
+            ul.EditAvatarOptions li a.UploadImgIcon {
+                background-image: url(../images/icon-upload-image.png);
+            }
+                ul.EditAvatarOptions li a.UploadImgIcon iframe.IframeUpload {
+                    border: none;
+                    background: none;
+                    margin: 0;
+                    padding: 0;
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    opacity: 0;
+                    -moz-opacity: 0;
+                    filter: alpha(opacity=0);
+                }
+            ul.EditAvatarOptions li a.EditImgIcon {
+                background-image: url(../images/icon-edit-image.png);
+            }
+            ul.EditAvatarOptions li a.RemoveImgIcon {
+                background-image: url(../images/icon-remove-image.png);
+            }
+    .OriginalImg {
+        width: 100%;
+        overflow: hidden;
+        background: #fff url(../images/icon-loading.gif) no-repeat center center !important;
+    }
+    .OriginalImg img {
+        display: block;
+        margin: 0 auto;
+    }
+    .jcrop-holder {
+        margin: 0 auto;
+    }
+/* END. User Profile Form */
+
+/* Context menu */
+    .CommonContextMenu { /* use in edit avatar context menu */
+        position: absolute;
+        width: 200px;
+        background: #efefef;
+        border: 4px solid #617F45;
+    }
+
+    .ContextContainer {
+        -webkit-border-bottom-right-radius: 5px;
+        -webkit-border-bottom-left-radius: 5px;
+        -moz-border-radius-bottomright: 5px;
+        -moz-border-radius-bottomleft: 5px;
+        border-bottom-right-radius: 5px;
+        border-bottom-left-radius: 5px;
+        width: 180px;
+        padding: 5px 10px;
+        border: 1px solid #999;
+        position: absolute;
+        left: 0;
+        top: 0;
+        z-index: 3;
+        background: #fff;
+        box-shadow: 0 3px 4px 1px rgba(77, 77, 77, 0.2);
+        -moz-box-shadow: 0 3px 4px 1px rgba(77, 77, 77, 0.2);
+        -webkit-box-shadow: 0 3px 4px 1px rgba(77, 77, 77, 0.2);
+    }
+    .ContextCloseBtn {
+        position: absolute;
+        top: -12px;
+        right: -12px;
+        z-index: 2;
+    }
+    .ContextContainer strong {
+        width: 100%;
+        padding: 0 10px;
+        margin: 3px 0 3px -10px;
+        display: block;
+        font-size: 11px;
+        color: #666;
+        border-bottom: 1px solid #ddd;
+    }
+    .ContextContainer button {
+        margin: 0 -3px 0 0;
+    }
+    .ContextInputBox {
+        width: 100%;
+        font-size: 12px;
+        margin: 0 0 5px -3px;
+        color: #000;
+    }
+
+    /* Checklist context */
+        .ChecklistContext {
+            padding: 0;
+            width: 200px;
+        }
+        .CommonChecklist {}
+            .CommonChecklist li {
+                width: 100%;
+                overflow: hidden;
+            }
+                .CommonChecklist li a {
+                    display: block;
+                    background: url(../images/checkbox-bg-01.png) no-repeat 6px 4px;
+                    padding: 5px 10px 5px 30px !important;
+                    color: #000;
+                    font-size: 11px;
+                }
+                .CommonChecklist li a:hover,
+                .CommonChecklist li a.ui-state-hover,
+                .CommonChecklist li a.ui-state-active {
+                    text-decoration: none;
+                    background: #2473ab url(../images/checkbox-bg-01.png) no-repeat 6px 4px !important;
+                    color: #fff;
+                }
+
+                .CommonChecklist li.Active a,
+                .CommonChecklist li.Active a:hover,
+                .CommonChecklist li.Active a:focus {
+                    background-position: 6px -59px !important;
+                }
+    /* END. Checklist context */
+/* END. Context menu */
+
+.FormContainer {
+    width: 348px;
+}
+.FormContainerAlt {
+    width: 100%;
+}
+    .FormContainerAlt label {
+        width: 244px;
+        float: left;
+        text-align: right;
+        padding: 13px 10px 0 0;
+    }
+    .FieldContainer {
+        float: left;
+        width: 404px;
+        margin: 3px 0 0;
+    }
+        .FieldContainer .CommonButtonLnk {
+            float: left;
+            margin: 0;
+        }
+        .FieldContainer .MsgBoxWrapper {
+            width: 348px;
+        }
+    .FormContainerAlt .ButtonRow {
+        padding: 0 0 0 244px !important;
+    }
+        .FormContainerAlt .ButtonRow .CommonBtn,
+        .FormContainerAlt .ButtonRow .CommonButtonLnk {
+            float: left;
+        }
+.FormContainerAlt01 {
+    width: 584px;
+}
+    .FormContainerAlt01 .TextInput {
+        width: 502px;
+    }
+    .FormContainerAlt01 .ButtonRow {
+        padding: 0 !important;
+    }
+        .FormContainerAlt01 .ButtonRow .CommonBtn {
+            float: right;
+        }
+.FormContainerRight {
+    float: right;
+}
+.FormContainerLeft {
+    float: left;
+}
+
+.ProfileContainer {
+    overflow: hidden;
+    border: 1px solid #ccc;
+    margin: 20px;
+    padding: 20px;
+    border-radius: 3px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+    -moz-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+    background: #fff;
+}
+.AccountName {
+    font-size: 22px;
+    font-weight: bold;
+    margin: 10px 0 0;
+}
+    .AccountName span {
+        font-size: 15px;
+        font-weight: normal;
+        color: #666;
+    }
+.PhotoNotice {
+    margin: 20px 0 0;
+    padding: 0 20px 0 0;
+}
+.LnkStyle01 {
+    float: right;
+    margin: 12px 0 0;
+    text-decoration: none;
+    color: #617F45;
+}
+    .LnkStyle01 strong {
+        font-weight: bold;
+    }

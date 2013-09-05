@@ -251,7 +251,7 @@ Zenwork.Comment = { //Singleton
             e.stopPropagation();
         });
         $(document).on('drop', '#streamCommentInputBoxWrapper', function (e) {
-            $(e.target).removeClass('StreamAttachmentHelperDragOver');
+            $('#streamCommentInputBoxWrapper').removeClass('StreamAttachmentHelperDragOver');
         });
         $(document).on('dragover', function (e) {
             $('#streamCommentInputBoxWrapper').removeClass('StreamAttachmentHelperDragOver');

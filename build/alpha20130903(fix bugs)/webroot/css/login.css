@@ -1,0 +1,215 @@
+body{
+	background: #f2f2f2 url(../images/bg.gif) repeat-x;
+	color: #000;
+}
+
+#outer{
+	width: 980px;
+    margin: 0 auto;
+	overflow: hidden;
+	padding: 0 20px;
+}
+
+#header {
+    float: left;
+	height: 115px;
+	width: 100%;
+	position: relative;
+}
+
+h1 {
+    width: 132px;
+    margin: 55px auto 0;
+}
+    h1 a.Logo {
+        display: block;
+        width: 100%;
+    }
+    h1 a.Logo:hover {
+    }
+
+h2 {
+    font-size: 22px;
+    font-weight: bold;
+    color: #617F45;
+    margin: 0 0 20px;
+    text-align: center;
+}
+
+.BoxContact{
+	font-size: 11px;
+	text-align: right;
+	padding: 6px 0 0 0;
+	color: #fff;
+	width: 200px;
+	position: absolute;
+	top:0;
+    right:0;
+}
+.BoxContact a:link,
+.BoxContact a:visited {
+	color: #fff;
+}
+.BoxContact a:hover{
+	text-decoration: underline;
+}
+
+#content {
+    width: 100%;
+    overflow: hidden;
+    padding: 0 0 20px;
+}
+.AuthTab {
+    width: 390px;
+    overflow: hidden;
+    margin: 40px auto 0;
+    padding: 0 2px;
+}
+    .AuthTab li {
+        width: 191px;
+        height: 40px;
+        overflow: hidden;
+        float: left;
+        padding: 4px 2px 0;
+        margin: 0 0 -1px;
+    }
+        .AuthTab li a {
+            display: block;
+            height: 40px;
+            line-height: 42px;
+            text-align: center;
+            font-size: 16px;
+            color: #547C34;
+        }
+        .AuthTab li.Active a {
+            font-weight: bold;
+            margin: 0 0 -1px;
+            background: #fff;
+            border-radius: 3px 3px 0 0;
+            -webkit-border-radius: 3px 3px 0 0;
+            -moz-border-radius: 3px 3px 0 0;
+
+            box-shadow: 0 0 3px rgba(0, 0, 0, 0.2);
+            -webkit-box-shadow: 0 0 3px rgba(0, 0, 0, 0.2);
+            -moz-box-shadow: 0 0 3px rgba(0, 0, 0, 0.2);
+        }
+        .AuthTab li.Active a:hover {
+            text-decoration: none;
+        }
+        .AuthTab li a.AuthTabDisabled,
+        .AuthTab li a.AuthTabDisabled:hover {
+            color: #ddd;
+            text-decoration: none;
+            cursor: default;
+        }
+#loginBox {
+    width: 388px;
+    overflow: hidden;
+    margin: 0 auto;
+    padding: 20px 20px 15px 20px;
+    border-radius: 3px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+
+    -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+    -moz-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+    background: #fff;
+}
+.AuthTabContent {
+    padding: 5px 0 0;
+}
+#footer {
+    width: 100%;
+    padding: 10px 0 40px;
+	color: #000;
+	text-align: center;
+	font-size: 11px;
+}
+
+.CommonBtn {
+    float: right;
+}
+
+label.RememberLogin {
+    width: 50%;
+    float: left;
+    color: #444444;
+    font-size: 13px;
+}
+    .RememberLogin input {
+        float: left;
+        margin: 3px 5px 0 0;
+    }
+.FormRow {
+    position: relative;
+}
+.TextInput {
+    width: 388px;
+}
+.ForgotPassLnk {
+    text-decoration: none;
+    color: #617F45;
+    position: absolute;
+    top: 13px;
+    right: 10px;
+}
+.ButtonRow {
+    width: 50%;
+    float: right;
+    padding: 0 !important;
+}
+.ButtonRow .CommonBtn {
+    float: none;
+    width: 100%;
+    margin: 0;
+}
+
+.FormRowLineThrough {
+    border-top: 1px solid #ccc;
+    margin: 30px 0 0;
+    overflow: visible;
+    text-align: center;
+}
+.AlternativeLoginText {
+    font-size: 18px;
+    font-weight: bold;
+    color: #666;
+    position: relative;
+    top: -14px;
+    background: #fff;
+    display: inline;
+    padding: 0 5px;
+}
+.OpenIDLoginProvider {
+    width: 100%;
+    overflow: hidden;
+}
+    .OpenIDLoginProvider li {
+        width: 48%;
+        overflow: hidden;
+        float: left;
+    }
+    .OpenIDLoginProvider li:last-child {
+        float: right;
+    }
+        .OpenIDLoginProvider li a {
+            margin: 0;
+            text-align: left;
+            padding-left: 45px;
+        }
+        .OpenIDLoginProvider li a,
+        .OpenIDLoginProvider li a:hover {
+            background-repeat: no-repeat;
+            background-position: 10px center;
+        }
+        .OpenIDLoginProvider li a:hover {
+            background-repeat: no-repeat;
+            background-position: 10px 5px;
+        }
+        .OpenIDLoginProvider li a.GoogleID {
+            background-image: url(../images/icon-google.png);
+        }
+        .OpenIDLoginProvider li a.YahooID {
+            background-image: url(../images/icon-yahoo.png);
+        }
