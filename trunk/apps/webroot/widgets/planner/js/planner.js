@@ -3547,6 +3547,117 @@ jQuery(document).ready(function () { //ensure document is ready
             this.value = '';
         });
 
+        //handle stream filtering
+        var filterStreamListParams = {
+            checkedUID: [],
+            tag: ''
+        }
+        var _filterStreamList_ = function (e) {
+            filterStreamListParams.checkedUID = [];
+            filterStreamListParams.tag = $('#tagFilterTaskView').val();
+            $('.UserTaskViewCheckbox:checked').each(function (index, element) {
+                filterStreamListParams.checkedUID.push($(element).data('uid'));
+            });
+            if ( filterStreamListParams.checkedUID.length == 0 ) { 
+                alert('Please select at least 1 people');
+                return false;
+            }
+            var filteredData = {
+                streams: [],
+                relationship: Zenwork.Planner.data.relationship
+            };
+            $.each(Zenwork.Planner.data.streams, function (index, element) {
+                var streamFound = false;
+
+                //filter by people
+                $.each(element.Timeline, function (_index, _element) {
+                    $.each(_element.User, function (__index, __element) {
+                        if ( $.inArray(Number(__element.id), filterStreamListParams.checkedUID) > -1 ) {
+                            streamFound = true;
+                            return false; //break
+                        }
+                    });
+                    if ( streamFound ) { return false; } //break
+                });
+
+                //filter by tag
+                if ( streamFound && filterStreamListParams.tag != '' ) {
+                    var tmpTags = filterStreamListParams.tag.replace(/\s/g, '').split(',');
+                    var tagFound = false;
+                    $.each(tmpTags, function (index, value) {
+                        if ( new RegExp(value, 'gi').test(element.Stream.tag) ) {
+                            tagFound = true;
+                            return false; //break;
+                        }
+                    });
+                    if ( !tagFound ) { streamFound = false; }
+                }
+
+                if ( streamFound ) {
+                    filteredData.streams.push(element);
+                    return true; 
+                } //continue
+            });
+            //render data
+            loadingOverlays.css({
+                height: $(document).height() - topBarHeight
+            }).show();
+            _initGantControl_();
+            _lazy_(filteredData, 1, function () {
+                //showing app
+                ganttAppOuter.css({
+                    height: 'auto'
+                });
+                loadingOverlays.fadeOut('medium', function () {
+                    $('#ganttApp > .Invisible').removeClass('Invisible');
+                    //completed rendered callback
+                    Zenwork.Planner.app.planner('rendered');
+
+                    //when page first load completed, set reload to true
+                    if ( !reload ) {
+                        reload = true;
+                    }
+
+                    Zenwork.Popup.close(true);
+                });
+            });
+        }
+        $('#filterStreamList').on('click', function (e) {
+            var pos = {
+                my: 'center top',
+                at: 'center top+60',
+                of: window
+            };
+            var postUrl = Zenwork.Root+'/planner/filterStreamList/'+Zenwork.List.active;
+            Zenwork.Popup.preProcess(pos, true);
+            $.ajax({
+                type: 'POST',
+                url: postUrl,
+                dataType: 'html', //receive from server
+                contentType: 'json', //send to server
+                data: JSON.stringify(filterStreamListParams),
+                success: function (data, textStatus, jqXHR) {
+                    Zenwork.Popup.show(data);
+
+                    $('.UserTaskViewCheckbox').on('change', function (e) {
+                        var $this = $(this);
+                        $($this.attr('rel')).toggleClass('Checked', $this.is(':checked'));
+                    });
+
+                    $('#updateStreamListFilter').on('click', function (e) {
+                        _filterStreamList_(e);
+                        return false;
+                    });
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    if ( textStatus !== 'abort' ) {
+                        alert('Really sorry for this, network error! Please try again!');
+                    }
+                }
+            });
+            return false;
+        });
+
         //gant dialog
         Zenwork.Dialog.container = $('#ganttTimelineContainer');
 
@@ -3759,15 +3870,54 @@ jQuery(document).ready(function () { //ensure document is ready
         });
         //load app data & render function
         var reload = false;
+        var streamNameSearchBox = $('#streamNameSearchBox');
+        streamNameSearchBox.on('keyup', function (e) {
+            if ( e.which == 13 ) {
+                var keyword = this.value;
+                var searchData = {
+                    streams: [],
+                    relationship: Zenwork.Planner.data.relationship
+                };
+                $.each(Zenwork.Planner.data.streams, function (index, element) {
+                    //search by name
+                    if ( new RegExp(keyword, 'gi').test(element.Stream.name) ) {
+                        searchData.streams.push(element);
+                        return true; //continue;
+                    }
+                });
+
+                //render data
+                loadingOverlays.css({
+                    height: $(document).height() - topBarHeight
+                }).show();
+                _initGantControl_();
+                _lazy_(searchData, 1, function () {
+                    //showing app
+                    ganttAppOuter.css({
+                        height: 'auto'
+                    });
+                    loadingOverlays.fadeOut('medium', function () {
+                        $('#ganttApp > .Invisible').removeClass('Invisible');
+                        //completed rendered callback
+                        Zenwork.Planner.app.planner('rendered');
+
+                        //when page first load completed, set reload to true
+                        if ( !reload ) {
+                            reload = true;
+                        }
+                    });
+                });
+            }
+        });
         var _toggleAppBtn_ = function (disable) {
             disable = disable || false;
             Zenwork.List.toggleEditing(!disable);
             $('.GanttToolbarBtn').toggleClass('Hidden', disable);
             if ( disable ) {
-                $('#streamSearchBox').attr('disabled', 'disabled');
+                streamNameSearchBox.attr('disabled', 'disabled');
             }
             else {
-                $('#streamSearchBox').removeAttr('disabled');
+                streamNameSearchBox.removeAttr('disabled');
             }
         }
         var _404_ = function (msg, callback) {
@@ -3825,6 +3975,8 @@ jQuery(document).ready(function () { //ensure document is ready
                 contentType: 'json', //send to server
                 data: JSON.stringify({}),
                 success: function (data, textStatus, jqXHR) {
+                    Zenwork.Planner.data = $.extend(true, {}, data); //clone 'data' and store locally
+
                     if ( data === 403 ) { //forbidden access app
                         Zenwork.Notifier.notify('Sorry! You are not allow to view this page!');
                         loadingOverlays.fadeOut('medium', function () {

@@ -66,11 +66,18 @@
     .GanttTimelineToolbar .GanttSettings {
         background: #f4f4f4 url(../images/icon-setting.png) no-repeat center center;
     }
-    .GanttTimelineToolbar .GanttPeople {
+    .GanttTimelineToolbar .GanttPeople,
+    .GanttTimelineToolbar .GanttFilter {
         width: 36px;
         padding: 33px 0 0;
         margin: 0 0 0 5px;
         background: #f4f4f4 url(../images/icon-people.png) no-repeat center center;
+    }
+    .GanttTimelineToolbar .GanttPeople {
+        background: #f4f4f4 url(../images/icon-people.png) no-repeat center center;
+    }
+    .GanttTimelineToolbar .GanttFilter {
+        background: #f4f4f4 url(../images/icon-filter.png) no-repeat center center;
     }
     .GanttTimelineToolbar .GanttTag {
         background: #f4f4f4 url(../images/icon-tag.png) no-repeat center center;
@@ -79,7 +86,7 @@
         background-color: #efefef;
     }
     .FilterBlock {
-        width: 595px;
+        width: 635px;
         margin: -3px 0 0 0;
         padding: 0;
         float: left;
@@ -765,4 +772,25 @@
             background-position: 10px -78px;
             background-color: #d40505;
         }
-
+.ListInvitedPeopleWrapperAlt01 {
+    height: auto;
+}
+    .ListInvitedPeopleWrapperAlt01 li {
+        width: auto;
+        float: left;
+        margin: 0 20px 0 0;
+        opacity: 0.3;
+        -moz-opacity: 0.3;
+        filter: alpha(opacity=30);
+    }
+    .ListInvitedPeopleWrapperAlt01 li:hover,
+    .ListInvitedPeopleWrapperAlt01 li.Checked,
+    .ListInvitedPeopleWrapperAlt01 li.Checked:hover {
+        opacity: 1;
+        -moz-opacity: 1;
+        filter: alpha(opacity=100);
+    }
+        .ListInvitedPeopleWrapperAlt01 .UserTaskViewCheckbox {
+            float: right;
+            margin: 8px 4px 0 10px;
+        }

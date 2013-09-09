@@ -44,6 +44,8 @@
 
                 <a href="#" id="createNewStreamList" title="Create new plan" class="QTip CommonButtonLnk CommonButtonLnkSmall TextBtn" data-qtip-my="left center" data-qtip-at="right center">Create new plan</a>
 
+                <a href="#" title="Filter task by people or keyword" class="QTip CommonButtonLnk CommonButtonLnkSmall CommonButtonLnkCompact GanttFilter GanttToolbarBtn" id="filterStreamList" data-qtip-my="left center" data-qtip-at="right center">Filter view</a>
+
                 <a href="#" title="Manage people in this plan: invite new people, remove exsiting people" class="QTip CommonButtonLnk CommonButtonLnkSmall CommonButtonLnkCompact GanttPeople GanttToolbarBtn" id="manageUserList" data-qtip-my="left center" data-qtip-at="right center">Manage people in this plan</a>
             </div>
 
@@ -66,7 +68,7 @@
                 <table width="100%" cellpadding="0" cellspacing="0">
                     <thead id="streamHeader" class="StreamHeader">
                         <tr>
-                            <th colspan="7" class="SearchStreamWrapper"><input disabled="disabled" type="text" placeholder="Type and press enter to highlight matched row" id="streamSearchBox[disabled]->remove[] when using" class="QTip" data-qtip-my="left center" data-qtip-at="right center" title="Sorry! Currently not available" /></th>
+                            <th colspan="7" class="SearchStreamWrapper"><input type="text" placeholder="Type task name then enter to view task" id="streamNameSearchBox" class="QTip" data-qtip-my="left center" data-qtip-at="right center" title="Type task name then enter to view task" /></th>
                         </tr>
                         <tr>
                             <th width="24" class="CenterCol"><a href="#" title="Click on checkbox of each row in this column then click on this icon to perform action(such as delete, indent, outdent...) on selected rows" id="streamBatchActionTrigger" class="StreamBatchActionTrigger QTip" data-qtip-my="bottom left" data-qtip-at="top right">Batch action</a></th>

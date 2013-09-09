@@ -606,6 +606,9 @@ a.StreamCommonLnk:active {
     left: 440px;
     margin: 0;
 }
+    .StreamDialog h3 {
+        height: 59px;
+    }
 .StreamDialogDecor {
     background: url(../images/stream-dialog-arrow.png) no-repeat 0 9px;
     padding: 0 0 0 7px;

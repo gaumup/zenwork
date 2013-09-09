@@ -245,6 +245,38 @@
             }
             return json_encode(array('success'=>$isSuccess, 'message'=>$message));
         }
+        public function filterStreamList ($lid) {
+            $this->autoRender = false;
+            if ( $this->request->isAjax() ) {
+                if ( $lid == 1 ) {
+                    $this->render('forbidden');
+                    return false;
+                }
+
+                $postData = $this->request->input('json_decode', true);
+
+                $this->loadModel('Stream_list');
+                $this->Stream_list->id = $lid;
+                $this->set('list', $this->Stream_list->read());
+                
+                $this->loadModel('Users_list');
+                $this->Users_list->bindModel(array(
+                    'belongsTo' => array(
+                        'User' => array(
+                            'className' => 'User',
+                            'foreignKey' => 'uid'
+                        )
+                    )    
+                ));
+                $this->set('usersList', $this->Users_list->find('all', array(
+                    'conditions' => array('Users_list.lid'=>$lid),
+                    'fields' => array('User.id, User.username, User.email, User.avatar')
+                )));
+
+                $this->set(compact('lid', 'postData'));
+                $this->render('filter_stream_list');
+            }
+        }
         
         private function _validateTree ($lid) {
             $this->loadModel('Stream_list_map');
