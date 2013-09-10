@@ -408,7 +408,12 @@ a.StreamCommonLnk:active {
     background: url(../images/icon-dragging-16.png) no-repeat 3px 0;
 }
 .StreamDraggingBtn:hover {
+    cursor: url(../images/cursor-open-hand.cur),auto;
     background-position: 3px -37px;
+}
+.StreamDraggingBtn:focus,
+.StreamDraggingBtn:active {
+    cursor: url(../images/cursor-close-hand.cur),auto;
 }
 .StreamDraggingHelper {
     width: 16px;
@@ -847,7 +852,7 @@ a.StreamCommonLnk:active {
                     padding: 15px 0 0;
                     text-indent: -1000em;
                     overflow: hidden;
-                    background: url(../images/icon-stream-completion--tiny.png) no-repeat 0 0;
+                    background: url(../images/icon-stream-completion-tiny.png) no-repeat 0 0;
                     position: absolute;
                     top: -6px;
                     right: -6px;

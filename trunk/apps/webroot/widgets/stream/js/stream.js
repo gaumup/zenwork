@@ -203,7 +203,13 @@
                         mouseTimer = setTimeout(function () {
                             element.selectable('enable');
                             onDraggingList = false;
+                            element.css({
+                                cursor: 'default'
+                            });
                         }, 100);
+                        element.css({
+                            cursor: 'url(widgets/stream/images/cursor-close-hand.cur),auto'
+                        });
                         element.selectable('disable');
                         onDraggingList = true;
                         y = e.pageY;
@@ -220,9 +226,6 @@
                     element.on('mousemove', function (e) {
                         if ( onDraggingList ) {
                             if ( mouseTimer !== undefined ) { clearTimeout(mouseTimer); }
-                            element.css({
-                                cursor: 'url(widgets/stream/images/cursor-close-hand.cur),auto'
-                            });
                             var deltaY = e.pageY - y;
                             if ( Math.abs(deltaY) > 10 ) {
                                 self._trigger(self.EVENT.SCROLL, e, deltaY);
