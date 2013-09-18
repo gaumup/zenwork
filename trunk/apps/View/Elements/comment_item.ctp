@@ -29,7 +29,10 @@
         '    </p>'.
         '    <p class="StreamCommentMsg">'.nl2br(htmlspecialchars($commentMsgShort), true).(mb_strlen($commentMsg) > $maxlength ? '<a href="#" title="See more" class="SCommentViewFull">See more <span class="SCommentFullMsg Hidden">'.htmlspecialchars(htmlspecialchars($commentMsg)).'</span></a>' : '').'</p>'.
         ( $comment['User']['id'] == $this->Session->read('Auth.User.id')
-            ? '<a rel="#comment'.$comment['Scomment']['id'].'" href="'.Configure::read('root_url').'/app/removeComment/'.$comment['Scomment']['id'].'" title="Remove" class="StreamDialogRemoveBtn StreamCommentRemove">Remove</a>'
+            ? (
+                '<a rel="#comment'.$comment['Scomment']['id'].'" href="'.Configure::read('root_url').'/app/removeComment/'.$comment['Scomment']['id'].'" title="Remove" class="StreamDialogRemoveBtn StreamCommentRemove">Remove</a>'.
+                '<a rel="#comment'.$comment['Scomment']['id'].'" href="#" title="Edit" class="StreamCommentEdit">Edit</a>'
+            )
             : ''
         ).
         $attachFiles.

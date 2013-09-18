@@ -102,7 +102,7 @@
         <?php if ( $isOwner ) : ?>
         <ul class="StreamTimelineBlockActionBtn">
             <?php if ( !$timeline['completed'] && $selfCompleted < 3 ) : ?>
-            <li><input data-timeline-id="<?php echo $timeline['id']; ?>" type="text" id="" name="" value="" placeholder="re-assign to" class="ReassignBox" spellcheck="false" /></li>
+            <li><input data-timeline-id="<?php echo $timeline['id']; ?>" type="text" name="" value="" placeholder="re-assign to" class="ReassignTaskBox ReassignBox" spellcheck="false" /></li>
             <?php endif; ?>
         </ul>
         <?php endif; ?>

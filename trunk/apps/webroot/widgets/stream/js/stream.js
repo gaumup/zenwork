@@ -206,14 +206,13 @@
                             element.css({
                                 cursor: 'default'
                             });
-                        }, 100);
+                        }, 200);
                         element.css({
                             cursor: 'url(widgets/stream/images/cursor-close-hand.cur),auto'
                         });
                         element.selectable('disable');
                         onDraggingList = true;
                         y = e.pageY;
-                        return false;
                     });
                     element.on('mouseup', function (e) {
                         element.css({
@@ -1793,10 +1792,10 @@
                             if ( $(e.currentTarget).hasClass('ZWDialogBtnActive') ) {
                                 return false;
                             }
+                            target = $(e.currentTarget).addClass('ZWDialogBtnActive');
                             if ( Zenwork.Dialog !== undefined ) {
                                 Zenwork.Dialog.close();
                             }
-                            target = $(e.currentTarget).addClass('ZWDialogBtnActive');
                             Zenwork.Model.checkExist('Timeline', target.data('tid'), function (exists) {
                                 if ( exists ) {
                                     listAssignee = $(target.attr('rel'));

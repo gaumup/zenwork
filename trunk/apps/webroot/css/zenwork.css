@@ -878,7 +878,7 @@ div.Success {
     font-size: 13px;
     width: 70px;
     padding: 0 0 2px 30px;
-    margin: 9px 5px 0 0;
+    margin: 7px 5px 0 0;
     border: none;
     cursor: default;
     background: url(../images/icon-move-to.png) no-repeat 0 center;
@@ -894,8 +894,8 @@ div.Success {
     width: 150px;
     color: #444;
     text-align: left;
-    padding: 5px 10px 6px;
-    margin: 3px 5px 0 0;
+    padding: 5px 10px;
+    margin: 2px 5px 0 0;
     border: 1px solid #ccc;
     background-color: #fff !important;
     background-image: none;

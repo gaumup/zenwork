@@ -1229,10 +1229,16 @@ jQuery(document).ready(function () {
                         });
                     Zenwork.StreamPopup.wrapper.on( //click on button
                         'click.stream', 
-                        '.StreamTimelineBlockEditAssignee:not(".ZWDialogBtnActive")',
+                        '.StreamTimelineBlockEditAssignee',
                         function (e) {
-                            Zenwork.Dialog.close();
-                            target = $(e.currentTarget).addClass('ZWDialogBtnActive');
+                            target = $(e.currentTarget);
+                            if ( target.hasClass('ZWDialogBtnActive') ) {
+                                return false;
+                            }
+                            target.addClass('ZWDialogBtnActive');
+                            if ( Zenwork.Dialog !== undefined ) {
+                                Zenwork.Dialog.close();
+                            }
                             var timeline = $(target.attr('href'));
                             listAssignee = $(target.attr('rel'));
                             Zenwork.AssigneeDialog.show(e, timeline, target);
@@ -1242,7 +1248,7 @@ jQuery(document).ready(function () {
 
                 //re-assign autocomplete
                 var cache = {}; //use for auto-suggest box
-                var reassignBox = $('.ReassignBox');
+                var reassignBox = $('.ReassignTaskBox');
                 if ( reassignBox.length > 0 ) {
                     reassignBox
                         .autocomplete({
@@ -1318,6 +1324,10 @@ jQuery(document).ready(function () {
                                 '</a>'
                             ).appendTo(ul);
                         };
+                    reassignBox.autocomplete('widget').on('click', function (e) {
+                        $(this).menu('resetMouseHandled');
+                        e.stopPropagation();
+                    });
                 }
             
                 //check complete button

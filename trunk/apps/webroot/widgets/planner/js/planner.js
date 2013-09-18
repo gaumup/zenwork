@@ -3950,6 +3950,10 @@ jQuery(document).ready(function () { //ensure document is ready
             Zenwork.Planner.pub('createFirstPlan.Help.Planner', '#createNewStreamList');
         }
         var _loadApp_ = function (id, lazyLimit, callback) {
+            filterStreamListParams = {
+                checkedUID: [],
+                tag: ''
+            }
             _toggleAppBtn_(true); //disable all button before finish loading
 
             loadingOverlays.css({

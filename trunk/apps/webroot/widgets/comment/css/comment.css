@@ -49,10 +49,10 @@
                 }
                 .StreamCommentList li p.StreamCommentMsg a.SCommentViewFull:hover {
                     text-decoration: underline;
-                }            .StreamCommentTime {
+                }
+            .StreamCommentTime {
                 font-size: 11px;
-                float: right;
-                margin: 0 30px 0 0;
+                margin: 0 0 0 5px;
             }
     .StreamAttachmentBoxTrigger {
         width: 15px;
@@ -309,3 +309,16 @@
             .CommentBoxAttachment li.StreamUploadError a.CommentBoxAttachmentRemoveBtn:hover {
                 background-position: 0 -15px;
             }
+
+a.StreamCommentEdit {
+    position: absolute;
+    top: 7px;
+    right: 24px;
+    font-size: 11px;
+    color: #666;
+    text-decoration: underline;
+}
+a.StreamCommentEdit:hover {
+    color: #79985A;
+    text-decoration: underline;
+}

@@ -307,17 +307,18 @@ jQuery(document).ready(function () {
                 });
             },
             listSelection: function (input, streamData) {
+                var lcache = {};
                 //stream list selection
                 input
                     .autocomplete({
                         autoFocus: true,
                         source: function (request, response) {
-                            dataSource = Zenwork.Root+'/slist/searchByUserList';
-                            if ( request.term in cache ) {
-                                response(cache[request.term], request, response);
+                            if ( request.term in lcache ) {
+                                response(lcache[request.term], request, response);
                                 return;
                             }
 
+                            dataSource = Zenwork.Root+'/slist/searchByUserList';
                             $.getJSON(dataSource, {
                                 term: request.term
                             }, function (data, status, xhr) {
@@ -332,7 +333,7 @@ jQuery(document).ready(function () {
                                     data = tmp;
                                 }
                                 response($.ui.autocomplete.filter(data, request.term));
-                                cache[request.term] = data;
+                                lcache[request.term] = data;
                             });
                         },
                         focus: function (e, ui) {
@@ -413,8 +414,8 @@ jQuery(document).ready(function () {
                             '</a>'
                         ).appendTo(ul);
                     };
-
                 input.autocomplete('widget').on('click', function (e) {
+                    $(this).menu('resetMouseHandled');
                     e.stopPropagation();
                 });
             },
@@ -996,7 +997,7 @@ jQuery(document).ready(function () {
                 });
                 assigneeDialogSelect.data('uiAutocomplete')._renderItem = function(ul, item) {
                     return $('<li>').append(
-                        '<a class="'+item.className+'">'+
+                        '<a class="'+(item.className === undefined ? '' : item.className )+'">'+
                         item.label.replace(
                             new RegExp(
                                 '(?![^&;]+;)(?!<[^<>]*)(' +

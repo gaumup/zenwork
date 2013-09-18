@@ -44,7 +44,7 @@
 
                 <a href="#" id="createNewStreamList" title="Create new plan" class="QTip CommonButtonLnk CommonButtonLnkSmall TextBtn" data-qtip-my="left center" data-qtip-at="right center">Create new plan</a>
 
-                <a href="#" title="Filter task by people or keyword" class="QTip CommonButtonLnk CommonButtonLnkSmall CommonButtonLnkCompact GanttFilter GanttToolbarBtn" id="filterStreamList" data-qtip-my="left center" data-qtip-at="right center">Filter view</a>
+                <a href="#" title="Filter task view by people or keyword" class="QTip CommonButtonLnk CommonButtonLnkSmall CommonButtonLnkCompact GanttFilter GanttToolbarBtn" id="filterStreamList" data-qtip-my="left center" data-qtip-at="right center">Filter view</a>
 
                 <a href="#" title="Manage people in this plan: invite new people, remove exsiting people" class="QTip CommonButtonLnk CommonButtonLnkSmall CommonButtonLnkCompact GanttPeople GanttToolbarBtn" id="manageUserList" data-qtip-my="left center" data-qtip-at="right center">Manage people in this plan</a>
             </div>
