@@ -185,6 +185,48 @@ Zenwork.Comment = { //Singleton
             );
             return false;
         });
+        $(document).on('click', '.StreamCommentEdit', function (e) {
+            var $this  =$(this);
+            var cid = $this.attr('href');
+            var toggleText = $this.attr('data-text-toggle');
+            $this.attr('data-text-toggle', $this.text()).text(toggleText).toggleClass('StreamCommentUpdate');
+            var msgEl = $('.StreamCommentMsg[data-id="'+cid+'"]');
+            var textboxEl = $('.StreamCommentTextboxWrapper[data-id="'+cid+'"]');
+            if ( $this.hasClass('StreamCommentUpdate') ) {
+                msgEl.addClass('Hidden');
+                textboxEl.removeClass('Hidden').find('textarea').focus();
+            }
+            else {
+                var newComment = textboxEl.find('textarea').eq(0).val();
+                Zenwork.Model.addBuffer({
+                    id: cid,
+                    comment: newComment
+                }, 'Scomment', Zenwork.Model.CU);
+                Zenwork.Model.flush();
+                msgEl.html(newComment.replace(/([^>\r\n]?)(\r\n|\n\r|\r|\n)/g, '$1<br />$2')).removeClass('Hidden');
+                textboxEl.addClass('Hidden');
+            }
+            return false;
+        });
+        var _cancelEdit_ = function (cid) {
+            var editLnk = $('.StreamCommentEdit[data-id="'+cid+'"]');
+            var toggleText = editLnk.attr('data-text-toggle');
+            editLnk.attr('data-text-toggle', editLnk.text()).text(toggleText).toggleClass('StreamCommentUpdate');
+            var msgEl = $('.StreamCommentMsg[data-id="'+cid+'"]');
+            msgEl.removeClass('Hidden');
+            var fullMsgBox = msgEl.find('span.SCommentFullMsg');
+            if ( fullMsgBox.length == 0 ) { fullMsgBox = msgEl; }
+            $('.StreamCommentTextboxWrapper[data-id="'+cid+'"]').addClass('Hidden').find('textarea').eq(0).val(fullMsgBox.text());
+        }
+        $(document).on('click', '.StreamCommentCancelEdit', function (e) {
+            _cancelEdit_($(this).attr('href'));
+            return false;
+        });
+        $(document).on('keyup', '.StreamCommentTextboxWrapper', function (e) {
+            if ( e.which == 27 ) {
+                _cancelEdit_($(this).attr('data-id'));
+            }
+        });
         $(document).off('ZWRemoveAttachment');
         $(document).on('click.ZWRemoveAttachment', '.StreamAttachmentRemoveBtn', function (e) {
             var $target = $(e.target);
@@ -258,3 +300,6 @@ Zenwork.Comment = { //Singleton
         });
     }
 }
+Zenwork.Model.createModel('Scomment', function (data) {
+    return { 'Scomment': $.extend({}, data) };
+});

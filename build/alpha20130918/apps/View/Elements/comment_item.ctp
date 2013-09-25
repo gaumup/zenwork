@@ -27,11 +27,12 @@
         '        <strong>'.$comment['User']['username'].'</strong>'.
         '        <span class="StreamCommentTime">'.$this->Time->timeAgoInWords($comment['Scomment']['when']).'</span>'.
         '    </p>'.
-        '    <p class="StreamCommentMsg">'.nl2br(htmlspecialchars($commentMsgShort), true).(mb_strlen($commentMsg) > $maxlength ? '<a href="#" title="See more" class="SCommentViewFull">See more <span class="SCommentFullMsg Hidden">'.htmlspecialchars(htmlspecialchars($commentMsg)).'</span></a>' : '').'</p>'.
+        '    <p class="StreamCommentMsg" data-id="'.$comment['Scomment']['id'].'">'.nl2br(htmlspecialchars($commentMsgShort), true).(mb_strlen($commentMsg) > $maxlength ? '<a href="#" title="See more" class="SCommentViewFull">See more <span class="SCommentFullMsg Hidden">'.htmlspecialchars(htmlspecialchars($commentMsg)).'</span></a>' : '').'</p>'.
+        '<div class="StreamCommentTextboxWrapper Hidden" data-id="'.$comment['Scomment']['id'].'"><textarea class="StreamCommentTextbox" data-id="'.$comment['Scomment']['id'].'">'.htmlspecialchars(htmlspecialchars($commentMsg)).'</textarea><span>Press Esc or <a href="'.$comment['Scomment']['id'].'" title="Cancel" class="StreamCommentCancelEdit">click here</a> to cancel</span></div>'.
         ( $comment['User']['id'] == $this->Session->read('Auth.User.id')
             ? (
                 '<a rel="#comment'.$comment['Scomment']['id'].'" href="'.Configure::read('root_url').'/app/removeComment/'.$comment['Scomment']['id'].'" title="Remove" class="StreamDialogRemoveBtn StreamCommentRemove">Remove</a>'.
-                '<a rel="#comment'.$comment['Scomment']['id'].'" href="#" title="Edit" class="StreamCommentEdit">Edit</a>'
+                '<a data-id="'.$comment['Scomment']['id'].'" rel="#comment'.$comment['Scomment']['id'].'" href="'.$comment['Scomment']['id'].'" title="Edit" class="StreamCommentEdit" data-text-toggle="Update">Edit</a>'
             )
             : ''
         ).
