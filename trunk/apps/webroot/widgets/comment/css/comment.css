@@ -35,6 +35,32 @@
                 color: #79985A;
                 line-height: 14px;
             }
+            .StreamCommentList li .StreamCommentTextboxWrapper {
+                padding: 5px 0 20px 53px;
+                position: relative;
+            }
+                .StreamCommentList li .StreamCommentTextboxWrapper .StreamCommentTextbox {
+                    width: 90%;
+                    height: 100px;
+                    resize: none;
+                    border: 1px solid #BFBFBF;
+                    border-radius: 3px;
+                    -moz-border-radius: 3px;
+                    -webkit-border-radius: 3px;
+                    box-shadow: 0 0 0 #000000, 0 3px 3px #EEEEEE inset;
+                    -moz-box-shadow: 0 0 0 #000000, 0 3px 3px #EEEEEE inset;
+                    -webkit-box-shadow: 0 0 0 #000000, 0 3px 3px #EEEEEE inset;
+                }
+                .StreamCommentList li .StreamCommentTextboxWrapper span {
+                    position: absolute;
+                    bottom: 2px;
+                    left: 53px;
+                    font-size: 11px;
+                }
+                    .StreamCommentList li .StreamCommentTextboxWrapper span a.StreamCommentCancelEdit {
+                        text-decoration: underline;
+                        color: #79985A;
+                    }
             .StreamCommentList li p.StreamCommentMsg {
                 color: #333;
                 line-height: 19px;
