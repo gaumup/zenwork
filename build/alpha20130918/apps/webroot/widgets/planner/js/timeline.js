@@ -369,6 +369,13 @@
             deleteTimeline: function (e, callback) {
                 this._deleteTimeline(e, callback);
             },
+            setAssignee: function (e, assignee) {
+                var assigneeStr = this._util_.getAssigneeStr(assignee);
+                this.element.find('.'+this.options.cssClass.timelineAssignBtn)
+                    .attr('title', assigneeStr.full)
+                    .text(assigneeStr.full);
+                this.element.find('.'+this.options.cssClass.timelineAssignee).text(assigneeStr.compact);
+            },
 
         //private method
             _markTimelineAsCompleted: function (checkbox, timeline, e, forceUpdateAll) {
