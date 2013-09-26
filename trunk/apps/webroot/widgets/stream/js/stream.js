@@ -1763,6 +1763,9 @@
                                 '    <strong>'+assigneeData.username+'</strong>(<span data-effort-id="'+assigneeData.id+'">'+assigneeData.Users_timeline.effort+'</span> wdays)'+
                                 '</li>'
                             );
+                            if ( timeline !== undefined ) {
+                                timeline.timeline('setAssignee', e, timelineData.User);
+                            }
                         });
                     Zenwork.StreamPopup.wrapper.on( //un-assign
                         Zenwork.AssigneeDialog.EVENT.UNASSIGN,
@@ -1771,6 +1774,9 @@
                             listAssignee.find('[data-id="'+uid+'"]').remove();
                             if ( listAssignee.find('li').length === 1 ) {
                                 listAssignee.find('.NoAssignee').removeClass('Hidden');
+                            }
+                            if ( timeline !== undefined ) {
+                                timeline.timeline('setAssignee', e, timelineData.User);
                             }
                         });
                     Zenwork.StreamPopup.wrapper.on( //update effort
@@ -1793,6 +1799,8 @@
                                 return false;
                             }
                             target = $(e.currentTarget).addClass('ZWDialogBtnActive');
+                            timeline = $(target.attr('href'));
+                            timelineData = timeline.data();
                             if ( Zenwork.Dialog !== undefined ) {
                                 Zenwork.Dialog.close();
                             }
