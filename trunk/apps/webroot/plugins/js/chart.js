@@ -838,7 +838,7 @@ window.Chart = function(context){
                         
                         if ( config.pointValue ) { //add by 'ukhome@gmail.com'
                             ctx.font = 'bold 16px Trebuchet MS';
-                            ctx.fillText(data.datasets[i].data[k], yAxisPosX + (valueHop *k), xAxisPosY -   animPc*(calculateOffset(data.datasets[i].data[k], calculatedScale, scaleHop)) -18);
+                            ctx.fillText(data.datasets[i].data[k], yAxisPosX + (valueHop *k) +4, xAxisPosY -   animPc*(calculateOffset(data.datasets[i].data[k], calculatedScale, scaleHop)) -11);
                         }
                         //reset config font
                         ctx.font = config.scaleFontStyle + " " + config.scaleFontSize+"px " + config.scaleFontFamily; 

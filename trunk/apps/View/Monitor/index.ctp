@@ -47,3 +47,15 @@
     <canvas id="streamListsCreationChart" height="400" />
 </div>
 
+<h2>Comments(total: <?php echo count($comments); ?>)</h2>
+<div class="ChartWrapper">
+    <input type="hidden" id="streamsCommentChartData" value="<?php echo urlencode(json_encode($comments)); ?>" />
+    <canvas id="streamsCommentChart" height="400" />
+</div>
+
+<h2>Files(total: <?php echo count($attachments); ?>)</h2>
+<div class="ChartWrapper">
+    <input type="hidden" id="streamsAttachmentChartData" value="<?php echo urlencode(json_encode($attachments)); ?>" />
+    <canvas id="streamsAttachmentChart" height="400" />
+</div>
+

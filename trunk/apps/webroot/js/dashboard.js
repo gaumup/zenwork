@@ -207,6 +207,19 @@ jQuery(document).ready(function () {
         var userStatisticModel = new Zenwork.Dashboard.LineChartModel($('#myTaskStatistic'));
         userStatisticModel.setLabels(chartLabel.year);
         userStatisticModel.config({
+            tooltip: {
+                formatter: function() {
+                    return this.y+' %';
+                }
+            },
+            yAxis: {
+                max: 250,
+                labels: {
+                    formatter: function () {
+                        return this.value+' %';
+                    }
+                }
+            }
         });
         //load today task list data
         $.ajax({

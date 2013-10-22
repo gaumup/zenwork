@@ -48,8 +48,29 @@
                 'fields' => array('Stream_list.createdOn'),
                 'order' => array('Stream_list.createdOn asc')    
             )));
+            
+            //comments monitoring
+            $this->loadModel('Scomment');
+            $this->Scomment->unbindModel(array(
+                'belongsTo' => array('User'),
+                'hasMany' => array('Attachment')
+            ));
+            $comments = array_values($this->Scomment->find('list', array(
+                'fields' => array('Scomment.when'),
+                'order' => array('Scomment.when asc')    
+            )));
+            
+            //attachments monitoring
+            $this->loadModel('Attachment');
+            $this->Attachment->unbindModel(array(
+                'belongsTo' => array('User')
+            ));
+            $attachments = array_values($this->Attachment->find('list', array(
+                'fields' => array('Attachment.since'),
+                'order' => array('Attachment.since asc')    
+            )));
 
-            $this->set(compact('users', 'streams', 'streamLists'));
+            $this->set(compact('users', 'streams', 'streamLists', 'comments', 'attachments'));
         }
     }
 ?>
