@@ -7,28 +7,41 @@ jQuery(document).ready(function () {
             Zenwork.Plugins.jScrollPane.call(this);
         });
 
-        Zenwork.Dashboard.LineChartModel = function (canvas) {
-            var _drawChart_ = function (ctx, $canvas, opts) {
-                ctx.clearRect(0, 0, $canvas.attr('width'), $canvas.attr('height'));
-                $canvas.attr('width', $canvas.parent().width());
-                new Chart(ctx).Line(
-                    {
-                        labels : opts.labels,
-                        datasets : opts.datasets
+        Zenwork.Dashboard.LineChartModel = function (container) {
+            var _drawChart_ = function (container, opts) {
+                var opts = $.extend(true, {
+                    legend: {
+                        enabled: false
                     },
-                    $.extend({}, Zenwork.Chart.Line.defaults, opts.config)
-                );
+                    chart: {
+                        type: 'area'
+                    },
+                    title: {
+                        text: ''
+                    },
+                    xAxis: {
+                        categories: opts.labels
+                    },
+                    yAxis: {
+                        title: {
+                            text: ''
+                        },
+                        min: 0
+                    },
+                    series: opts.datasets
+                }, opts.config);
+                var api = container.highcharts();
+                if ( api !== undefined ) {
+                    api.destroy();
+                }
+                container.highcharts(opts);
             }
             var api = { //export api
-                canvas: canvas,
-                ctx: canvas.get(0).getContext('2d'),
+                container: container,
                 store: {
                     /*
                      * key: {
-                     *    fillColor : 'rgba(220,220,220,0.5)',
-                     *    strokeColor : 'rgba(220,220,220,1)',
-                     *    pointColor : 'rgba(220,220,220,1)',
-                     *    pointStrokeColor : '#fff',
+                     *    name : key,
                      *    data : [100, 80, 90, 95, 110, 100, 50, 0, 0, 0, 0, 0]
                      * }
                      */
@@ -41,8 +54,8 @@ jQuery(document).ready(function () {
                     return datasets;
                 },
                 set: function (key, data) {
-                    this.store[key].data = data;
-                    _drawChart_(this.ctx, this.canvas, {
+                    this.store[key] = data;
+                    _drawChart_(this.container, {
                         config: this.config,
                         labels: this.labels,
                         datasets: this.getDatasets()
@@ -53,7 +66,7 @@ jQuery(document).ready(function () {
                     for ( var key in datasets ) {
                         this.store[key] = datasets[key];
                     }
-                    _drawChart_(this.ctx, this.canvas, {
+                    _drawChart_(this.container, {
                         config: this.config,
                         labels: this.labels,
                         datasets: this.getDatasets()
@@ -64,14 +77,14 @@ jQuery(document).ready(function () {
                 },
                 clearDatasets: function () {
                     this.store = {};
-                    this.ctx.clearRect(0, 0, this.canvas.attr('width'), this.canvas.attr('height'));
+                    this.container.empty();
                 },
                 config: function (cfg) {
-                    this.config = cfg;
+                    this.config = $.extend(true, this.config, cfg);
                 } 
             }
             $(window).on('resize', function (e) {
-                _drawChart_(api.ctx, api.canvas, {
+                _drawChart_(api.container, {
                     config: api.config,
                     labels: api.labels,
                     datasets: api.getDatasets()
@@ -112,7 +125,9 @@ jQuery(document).ready(function () {
                             dailyCompletedTasks[i] += dailyEffortInPercent;
                         }
                     }
-                    dailyCompletedTasks[i] = Math.round(dailyCompletedTasks[i]*100)/100;
+                    dailyCompletedTasks[i] = isNaN(dailyCompletedTasks[i])
+                        ? 0
+                        : Math.round(dailyCompletedTasks[i]*100)/100
                 }
             });
 
@@ -146,6 +161,7 @@ jQuery(document).ready(function () {
                     monthlyCompletedTasks[month] = monthlyCompletedTasks[month] === undefined
                         ? workloadInMonth
                         : monthlyCompletedTasks[month] + workloadInMonth;
+                    monthlyCompletedTasks[month] = Math.round(monthlyCompletedTasks[month]*100)/100;
                 }
 
                 //calculate the extend out of month if deadline > last day in month
@@ -164,6 +180,7 @@ jQuery(document).ready(function () {
                         monthlyCompletedTasks[nextMonth] = monthlyCompletedTasks[nextMonth] === undefined
                             ? _workload_
                             : monthlyCompletedTasks[nextMonth] + _workload_;
+                        monthlyCompletedTasks[nextMonth] = Math.round(monthlyCompletedTasks[nextMonth]*100)/100;
                     }
                     nextMonth++;
                     fisrtDayInNextMonth.addMonths(1);
@@ -190,11 +207,6 @@ jQuery(document).ready(function () {
         var userStatisticModel = new Zenwork.Dashboard.LineChartModel($('#myTaskStatistic'));
         userStatisticModel.setLabels(chartLabel.year);
         userStatisticModel.config({
-            scaleOverride: true,
-            scaleSteps: 10,
-            scaleStepWidth: 20,
-            scaleStartValue: 0,
-            scaleLabel: '<%=value%> %'
         });
         //load today task list data
         $.ajax({
@@ -235,17 +247,13 @@ jQuery(document).ready(function () {
                 $('#myTaskStatisticChartBlock').removeClass('ZWPending');
                 userStatisticModel.setDatasets({
                     planning: { //planning
-                        fillColor : 'rgba(220, 220, 220, 0.5)',
-                        strokeColor : 'rgba(220, 220, 220, 1)',
-                        pointColor : 'rgba(220, 220, 220, 1)',
-                        pointStrokeColor : '#fff',
+                        color : 'rgba(220, 220, 220, 1)',
+                        name: 'planning',
                         data : $.extend([], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], monthlyTasks.planning)
                     },
                     actual: { //actual
-                        fillColor : 'rgba(151, 187, 205, 0.5)',
-                        strokeColor : 'rgba(151, 187,205 ,1)',
-                        pointColor : 'rgba(151, 187, 205, 1)',
-                        pointStrokeColor : '#fff',
+                        color : 'rgba(151, 187, 205, 1)',
+                        name: 'completed',
                         data : $.extend([], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], monthlyTasks.completed)
                     }
                 });
@@ -458,12 +466,19 @@ jQuery(document).ready(function () {
             teamResourceChartBlock.removeClass('ZWPending');
             var teamResourceStatisticModel = new Zenwork.Dashboard.LineChartModel(teamResourceStatistic);
             teamResourceStatisticModel.config({
-                bezierCurve: false,
-                scaleOverride: true,
-                scaleSteps: 15,
-                scaleStepWidth: 20,
-                scaleStartValue: 0,
-                scaleLabel: '<%=value%> %'
+                tooltip: {
+                    formatter: function() {
+                        return this.y+' %';
+                    }
+                },
+                yAxis: {
+                    max: 250,
+                    labels: {
+                        formatter: function () {
+                            return this.value+' %';
+                        }
+                    }
+                }
             });
             teamResourceStatisticModel.setLabels(chartLabel.month);
         }
@@ -475,16 +490,25 @@ jQuery(document).ready(function () {
         if ( teamMemberWorkloadStatistic.length > 0 ) {
             teamMemberWorkloadChartBlock.removeClass('ZWPending');
             var teamMemberWorkloadStatisticModel = new Zenwork.Dashboard.LineChartModel(teamMemberWorkloadStatistic);
-            teamMemberWorkloadStatisticModel.config({
-                pointValue: true,
-                bezierCurve: false,
-                scaleOverride: true,
-                scaleSteps: 15,
-                scaleStepWidth: 20,
-                scaleStartValue: 0,
-                scaleLabel: '<%=value%> %'
-            });
             teamMemberWorkloadStatisticModel.setLabels(chartLabel.month);
+            teamMemberWorkloadStatisticModel.config({
+                chart: {
+                    type: 'line'
+                },
+                tooltip: {
+                    formatter: function() {
+                        return this.y+' %';
+                    }
+                },
+                yAxis: {
+                    max: 250,
+                    labels: {
+                        formatter: function () {
+                            return this.value+' %';
+                        }
+                    }
+                }
+            });
         }
     /* End. Team member workload block js code */
 
@@ -535,10 +559,12 @@ jQuery(document).ready(function () {
                         totalTasks.planning[i] = totalTasks.planning[i] === undefined
                             ? 0
                             : totalTasks.planning[i]/data.members.length;
+                        totalTasks.planning[i] = Math.round(totalTasks.planning[i]*100)/100;
                         
                         totalTasks.completed[i] = totalTasks.completed[i] === undefined
                             ? 0
                             : totalTasks.completed[i]/data.members.length;
+                        totalTasks.completed[i] = Math.round(totalTasks.completed[i]*100)/100;
                     }
                     //preparing data for team members workload: individual
                     var teamMemberDatasets = {};
@@ -548,12 +574,13 @@ jQuery(document).ready(function () {
                         var color = Core.ColorSwatch.hex2rgb(Core.ColorSwatch.palette[i]);
                         var rgba = 'rgba('+color.r+','+color.g+','+color.b+',1)'; 
                         teamMemberDatasets[username] = {
-                            fillColor : 'rgba(0, 0, 0, 0)',
-                            strokeColor : rgba,
-                            pointColor : rgba,
-                            pointStrokeColor : '#fff',
+                            id: username,
+                            color: rgba,
+                            name: username,
                             data : $.extend([],
-                                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                                (opts.xAxisType == 'month'
+                                    ? [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+                                    : [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]),
                                 memberTasks.planning
                             )
                         }
@@ -569,22 +596,22 @@ jQuery(document).ready(function () {
                         teamResourceStatisticModel.setLabels(chartLabel[opts.xAxisType]);
                         teamResourceStatisticModel.setDatasets({
                             planning: { //planning
-                                fillColor : 'rgba(220, 220, 220, 0.5)',
-                                strokeColor : 'rgba(220, 220, 220, 1)',
-                                pointColor : 'rgba(220, 220, 220, 1)',
-                                pointStrokeColor : '#fff',
+                                color : 'rgba(220, 220, 220, 1)',
+                                name: 'planning',
                                 data : $.extend([],
-                                    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                                    (opts.xAxisType == 'month'
+                                        ? [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+                                        : [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]),
                                     totalTasks.planning
                                 )
                             },
                             actual: { //actual
-                                fillColor : 'rgba(151, 187, 205, 0.5)',
-                                strokeColor : 'rgba(151, 187,205 ,1)',
-                                pointColor : 'rgba(151, 187, 205, 1)',
-                                pointStrokeColor : '#fff',
+                                color : 'rgba(151, 187,205 ,1)',
+                                name: 'actual',
                                 data : $.extend([],
-                                    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                                    (opts.xAxisType == 'month'
+                                        ? [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+                                        : [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]),
                                     totalTasks.completed
                                 )
                             }
@@ -602,8 +629,17 @@ jQuery(document).ready(function () {
                     });
                     Zenwork.Chart.Control.installTo(teamMembersChartLegend, teamMemberDatasets);
                     teamMembersChartLegend.on('update.zenworkchart', function (e, datasets) {
-                        teamMemberWorkloadStatisticModel.clearDatasets();
-                        teamMemberWorkloadStatisticModel.setDatasets(datasets);
+                        var datasetsKey = $.map(datasets, function(el, index) {return index;});
+                        var api = teamMemberWorkloadStatisticModel.container.highcharts();
+                        $.each(teamMemberDatasets, function (key, obj) {
+                            var series = api.get(obj.id);
+                            if ( $.inArray(key, datasetsKey) > -1 ) {
+                                series.show();
+                            }
+                            else {
+                                series.hide();
+                            }
+                        });
                     });
                     if ( teamMemberWorkloadStatistic.length > 0 
                         && teamMemberWorkloadChartBlock.length > 0 

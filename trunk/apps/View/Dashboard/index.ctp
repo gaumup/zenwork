@@ -12,7 +12,7 @@
     $this->Html->script('/plugins/js/jquery-mousewheel.js', false);
     $this->Html->script('/plugins/js/jquery-selectable.js', false);
     $this->Html->script('/plugins/js/jquery-hotkeys.js', false);
-    $this->Html->script('/plugins/js/chart.js', false);
+    $this->Html->script('/plugins/js/highcharts.js', false);
     $this->Html->script('/js/dashboard.js', false);
     
     $now = time();
@@ -69,7 +69,7 @@
                         <li class="ZWUserStatisticLabelItem01"><span class="ZWUserStatisticLabelImg">&nbsp;</span> <em>planning</em> <span class="ZWHelpPopup QTip QTipPermanent" title="Total workload of all tasks <strong>assigned to you</strong>">help</span></li>
                         <li class="ZWUserStatisticLabelItem02"><span class="ZWUserStatisticLabelImg">&nbsp;</span> <em>completed</em> <span class="ZWHelpPopup QTip QTipPermanent" title="Total workload of all tasks <strong>assigned to you</strong> and <strong>completed</strong>">help</span></li>
                     </ul>
-                    <canvas id="myTaskStatistic" height="335"></canvas>
+                    <div id="myTaskStatistic"></div>
                 </div>
             </div>
 
@@ -140,7 +140,7 @@
                         <li class="ZWUserStatisticLabelItem01"><span class="ZWUserStatisticLabelImg">&nbsp;</span> <em>planning</em> <span class="ZWHelpPopup QTip QTipPermanent" title="Total workload of all tasks <strong>assigned to you</strong>">help</span></li>
                         <li class="ZWUserStatisticLabelItem02"><span class="ZWUserStatisticLabelImg">&nbsp;</span> <em>actual</em> <span class="ZWHelpPopup QTip QTipPermanent" title="Total workload of all tasks <strong>assigned to team members</strong> and <strong>completed</strong>(actual workload are update by each team members)">help</span></li>
                     </ul>
-                    <canvas id="teamResourceStatistic" height="420"></canvas>
+                    <div id="teamResourceStatistic" height="420"></div>
                 </div>
             </div>
 
@@ -162,7 +162,7 @@
 
                 <div id="teamMemberWorkloadChartBlock" class="ZWChartBlock ZWChartBlockAlt01 ZWPending">
                     <ul class="TeamMembersChartLegend" id="teamMembersChartLegend"></ul>
-                    <canvas id="teamMemberWorkloadStatistic" height="420"></canvas>
+                    <div id="teamMemberWorkloadStatistic" height="420"></div>
                 </div>
             </div>
         </div>
