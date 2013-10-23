@@ -50,22 +50,12 @@
         public function search ($keyword='') {
             if ( empty($keyword) ) { return array(); }
             $this->unbindModel(array(
-                'hasOne' => array('Deliverable'),
-                'hasMany' => array('Stream_follower', 'Attachment', 'Scomment', 'Deliverable', 'Stream_log', 'User_stream')
+                'hasMany' => array('Stream_follower', 'Attachment', 'Scomment', 'Stream_log', 'Timeline')
             ));
-            $streams = $this->find('all', array(
+            return $this->find('all', array(
                 'conditions' => array('Stream.name LIKE'=>'%'.$keyword.'%'),
-                'order' => array('Stream.name ASC'),
-                'fields' => array('Stream.id, Stream.name, Stream.endTime, Stream.description, Stream.completed, Stream.listID, Stream.belongsToModel, User.username')
+                'order' => array('Stream.name ASC')
             ));
-            foreach ( $streams as $key => $_s ) {
-                $streams[$key]['Stream']['tid'] = $this->getDeliveryTeamId(
-                    $_s['Stream']['listID'],
-                    $_s['Stream']['belongsToModel']
-                );
-
-            }
-            return $streams;
         }
         public function getDetails ($sid, $lid=null) {
             //check whether stream has child or not

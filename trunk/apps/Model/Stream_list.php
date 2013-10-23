@@ -98,6 +98,18 @@
             ));
         }
 
+        public function search ($keyword) {
+            if ( empty($keyword) ) { return array(); }
+            $this->unbindModel(array(
+                'hasAndBelongsToMany' => array('User')
+            ));
+            return $this->find('all', array(
+                'conditions' => array('Stream_list.name LIKE'=>'%'.$keyword.'%'),
+                'order' => array('Stream_list.name ASC'),
+                'fields' => array('Stream_list.id, Stream_list.name', 'Stream_list.description', 'Creator.username')
+            ));
+        }
+
         public function searchByName ($keyword) {
             $results = $this->find('all', array(
                 'conditions' => array('Stream_list.name LIKE'=>'%'.$keyword.'%'),

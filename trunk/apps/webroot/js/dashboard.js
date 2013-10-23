@@ -14,7 +14,8 @@ jQuery(document).ready(function () {
                         enabled: false
                     },
                     chart: {
-                        type: 'area'
+                        type: 'area',
+                        zoomType: 'x'
                     },
                     title: {
                         text: ''
@@ -493,7 +494,6 @@ jQuery(document).ready(function () {
                     }
                 }
             });
-            teamResourceStatisticModel.setLabels(chartLabel.month);
         }
     /* End. Resource usage block js code */
 
@@ -503,7 +503,6 @@ jQuery(document).ready(function () {
         if ( teamMemberWorkloadStatistic.length > 0 ) {
             teamMemberWorkloadChartBlock.removeClass('ZWPending');
             var teamMemberWorkloadStatisticModel = new Zenwork.Dashboard.LineChartModel(teamMemberWorkloadStatistic);
-            teamMemberWorkloadStatisticModel.setLabels(chartLabel.month);
             teamMemberWorkloadStatisticModel.config({
                 chart: {
                     type: 'line'
@@ -546,6 +545,15 @@ jQuery(document).ready(function () {
             }
             if ( teamMemberWorkloadChartBlock.length > 0  ) {
                 teamMemberWorkloadChartBlock.addClass('ZWPending');
+            }
+
+            var api1 = teamResourceStatisticModel.container.highcharts();
+            var api2 = teamMemberWorkloadStatisticModel.container.highcharts();
+            if ( api1 !== undefined ) {
+                api1.showLoading();
+            }
+            if ( api2 !== undefined ) {
+                api2.showLoading();
             }
             $.ajax({
                 type: 'POST',
@@ -600,7 +608,7 @@ jQuery(document).ready(function () {
                         i++;
                     });
 
-                    //start drawing chart
+                    //Resource chart: start drawing chart
                     if ( teamResourceStatistic.length > 0 
                         && teamResourceChartBlock.length > 0 
                         && teamResourceStatisticModel !== undefined
@@ -654,6 +662,7 @@ jQuery(document).ready(function () {
                             }
                         });
                     });
+                    //Team member workload chart: start drawing chart
                     if ( teamMemberWorkloadStatistic.length > 0 
                         && teamMemberWorkloadChartBlock.length > 0 
                         && teamMemberWorkloadStatisticModel !== undefined
@@ -788,7 +797,8 @@ jQuery(document).ready(function () {
                 cssClass: {
                     streamExtendModel: 'StreamExtendModel',
                     streamExtendModelTask: 'StreamExtendModelTask',
-                    unassignedTask: 'UnassignedTask'
+                    unassignedTask: 'UnassignedTask',
+                    streamOverdue: 'StreamOverdue'
                 },
                 listPrefix: '',
                 selectable: false,
@@ -893,6 +903,10 @@ jQuery(document).ready(function () {
                         stream.find('.'+opts.cssClass.streamAttachmentBtn+' span').text(streamData.countAttachment);
                     }
                 );
+
+                this.element.on('click.tasklist', '.'+opts.cssClass.streamOverdue, function (e) {
+                    $($(this).attr('rel') + ' .' + opts.cssClass.streamDetailsBtn).eq(0).trigger('mousedown');
+                });
             },
 
         //public method
@@ -932,6 +946,7 @@ jQuery(document).ready(function () {
                         '        <div class="'+opts.cssClass.streamField+' '+opts.cssClass.streamExtendModel+'">Task</div>'+
                         '        <div class="StreamRowWrapperInside01">'+
                         '            <div class="StreamRowWrapperInside02">'+
+                        (data.overdue ? '<span rel="#'+sid+'" title="Overdue" class="QTip '+opts.cssClass.streamOverdue+'">Overdue</span>' : '')+
                         '                <div class="'+opts.cssClass.streamField+' '+opts.cssClass.streamName+'">'+
                         '                    <em>'+data.name+'</em>'+
                         '                </div>'+

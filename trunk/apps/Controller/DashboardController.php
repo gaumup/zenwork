@@ -466,9 +466,15 @@
             }
             return $filter; 
         }
-        private function _applyFilter ($item, $filterBy, $time) {
+        private function _applyFilter (&$item, $filterBy, $time) {
             switch ($filterBy) {
                 case 'today':
+                    if ( $item['Timeline']['end'] < $time ) {
+                        $item['Stream']['overdue'] = 1;
+                    }
+                    else {
+                        $item['Stream']['overdue'] = 0;
+                    }
                     return date('Ymd', $item['Timeline']['start']) == date('Ymd', $time)
                         || ( $item['Timeline']['start'] < $time && $item['Users_timeline']['completed'] < 3 );
                     break;

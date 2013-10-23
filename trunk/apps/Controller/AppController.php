@@ -77,6 +77,17 @@
             }
         }
 
+        public function search ($keyword, $scope=array()) {
+            $this->layout = 'blank';
+            $this->loadModel('Stream');
+            $this->loadModel('Stream_list');
+            $this->set(array(
+                'keyword' => $keyword,
+                'streams' => $this->Stream->search($keyword),
+                'lists' => $this->Stream_list->search($keyword)
+            ));
+        }
+
         /* attachment module */
         public function attachment ($sid=null) {
             $this->autoRender = false;
@@ -292,7 +303,7 @@
                         $this->loadModel('Stream');
                         $stream = $this->Stream->findById($sid, array('Stream.name', 'Creator.email'));
                         $this->notify(
-                            'Post a comment on task "'.$stream['Stream']['name'].'"',
+                            'New comment on task "'.$stream['Stream']['name'].'"',
                             $action,
                             '',
                             '',

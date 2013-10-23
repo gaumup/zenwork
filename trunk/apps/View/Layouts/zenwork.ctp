@@ -79,7 +79,8 @@
                         } 
                     ?>
 
-                    <a href="#" title="Quick help ?" class="ZWQuickHelpBtn" id="zwQuickHelp">Quick help ?</a>
+                    <!--<a href="#" title="Quick help ?" class="ZWQuickHelpBtn" id="zwQuickHelp">Quick help ?</a>-->
+                    <input class="TextInput GlobalSearchBox" type="text" placeholder="You can search for Task and Plan" id="zwGlobalSearch" />
                 </header>
 
                 <div id="content">
@@ -99,7 +100,7 @@
         echo $this->element('timeline_dialog');
         echo $this->element('assignee_dialog');
         echo $this->element('tag_dialog');
-        echo $this->element('feedback_dialog');
+        //echo $this->element('feedback_dialog');
     ?>
     <?php if ( in_array('alphaVersionFirstLogin', $startUpTour) ) : ?>
     <div class="ZWHelpBoard" id="zwStartUpTour">

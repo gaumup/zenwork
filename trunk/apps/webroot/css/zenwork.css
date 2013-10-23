@@ -337,6 +337,12 @@ h2 {
             font-size: 16px;
             color: #999;
         }
+    input.GlobalSearchBox {
+        width: 400px;
+        padding: 5px 10px;
+        margin: 6px 0 0 0;
+        float: left;
+    }
 /* END. Header */
 
 /* Content */
@@ -1344,3 +1350,39 @@ div.Success {
             background-position: -15px -15px;
         }
 
+.SearchResultContent {
+    width: 100%;
+    max-height: 400px;
+    overflow: auto;
+    border-top: 1px solid #efefef;
+}
+.SearchResultContent:focus {
+    outline: none;
+}
+.SearchBoxContainer {
+    padding: 10px 20px;
+    background: #fafafa;
+}
+.SearchResultList {
+    width: 100%;
+    overflow: hidden;
+}
+    .SearchResultList li {
+        padding: 0 22px 30px;
+        font-size: 15px;
+        color: #444;
+    }
+        .SearchResultList li a {
+            font-size: 18px;
+            color: #12c;
+            text-decoration: underline;
+        }
+            .SearchResultList li a strong {
+                font-weight: bold;
+            }
+        .SearchResultList li p {
+            padding: 2px 0;
+        }
+        .SearchResultList li p.TextAlt01 {
+            color: #093;
+        }

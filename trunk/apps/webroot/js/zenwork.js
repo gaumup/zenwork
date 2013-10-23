@@ -8,6 +8,48 @@ jQuery(document).ready(function () {
         Zenwork.Root = $('#rootUrl').val();
         Zenwork.Now = new Date(Number($('#serverTime').val()));
 
+        //global search
+        var _search_ = function (keyword) {
+            if ( keyword == '' ) { 
+                alert('Please enter keyword')
+                return false;
+            }
+            var pos = {
+                my: 'center top',
+                at: 'center top+60',
+                of: window
+            };
+            Zenwork.Popup.preProcess(pos, true);
+            $.ajax({
+                url: Zenwork.Root+'/app/search/'+keyword,
+                type: 'POST',
+                dataType: 'text',
+                success: function (response, textStatus, jqXHR) {
+                    Zenwork.Popup.show(response, pos);
+                    Zenwork.Plugins.jScrollPane.call($('#searchResultContent'), {verticalGutter: 0});
+                    $('#zwGlobalSearchAlt').on('keyup', function (e) {
+                        $('#zwGlobalSearch').val(this.value);
+                        if ( e.which == 13 ) { //enter
+                            _search_(this.value);
+                        }
+                        return false;
+                    });
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    if ( textStatus !== 'abort' ) {
+                        alert('Really sorry for this, network error! Please try again!');
+                    }
+                },
+                complete: function (jqXHR, textStatus) {}
+            });
+        }
+        $('#zwGlobalSearch').on('keyup', function (e) {
+            if ( e.which == 13 ) { //enter
+                _search_(this.value);
+            }
+            return false;
+        });
+
         //auth
         Zenwork.Auth = {};
         Zenwork.Auth.User = {};
