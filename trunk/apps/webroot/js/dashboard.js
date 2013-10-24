@@ -29,6 +29,9 @@ jQuery(document).ready(function () {
                         },
                         min: 0
                     },
+                    tooltip: {
+                        crosshairs: [true]
+                    },
                     series: opts.datasets
                 }, opts.config);
                 var api = container.highcharts();
@@ -480,9 +483,21 @@ jQuery(document).ready(function () {
             teamResourceChartBlock.removeClass('ZWPending');
             var teamResourceStatisticModel = new Zenwork.Dashboard.LineChartModel(teamResourceStatistic);
             teamResourceStatisticModel.config({
-                tooltip: {
-                    formatter: function() {
-                        return this.y+' %';
+                plotOptions: {
+                    spline: {
+                        tooltip: {
+                            headerFormat: '',
+                            pointFormat: '{point.y} %'
+                        },
+                        marker: {
+                            enabled: false
+                        }
+                    },
+                    pie: {
+                        tooltip: {
+                            headerFormat: '',
+                            pointFormat: '<strong>{point.name}</strong>: {point.y} %'
+                        }
                     }
                 },
                 yAxis: {
@@ -505,11 +520,18 @@ jQuery(document).ready(function () {
             var teamMemberWorkloadStatisticModel = new Zenwork.Dashboard.LineChartModel(teamMemberWorkloadStatistic);
             teamMemberWorkloadStatisticModel.config({
                 chart: {
-                    type: 'line'
+                    type: 'spline'
                 },
                 tooltip: {
                     formatter: function() {
                         return this.y+' %';
+                    }
+                },
+                plotOptions: {
+                    spline: {
+                        marker: {
+                            enabled: false
+                        }
                     }
                 },
                 yAxis: {
@@ -530,6 +552,41 @@ jQuery(document).ready(function () {
             Zenwork.Dashboard.pub('createFirstTeam.Help.Dashboard', '#createNewTeam');
         }, 500);
         
+        var _analyzeTag_ = function (tasks) {
+            var totalTagEffort = 0;
+            var tagsList = [];
+            var tags = {};
+            tags.uncategorized = 0;
+            $.each(tasks, function () {
+                totalTagEffort += Number(this.Users_timeline.effort);
+                if ( this.Stream.tag == '' ) {
+                    tags.uncategorized += Number(this.Users_timeline.effort);
+                }
+                else {
+                    var _tags = this.Stream.tag.split(',');
+                    tagsList = tagsList.concat(_tags);
+                    for ( var i = 0; i < _tags.length; i++ ) {
+                        if ( tags[_tags[i]] === undefined ) {
+                            tags[_tags[i]] = Number(this.Users_timeline.effort);
+                        }
+                        else {
+                            tags[_tags[i]] += Number(this.Users_timeline.effort);
+                        }
+                    }
+                }
+            });
+            var tagsPercentage = [];
+            $.each(tags, function (key, value) {
+                tagsPercentage.push({
+                    name: key,
+                    y: Math.round(value*100/totalTagEffort)
+                });
+            });
+            return {
+                list: $.unique(tagsList),
+                statistic: tagsPercentage
+            }
+        }
         var _loadTeamData_ = function (tid, config) {
             var opts = $.extend({
                 timeBounce: [],
@@ -609,6 +666,7 @@ jQuery(document).ready(function () {
                     });
 
                     //Resource chart: start drawing chart
+                    var tagsAnalyzing = _analyzeTag_(data.tasks);
                     if ( teamResourceStatistic.length > 0 
                         && teamResourceChartBlock.length > 0 
                         && teamResourceStatisticModel !== undefined
@@ -617,6 +675,7 @@ jQuery(document).ready(function () {
                         teamResourceStatisticModel.setLabels(chartLabel[opts.xAxisType]);
                         teamResourceStatisticModel.setDatasets({
                             planning: { //planning
+                                type: 'spline',
                                 color : 'rgba(220, 220, 220, 1)',
                                 name: 'planning',
                                 data : $.extend([],
@@ -627,6 +686,7 @@ jQuery(document).ready(function () {
                                 )
                             },
                             actual: { //actual
+                                type: 'spline',
                                 color : 'rgba(151, 187,205 ,1)',
                                 name: 'actual',
                                 data : $.extend([],
@@ -635,6 +695,17 @@ jQuery(document).ready(function () {
                                         : [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]),
                                     totalTasks.completed
                                 )
+                            },
+                            pie: {
+                                type: 'pie',
+                                name: 'Tags',
+                                data: tagsAnalyzing.statistic,
+                                center: ['80%', '10%'],
+                                size: 100,
+                                showInLegend: false,
+                                dataLabels: {
+                                    enabled: false
+                                }
                             }
                         });
                     }

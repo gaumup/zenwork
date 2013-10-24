@@ -11,7 +11,7 @@ jQuery(document).ready(function () {
         //global search
         var _search_ = function (keyword) {
             if ( keyword == '' ) { 
-                alert('Please enter keyword')
+                alert('Please enter keyword');
                 return false;
             }
             var pos = {
@@ -30,7 +30,7 @@ jQuery(document).ready(function () {
                     $('#zwGlobalSearchAlt').on('keyup', function (e) {
                         $('#zwGlobalSearch').val(this.value);
                         if ( e.which == 13 ) { //enter
-                            _search_(this.value);
+                            _search_(this.value.trim());
                         }
                         return false;
                     });
@@ -45,7 +45,7 @@ jQuery(document).ready(function () {
         }
         $('#zwGlobalSearch').on('keyup', function (e) {
             if ( e.which == 13 ) { //enter
-                _search_(this.value);
+                _search_(this.value.trim());
             }
             return false;
         });
