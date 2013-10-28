@@ -4,7 +4,7 @@ Core.Mediator.installTo(Zenwork.Dashboard);
 jQuery(document).ready(function () {
     (function($) {
         $('.jscrollpane').each(function() {
-            Zenwork.Plugins.jScrollPane.call(this);
+            Zenwork.Plugins.jScrollPane.call(this, {contentWidth: '0px'});
         });
 
         Zenwork.Dashboard.LineChartModel = function (container) {
@@ -288,7 +288,7 @@ jQuery(document).ready(function () {
             }
         });
 
-        Zenwork.Plugins.jScrollPane.call(todayTaskListjsp, {verticalGutter: 0}); //init jscrollpane for todayTaskList
+        Zenwork.Plugins.jScrollPane.call(todayTaskListjsp, {verticalGutter: 0, contentWidth: '0px'}); //init jscrollpane for todayTaskList
         todayTaskList.tasklist({ //init tasklist widget
             //options
             baseIndex: 0,
@@ -411,7 +411,7 @@ jQuery(document).ready(function () {
             }
         });
 
-        Zenwork.Plugins.jScrollPane.call(followedTaskListjsp, {verticalGutter: 0}); //init jscrollpane for todayTaskList
+        Zenwork.Plugins.jScrollPane.call(followedTaskListjsp, {verticalGutter: 0, contentWidth: '0px'}); //init jscrollpane for todayTaskList
         followedTaskList.tasklist({ //init tasklist widget
             //options
             baseIndex: 0,
@@ -547,10 +547,8 @@ jQuery(document).ready(function () {
     /* End. Team member workload block js code */
 
     /* Team control */
-        setTimeout(function () {
-            Zenwork.Dashboard.pub('teamSelectionFirstTime.Help.Dashboard', '#teamAutoSuggestDashboard');
-            Zenwork.Dashboard.pub('createFirstTeam.Help.Dashboard', '#createNewTeam');
-        }, 500);
+        Zenwork.Dashboard.pub('teamSelectionFirstTime.Help.Dashboard', '#teamAutoSuggestDashboard');
+        Zenwork.Dashboard.pub('createFirstTeam.Help.Dashboard', '#createNewTeam');
         
         var _analyzeTag_ = function (tasks) {
             var totalTagEffort = 0;
@@ -1666,7 +1664,7 @@ jQuery(document).ready(function () {
 
                         var scrollContentBlock = Zenwork.StreamPopup.content.find('.StreamScrollContent');
                         scrollContentBlock.each(function() {
-                            Zenwork.Plugins.jScrollPane.call(this, {verticalGutter: 0});
+                            Zenwork.Plugins.jScrollPane.call(this, {verticalGutter: 0, contentWidth: '0px'});
                         });
                         scrollContentBlock.bind(
                             'jsp-scroll-y', 
@@ -1952,7 +1950,7 @@ Zenwork.Team = {
                         return false;
                     });
 
-                    Zenwork.Plugins.jScrollPane.call($('#listInvitedPeople').parent(), {verticalGutter: 0});
+                    Zenwork.Plugins.jScrollPane.call($('#listInvitedPeople').parent(), {verticalGutter: 0, contentWidth: '0px'});
                 },
                 error: function (jqXHR, textStatus, errorThrown) {
                     if ( textStatus !== 'abort' ) {

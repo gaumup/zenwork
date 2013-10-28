@@ -170,6 +170,8 @@ jQuery(document).ready(function () {
                 else {
                     Zenwork.Dashboard.pub('todayBlockLoad.Help.Dashboard', '#zwAddNewTaskCompact', '#myTaskStatisticChartBlock', '#todayTaskListJScrollPane');
                 }
+                Zenwork.Dashboard.pub('teamSelectionFirstTime.Help.Dashboard', '#teamAutoSuggestDashboard');
+                Zenwork.Dashboard.pub('createFirstTeam.Help.Dashboard', '#createNewTeam');
             }
 
             if ( Zenwork.Planner !== undefined ) {
@@ -220,11 +222,16 @@ jQuery(document).ready(function () {
         Zenwork.Dashboard.sub('afterClickFinishTask.Help.Dashboard', function () {
             _dismiss_('finishTask.Help.Dashboard');
         });
+        //#7: team selection
         Zenwork.Dashboard.sub('teamSelectionFirstTime.Help.Dashboard', function () {
-            _util_('teamSelectionFirstTime.Help.Dashboard', Array.prototype.slice.call(arguments));
+            if ( $('#zwStartUpTour:visible').length == 0 ) {
+                _util_('teamSelectionFirstTime.Help.Dashboard', Array.prototype.slice.call(arguments));
+            }
         });
         Zenwork.Dashboard.sub('createFirstTeam.Help.Dashboard', function () {
-            _util_('createFirstTeam.Help.Dashboard', Array.prototype.slice.call(arguments));
+            if ( $('#zwStartUpTour:visible').length == 0 ) {
+                _util_('createFirstTeam.Help.Dashboard', Array.prototype.slice.call(arguments));
+            }
         });
         Zenwork.Dashboard.sub('teamSelectedFirstTime.Help.Dashboard', function () {
             _dismiss_('teamSelectionFirstTime.Help.Dashboard');

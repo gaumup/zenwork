@@ -10,11 +10,11 @@
 ?>
 <?php if ( time() >= mktime(9, 0, 0, 8, 12, 2013) ) : ?>
 <ul class="AuthTab" id="authTab">
-    <li class="Active"><a href="#signin" title="Sign in to Zenwork with your registered account" class="QTip" data-qtip-my="right center" data-qtip-at="left center" data-qtip-ajust="4px 0">Sign in to Zenwork</a></li>
-    <li><a href="#signup" class="AuthTabDisabled QTip" title="Currently not available on 'alpha' version" data-qtip-at="right center" data-qtip-my="left center">Create a free account</a></li>
+    <li <?php if (empty($this->data['Register'])) { echo 'class="Active"'; } ?>><a href="#signin" title="Sign in to Zenwork with your registered account" class="QTip" data-qtip-my="right center" data-qtip-at="left center" data-qtip-ajust="4px 0">Sign in to Zenwork</a></li>
+    <li <?php if (!empty($this->data['Register'])) { echo 'class="Active"'; } ?>><a href="#signup" class="QTip" title="Currently not available on 'alpha' version" data-qtip-at="right center" data-qtip-my="left center">Create a free account</a></li>
 </ul>
 <div id="loginBox" class="FormContainer">
-    <div id="signin" class="AuthTabContent">
+    <div id="signin" class="AuthTabContent <?php if (!empty($this->data['Register'])) { echo 'Hidden'; } ?>">
         <div class="LoginForm">
             <form id="loginForm" action="<?php echo Configure::read('root_url').'/auth/login'; ?>" method="post">
                 <fieldset>
@@ -51,6 +51,7 @@
                         </div>
                     </div>
 
+                    <!--
                     <div class="FormRow FormRowLineThrough">
                         <p class="AlternativeLoginText">or sign in using</p>
                     </div>
@@ -59,22 +60,17 @@
                         <li><a href="#" title="" class="CommonButtonLnk GoogleID">Google account</a></li>
                         <li><a href="#" title="" class="CommonButtonLnk YahooID">Yahoo account</a></li>
                     </ul>
+                    -->
                 </fieldset>
             </form>
         </div>
     </div>
 
-    <div id="signup" class="AuthTabContent Hidden">
+    <div id="signup" class="AuthTabContent <?php if (empty($this->data['Register'])) { echo 'Hidden'; } ?>">
         <div class="LoginForm">
             <form id="signupForm" action="<?php echo Configure::read('root_url').'/auth/signup'; ?>" method="post">
                 <fieldset>
                     <legend>Create a free account on Zenwork</legend>
-                    <?php
-                        echo $this->Session->flash('auth', array(
-                            'params' => array('extra_classes' => 'ErrorBox'),
-                            'element' => 'message_box'
-                        ));
-                    ?>
                     <div class="MsgBoxWrapper WarningBox Hidden" id="capslock_warning">
                         <div class="MsgBox">
                             <p>Capslock is on !</p>
@@ -82,47 +78,43 @@
                     </div>
 
                     <div class="FormRow">
-                        <input class="TextInput" value="<?php echo (!empty($this->data['User']) ? $this->data['User']['username'] : ""); ?>" type="text" name="data[User][username]" id="signupUsername" tabindex="6" placeholder="Username" autocomplete="off" />
+                        <input class="TextInput" value="<?php echo (!empty($this->data['Register']) ? $this->data['Register']['username'] : ""); ?>" type="text" name="data[Register][username]" id="signupUsername" tabindex="6" placeholder="Username(no spacing)" autocomplete="off" />
                         <?php
-                            echo $this->element('message_box', array(
-                                'extra_classes' => 'ErrorBox Hidden',
-                                'message' => 'Username contains letter or number(6-20 characters)'
-                            ));
+                            if ( isset($errors) && isset($errors['username']) ){
+                                $this->Msgbox->render($errors['username'][0], 'ErrorBox');
+                            }
                         ?>
                     </div>
 
                     <div class="FormRow">
-                        <input class="TextInput" value="<?php echo (!empty($this->data['User']) ? $this->data['User']['email'] : ""); ?>" type="email" name="data[User][email]" id="signupEmail" tabindex="6" placeholder="Email" autocomplete="off" />
+                        <input class="TextInput" value="<?php echo (!empty($this->data['Register']) ? $this->data['Register']['email'] : ""); ?>" type="email" name="data[Register][email]" id="signupEmail" tabindex="6" placeholder="Email" autocomplete="off" />
                         <?php
-                            echo $this->element('message_box', array(
-                                'extra_classes' => 'ErrorBox Hidden',
-                                'message' => 'Email can not be blank'
-                            ));
+                            if ( isset($errors) && isset($errors['email']) ){
+                                $this->Msgbox->render($errors['email'][0], 'ErrorBox');
+                            }
                         ?>
                     </div>
 
                     <div class="FormRow">
-                        <input class="TextInput" type="password" name="data[User][password]" id="signupPassword" tabindex="7" placeholder="Password" autocomplete="off" />
+                        <input class="TextInput" type="password" name="data[Register][password]" id="signupPassword" tabindex="7" placeholder="Password" autocomplete="off" />
                         <?php
-                            echo $this->element('message_box', array(
-                                'extra_classes' => 'ErrorBox Hidden',
-                                'message' => 'Password can not be blank'
-                            ));
+                            if ( isset($errors) && isset($errors['password']) ){
+                                $this->Msgbox->render($errors['password'][0], 'ErrorBox');
+                            }
                         ?>
                     </div>
                     <div class="FormRow">
-                        <input class="TextInput" type="password" name="data[User][password]" id="signupPasswordAgain" tabindex="8" placeholder="Confirm password" autocomplete="off" />
+                        <input class="TextInput" type="password" name="data[Register][confirm_password]" id="signupPasswordAgain" tabindex="8" placeholder="Confirm password" autocomplete="off" />
                         <?php
-                            echo $this->element('message_box', array(
-                                'extra_classes' => 'ErrorBox Hidden',
-                                'message' => 'Confirm password do not match'
-                            ));
+                            if ( isset($errors) && isset($errors['confirm_password']) ){
+                                $this->Msgbox->render($errors['confirm_password'][0], 'ErrorBox');
+                            }
                         ?>
                     </div>
 
                     <div class="FormRow">
                         <div class="FormRow ButtonRow">
-                            <button class="CommonBtn" title="Create account" tabindex="9"><span>Create account</span></button>
+                            <button class="CommonBtn" title="Create account" tabindex="9"><span>Create free account</span></button>
                         </div>
                     </div>
                 </fieldset>

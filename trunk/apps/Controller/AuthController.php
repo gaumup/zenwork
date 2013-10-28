@@ -12,7 +12,7 @@
             $this->checkParams($this->request->params, 0);
 
             $this->layout = 'login';
-            $this->set('title_for_layout', 'Login');
+            $this->set('title_for_layout', 'Login or Register');
 
             $this->loadModel('User');
             if ( $this->Auth->login() ) {
@@ -158,7 +158,7 @@
                             $is_saved = $this->User->save($this->data);
                         }
                         else {
-                            $this->set("errors", $this->User->validationErrors);
+                            $this->set('errors', $this->User->validationErrors);
                         }
                     }
 
@@ -508,6 +508,28 @@
                 return json_encode($this->User->searchByUsernameOrEmail($_GET['term']));
             }
             return 0;
+        }
+
+        public function signup () {
+            $this->checkParams($this->request->params, 0);
+
+            $this->layout = 'login';
+            $this->set('title_for_layout', 'Login or Register');
+
+            $register = $this->User->register($this->data);
+            if ( is_array($register) ) {
+                if ( $this->Auth->login($register) ) {
+                    $this->redirect(Configure::read('root_url').'/dashboard');
+                }
+            }
+            else {
+                switch ($register) {
+                    case 503:
+                        $this->set('errors', $this->User->validationErrors);
+                        break;
+                }
+                $this->render('login');
+            }
         }
     }
 ?>

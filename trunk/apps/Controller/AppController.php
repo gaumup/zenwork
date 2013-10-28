@@ -18,7 +18,7 @@
                 'controller' => 'auth',
                 'action' => 'login'
             );
-            $this->Auth->allow('register', 'login', 'forgotPwd', 'resetPwd');
+            $this->Auth->allow('register', 'login', 'forgotPwd', 'resetPwd', 'signup');
             $this->Auth->authorize = 'Controller';
             if ( $this->action !== 'login' ) {
                 if ( !empty($this->request->query) && $this->action !== 'forgotPwd' ) {
