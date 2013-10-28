@@ -297,7 +297,7 @@
 
     .ZWAddNewBtnCompact {
         position: absolute;
-        top: 7px;
+        top: 9px;
         right: 5px;
         display: block;
         overflow: hidden;
@@ -309,6 +309,11 @@
     }
     .ZWAddNewBtnCompact:hover {
         background-position: center -19px;
+    }
+    .ZWAddNewBtnCompact.Pending,
+    .ZWAddNewBtnCompact.Pending:hover {
+        cursor: default;
+        background: url(../images/icon-loading-tiny.gif) no-repeat center center;
     }
 
     .ZWChartBlock {

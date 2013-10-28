@@ -83,8 +83,8 @@
             $this->loadModel('Stream_list');
             $this->set(array(
                 'keyword' => $keyword,
-                'streams' => $this->Stream->search($keyword),
-                'lists' => $this->Stream_list->search($keyword)
+                'streams' => $this->Stream->search($keyword, $this->Auth->user('id')),
+                'lists' => $this->Stream_list->search($keyword, $this->Auth->user('id'))
             ));
         }
 

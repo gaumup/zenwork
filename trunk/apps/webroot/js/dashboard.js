@@ -354,7 +354,11 @@ jQuery(document).ready(function () {
         //add new task
         $('.ZWAddNewBtn').bind('click', function (e) {
             Zenwork.Dashboard.pub('dashboardStartAddFirstTask.Help.Dashboard');
-            var $this = $(this).addClass('Pending');
+            var $this = $(this);
+            if ( $this.hasClass('Pending') ) {
+                return false;
+            }
+            $('.ZWAddNewBtn').addClass('Pending');
 
             todayTaskList.tasklist('addNewStream', 
                 {
@@ -364,7 +368,7 @@ jQuery(document).ready(function () {
                 'top',
                 function (stream) {
                     $('#todayTaskListEmptyBlock').addClass('Hidden');
-                    $this.removeClass('Pending')
+                    $('.ZWAddNewBtn').removeClass('Pending')
                     stream.find('.StreamDetailsBtn').trigger('mousedown', function () {
                         Zenwork.Dashboard.pub('dashboardViewAddedFirstTask.Help.Dashboard', '#streamDialogTitle', '#belongsToList', '#listSelection', '#tagBlock', '#timelineBlock');
                     });

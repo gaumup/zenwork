@@ -47,13 +47,16 @@
             )
         );
 
-        public function search ($keyword='') {
+        public function search ($keyword='', $uid=null) {
             if ( empty($keyword) ) { return array(); }
             $this->unbindModel(array(
                 'hasMany' => array('Stream_follower', 'Attachment', 'Scomment', 'Stream_log', 'Timeline')
             ));
             return $this->find('all', array(
-                'conditions' => array('Stream.name LIKE'=>'%'.$keyword.'%'),
+                'conditions' => array(
+                    'Stream.name LIKE'=>'%'.$keyword.'%',
+                    'Stream.creatorID' => $uid
+                ),
                 'order' => array('Stream.name ASC')
             ));
         }

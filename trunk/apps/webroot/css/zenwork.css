@@ -1386,3 +1386,16 @@ div.Success {
         .SearchResultList li p.TextAlt01 {
             color: #093;
         }
+
+a.HelpLink {
+    position: absolute;
+    top: 11px;
+    right: 22px;
+    color: #fff;
+    font-size: 12px;
+    text-decoration: underline;
+    z-index: 100;
+}
+a.HelpLink:hover {
+    text-decoration: none;
+}

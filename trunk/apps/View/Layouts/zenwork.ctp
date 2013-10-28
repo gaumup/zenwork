@@ -100,7 +100,7 @@
         echo $this->element('timeline_dialog');
         echo $this->element('assignee_dialog');
         echo $this->element('tag_dialog');
-        //echo $this->element('feedback_dialog');
+        echo $this->element('feedback_dialog');
     ?>
     <?php if ( in_array('alphaVersionFirstLogin', $startUpTour) ) : ?>
     <div class="ZWHelpBoard" id="zwStartUpTour">
