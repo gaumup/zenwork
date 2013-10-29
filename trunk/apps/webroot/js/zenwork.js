@@ -2076,7 +2076,8 @@ Zenwork.StreamPopup = $.extend(true, {}, Zenwork.Popup, {
         });
         this.wrapper.on('click', '.StreamDialogShare', function (e) {
             var $this = $(this);
-            Zenwork.Plugins.shareStream.openPopup($this.attr('href'), $('#s'+$this.data('sid')).data());
+            var $thisData = $this.data();
+            Zenwork.Plugins.shareStream.openPopup($this.attr('href'), $('#'+$thisData.streamPrefix+'s'+$thisData.sid).data());
             return false;
         });
         this.wrapper.on('click', '.StreamDialogFollow', function (e) {
