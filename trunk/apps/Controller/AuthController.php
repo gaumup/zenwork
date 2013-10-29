@@ -517,18 +517,14 @@
             $this->set('title_for_layout', 'Login or Register');
 
             $register = $this->User->register($this->data);
-            if ( is_array($register) ) {
+            if ( !$register ) {
+                $this->set('errors', $this->User->validationErrors);
+                $this->render('login');
+            }
+            else {
                 if ( $this->Auth->login($register) ) {
                     $this->redirect(Configure::read('root_url').'/dashboard');
                 }
-            }
-            else {
-                switch ($register) {
-                    case 503:
-                        $this->set('errors', $this->User->validationErrors);
-                        break;
-                }
-                $this->render('login');
             }
         }
     }
