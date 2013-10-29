@@ -873,7 +873,6 @@ jQuery(document).ready(function () {
                     unassignedTask: 'UnassignedTask',
                     streamOverdue: 'StreamOverdue'
                 },
-                listPrefix: '',
                 selectable: false,
                 isUserScroll: true
             },
@@ -1613,8 +1612,6 @@ jQuery(document).ready(function () {
                     }
                     return false;
                 });
-
-                $('.StreamDialogShare').data('stream-prefix', opts.listPrefix);
             },
             _openStreamDetails: function (e, stream, aside, callback) {
                 var self = this;

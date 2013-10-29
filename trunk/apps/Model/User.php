@@ -31,8 +31,6 @@
 
         /*
          * register new user into system
-         * error code:
-         * #503 -> validation error
          */
         public function register ($postData) {
             $data = array(
@@ -53,16 +51,14 @@
                         'message' => 'This email already registered<br />Please go to "Sign in to Zenwork" tab to login'
                     )
                 ));
-            $this->set($data);
-            if ( !$this->validates($data) ) {
-                return 503;
-            }
-
+            
             $this->create();
             $data['User']['fullname'] = $data['User']['username'];
             $data['User']['online'] = 1;
             $data['User']['lastLogin'] = time();
-            $this->save($data);
+            if ( !$this->save($data) ) {
+                return false;
+            }
             $data['User']['id'] = $this->getLastInsertId();
             return $data['User'];
         }

@@ -20,7 +20,7 @@
             );
             $this->Auth->allow('register', 'login', 'forgotPwd', 'resetPwd', 'signup');
             $this->Auth->authorize = 'Controller';
-            if ( $this->action !== 'login' ) {
+            if ( $this->action !== 'login' && $this->action !== 'signup' ) {
                 if ( !empty($this->request->query) && $this->action !== 'forgotPwd' ) {
                     $this->Session->write('Auth.redirectUrl', Configure::read('root_url').'/'.$this->request->query['url']);
                 }

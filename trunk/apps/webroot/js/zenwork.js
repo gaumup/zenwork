@@ -1971,7 +1971,6 @@ Zenwork.Popup = {
             Zenwork.Window.toggleWindowScrolling(true);
         });
         this.wrapper.on('click', '.ZWDialogCloseBtn', function (e) {
-            console.log('close');
             self.close.call(self, true);
             e.preventDefault();
         });
