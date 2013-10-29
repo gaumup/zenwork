@@ -16,6 +16,12 @@
 
             $this->loadModel('User');
             if ( $this->Auth->login() ) {
+                if ( $this->Auth->user('is_blocked') == 1 ) {
+                    $this->Auth->logout();
+                    $this->Session->setFlash('Sorry, your account has been blocked!<br />Please <a href="mailto:ukhome@gmail.com?Subject=[ZW-Account blocked]" title="mailto:ukhome@gmail.com">contact us</a> more details', '', '', 'auth');
+                    return false;
+                }
+
                 $this->User->id = $this->Auth->user('id');
                 $this->User->save(array(
                     'User' => array(

@@ -489,7 +489,7 @@ div.Success {
         }
         .ErrorBox .MsgBox {
             border: 1px solid #e98b8b;
-            background: #f6b9b9 url(../images/error-icon-01.png) no-repeat 12px 14px;
+            background: #f6b9b9 url(../images/error-icon-01.png) no-repeat 12px 13px;
             color: #a33737;
         }
         .SuccessBox .MsgBox {
@@ -510,6 +510,21 @@ div.Success {
             font-weight: bold;
             font-size: 15px;
         }
+            .MsgBox a {
+                text-decoration: underline;
+            }
+            .ErrorBox .MsgBox a {
+                color: #a33737;
+            }
+            .SuccessBox .MsgBox a {
+                color: #7b9900;
+            }
+            .WarningBox .MsgBox a {
+                color: #da6a18;
+            }
+            .NotifierBox .MsgBox a {
+                color: #908603;
+            }
 /* END. Message Box */
 
 /* ZW dialog */

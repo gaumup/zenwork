@@ -11,6 +11,7 @@
             $this->Auth->authenticate = array(
                 'Form' => array(
                     'userModel' => 'User',
+                    //'scope' => array('User.is_blocked' => 0),
                     'fields' => array('username' => 'username', 'password' => 'password')
                 )
             );
