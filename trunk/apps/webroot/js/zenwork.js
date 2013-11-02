@@ -1126,6 +1126,10 @@ jQuery(document).ready(function () {
                     }
                     return false;
                 });
+                assigneeDialogSelect.autocomplete('widget').on('click', function (e) {
+                    $(this).menu('resetMouseHandled');
+                    e.stopPropagation();
+                });
                 Zenwork.Dialog.add(assigneeDialog.data('ui', this));
             }
         }
