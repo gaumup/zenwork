@@ -35,12 +35,16 @@ h2 {
         #userAccountBox {
             position: absolute;
             left: 5px;
-            top: 4px;
+            top: 3px;
         }
             img.Avatar {
                 float: left;
                 margin: 0;
-                border: 1px solid #fff;
+                border: 1px solid #999;
+                padding: 1px;
+                border-radius: 36px;
+                -webkit-border-radius: 36px;
+                -moz-border-radius: 36px;
             }
             #userAccountBox a {
                 float: left;
@@ -337,6 +341,12 @@ h2 {
             font-size: 16px;
             color: #999;
         }
+    input.GlobalSearchBox {
+        width: 400px;
+        padding: 5px 10px;
+        margin: 6px 0 0 0;
+        float: left;
+    }
 /* END. Header */
 
 /* Content */
@@ -483,7 +493,7 @@ div.Success {
         }
         .ErrorBox .MsgBox {
             border: 1px solid #e98b8b;
-            background: #f6b9b9 url(../images/error-icon-01.png) no-repeat 12px 14px;
+            background: #f6b9b9 url(../images/error-icon-01.png) no-repeat 12px 13px;
             color: #a33737;
         }
         .SuccessBox .MsgBox {
@@ -504,6 +514,21 @@ div.Success {
             font-weight: bold;
             font-size: 15px;
         }
+            .MsgBox a {
+                text-decoration: underline;
+            }
+            .ErrorBox .MsgBox a {
+                color: #a33737;
+            }
+            .SuccessBox .MsgBox a {
+                color: #7b9900;
+            }
+            .WarningBox .MsgBox a {
+                color: #da6a18;
+            }
+            .NotifierBox .MsgBox a {
+                color: #908603;
+            }
 /* END. Message Box */
 
 /* ZW dialog */
@@ -1344,3 +1369,52 @@ div.Success {
             background-position: -15px -15px;
         }
 
+.SearchResultContent {
+    width: 100%;
+    max-height: 400px;
+    overflow: auto;
+    border-top: 1px solid #efefef;
+}
+.SearchResultContent:focus {
+    outline: none;
+}
+.SearchBoxContainer {
+    padding: 10px 20px;
+    background: #fafafa;
+}
+.SearchResultList {
+    width: 100%;
+    overflow: hidden;
+}
+    .SearchResultList li {
+        padding: 0 22px 30px;
+        font-size: 15px;
+        color: #444;
+    }
+        .SearchResultList li a {
+            font-size: 18px;
+            color: #12c;
+            text-decoration: underline;
+        }
+            .SearchResultList li a strong {
+                font-weight: bold;
+            }
+        .SearchResultList li p {
+            padding: 2px 0;
+        }
+        .SearchResultList li p.TextAlt01 {
+            color: #093;
+        }
+
+a.HelpLink {
+    position: absolute;
+    top: 11px;
+    right: 22px;
+    color: #fff;
+    font-size: 12px;
+    text-decoration: underline;
+    z-index: 100;
+}
+a.HelpLink:hover {
+    text-decoration: none;
+}

@@ -4,7 +4,7 @@ Core.Mediator.installTo(Zenwork.Dashboard);
 jQuery(document).ready(function () {
     (function($) {
         $('.jscrollpane').each(function() {
-            Zenwork.Plugins.jScrollPane.call(this);
+            Zenwork.Plugins.jScrollPane.call(this, {contentWidth: '0px'});
         });
 
         Zenwork.Dashboard.LineChartModel = function (container) {
@@ -14,7 +14,8 @@ jQuery(document).ready(function () {
                         enabled: false
                     },
                     chart: {
-                        type: 'area'
+                        type: 'area',
+                        zoomType: 'x'
                     },
                     title: {
                         text: ''
@@ -27,6 +28,9 @@ jQuery(document).ready(function () {
                             text: ''
                         },
                         min: 0
+                    },
+                    tooltip: {
+                        crosshairs: [true]
                     },
                     series: opts.datasets
                 }, opts.config);
@@ -284,7 +288,7 @@ jQuery(document).ready(function () {
             }
         });
 
-        Zenwork.Plugins.jScrollPane.call(todayTaskListjsp, {verticalGutter: 0}); //init jscrollpane for todayTaskList
+        Zenwork.Plugins.jScrollPane.call(todayTaskListjsp, {verticalGutter: 0, contentWidth: '0px'}); //init jscrollpane for todayTaskList
         todayTaskList.tasklist({ //init tasklist widget
             //options
             baseIndex: 0,
@@ -350,7 +354,11 @@ jQuery(document).ready(function () {
         //add new task
         $('.ZWAddNewBtn').bind('click', function (e) {
             Zenwork.Dashboard.pub('dashboardStartAddFirstTask.Help.Dashboard');
-            var $this = $(this).addClass('Pending');
+            var $this = $(this);
+            if ( $this.hasClass('Pending') ) {
+                return false;
+            }
+            $('.ZWAddNewBtn').addClass('Pending');
 
             todayTaskList.tasklist('addNewStream', 
                 {
@@ -360,7 +368,7 @@ jQuery(document).ready(function () {
                 'top',
                 function (stream) {
                     $('#todayTaskListEmptyBlock').addClass('Hidden');
-                    $this.removeClass('Pending')
+                    $('.ZWAddNewBtn').removeClass('Pending')
                     stream.find('.StreamDetailsBtn').trigger('mousedown', function () {
                         Zenwork.Dashboard.pub('dashboardViewAddedFirstTask.Help.Dashboard', '#streamDialogTitle', '#belongsToList', '#listSelection', '#tagBlock', '#timelineBlock');
                     });
@@ -407,7 +415,7 @@ jQuery(document).ready(function () {
             }
         });
 
-        Zenwork.Plugins.jScrollPane.call(followedTaskListjsp, {verticalGutter: 0}); //init jscrollpane for todayTaskList
+        Zenwork.Plugins.jScrollPane.call(followedTaskListjsp, {verticalGutter: 0, contentWidth: '0px'}); //init jscrollpane for todayTaskList
         followedTaskList.tasklist({ //init tasklist widget
             //options
             baseIndex: 0,
@@ -479,9 +487,21 @@ jQuery(document).ready(function () {
             teamResourceChartBlock.removeClass('ZWPending');
             var teamResourceStatisticModel = new Zenwork.Dashboard.LineChartModel(teamResourceStatistic);
             teamResourceStatisticModel.config({
-                tooltip: {
-                    formatter: function() {
-                        return this.y+' %';
+                plotOptions: {
+                    spline: {
+                        tooltip: {
+                            headerFormat: '',
+                            pointFormat: '{point.y} %'
+                        },
+                        marker: {
+                            enabled: false
+                        }
+                    },
+                    pie: {
+                        tooltip: {
+                            headerFormat: '',
+                            pointFormat: '<strong>{point.name}</strong>: {point.y} %'
+                        }
                     }
                 },
                 yAxis: {
@@ -493,7 +513,6 @@ jQuery(document).ready(function () {
                     }
                 }
             });
-            teamResourceStatisticModel.setLabels(chartLabel.month);
         }
     /* End. Resource usage block js code */
 
@@ -503,14 +522,20 @@ jQuery(document).ready(function () {
         if ( teamMemberWorkloadStatistic.length > 0 ) {
             teamMemberWorkloadChartBlock.removeClass('ZWPending');
             var teamMemberWorkloadStatisticModel = new Zenwork.Dashboard.LineChartModel(teamMemberWorkloadStatistic);
-            teamMemberWorkloadStatisticModel.setLabels(chartLabel.month);
             teamMemberWorkloadStatisticModel.config({
                 chart: {
-                    type: 'line'
+                    type: 'spline'
                 },
                 tooltip: {
                     formatter: function() {
                         return this.y+' %';
+                    }
+                },
+                plotOptions: {
+                    spline: {
+                        marker: {
+                            enabled: false
+                        }
                     }
                 },
                 yAxis: {
@@ -526,11 +551,44 @@ jQuery(document).ready(function () {
     /* End. Team member workload block js code */
 
     /* Team control */
-        setTimeout(function () {
-            Zenwork.Dashboard.pub('teamSelectionFirstTime.Help.Dashboard', '#teamAutoSuggestDashboard');
-            Zenwork.Dashboard.pub('createFirstTeam.Help.Dashboard', '#createNewTeam');
-        }, 500);
+        Zenwork.Dashboard.pub('teamSelectionFirstTime.Help.Dashboard', '#teamAutoSuggestDashboard');
+        Zenwork.Dashboard.pub('createFirstTeam.Help.Dashboard', '#createNewTeam');
         
+        var _analyzeTag_ = function (tasks) {
+            var totalTagEffort = 0;
+            var tagsList = [];
+            var tags = {};
+            tags.uncategorized = 0;
+            $.each(tasks, function () {
+                totalTagEffort += Number(this.Users_timeline.effort);
+                if ( this.Stream.tag == '' ) {
+                    tags.uncategorized += Number(this.Users_timeline.effort);
+                }
+                else {
+                    var _tags = this.Stream.tag.split(',');
+                    tagsList = tagsList.concat(_tags);
+                    for ( var i = 0; i < _tags.length; i++ ) {
+                        if ( tags[_tags[i]] === undefined ) {
+                            tags[_tags[i]] = Number(this.Users_timeline.effort);
+                        }
+                        else {
+                            tags[_tags[i]] += Number(this.Users_timeline.effort);
+                        }
+                    }
+                }
+            });
+            var tagsPercentage = [];
+            $.each(tags, function (key, value) {
+                tagsPercentage.push({
+                    name: key,
+                    y: Math.round(value*100/totalTagEffort)
+                });
+            });
+            return {
+                list: $.unique(tagsList),
+                statistic: tagsPercentage
+            }
+        }
         var _loadTeamData_ = function (tid, config) {
             var opts = $.extend({
                 timeBounce: [],
@@ -546,6 +604,15 @@ jQuery(document).ready(function () {
             }
             if ( teamMemberWorkloadChartBlock.length > 0  ) {
                 teamMemberWorkloadChartBlock.addClass('ZWPending');
+            }
+
+            var api1 = teamResourceStatisticModel.container.highcharts();
+            var api2 = teamMemberWorkloadStatisticModel.container.highcharts();
+            if ( api1 !== undefined ) {
+                api1.showLoading();
+            }
+            if ( api2 !== undefined ) {
+                api2.showLoading();
             }
             $.ajax({
                 type: 'POST',
@@ -600,7 +667,8 @@ jQuery(document).ready(function () {
                         i++;
                     });
 
-                    //start drawing chart
+                    //Resource chart: start drawing chart
+                    var tagsAnalyzing = _analyzeTag_(data.tasks);
                     if ( teamResourceStatistic.length > 0 
                         && teamResourceChartBlock.length > 0 
                         && teamResourceStatisticModel !== undefined
@@ -609,6 +677,7 @@ jQuery(document).ready(function () {
                         teamResourceStatisticModel.setLabels(chartLabel[opts.xAxisType]);
                         teamResourceStatisticModel.setDatasets({
                             planning: { //planning
+                                type: 'spline',
                                 color : 'rgba(220, 220, 220, 1)',
                                 name: 'planning',
                                 data : $.extend([],
@@ -619,6 +688,7 @@ jQuery(document).ready(function () {
                                 )
                             },
                             actual: { //actual
+                                type: 'spline',
                                 color : 'rgba(151, 187,205 ,1)',
                                 name: 'actual',
                                 data : $.extend([],
@@ -627,6 +697,17 @@ jQuery(document).ready(function () {
                                         : [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]),
                                     totalTasks.completed
                                 )
+                            },
+                            pie: {
+                                type: 'pie',
+                                name: 'Tags',
+                                data: tagsAnalyzing.statistic,
+                                center: ['80%', '10%'],
+                                size: 100,
+                                showInLegend: false,
+                                dataLabels: {
+                                    enabled: false
+                                }
                             }
                         });
                     }
@@ -654,6 +735,7 @@ jQuery(document).ready(function () {
                             }
                         });
                     });
+                    //Team member workload chart: start drawing chart
                     if ( teamMemberWorkloadStatistic.length > 0 
                         && teamMemberWorkloadChartBlock.length > 0 
                         && teamMemberWorkloadStatisticModel !== undefined
@@ -788,9 +870,9 @@ jQuery(document).ready(function () {
                 cssClass: {
                     streamExtendModel: 'StreamExtendModel',
                     streamExtendModelTask: 'StreamExtendModelTask',
-                    unassignedTask: 'UnassignedTask'
+                    unassignedTask: 'UnassignedTask',
+                    streamOverdue: 'StreamOverdue'
                 },
-                listPrefix: '',
                 selectable: false,
                 isUserScroll: true
             },
@@ -893,6 +975,10 @@ jQuery(document).ready(function () {
                         stream.find('.'+opts.cssClass.streamAttachmentBtn+' span').text(streamData.countAttachment);
                     }
                 );
+
+                this.element.on('click.tasklist', '.'+opts.cssClass.streamOverdue, function (e) {
+                    $($(this).attr('rel') + ' .' + opts.cssClass.streamDetailsBtn).eq(0).trigger('mousedown');
+                });
             },
 
         //public method
@@ -932,6 +1018,7 @@ jQuery(document).ready(function () {
                         '        <div class="'+opts.cssClass.streamField+' '+opts.cssClass.streamExtendModel+'">Task</div>'+
                         '        <div class="StreamRowWrapperInside01">'+
                         '            <div class="StreamRowWrapperInside02">'+
+                        (data.overdue ? '<span rel="#'+sid+'" title="Overdue" class="QTip '+opts.cssClass.streamOverdue+'">Overdue</span>' : '')+
                         '                <div class="'+opts.cssClass.streamField+' '+opts.cssClass.streamName+'">'+
                         '                    <em>'+data.name+'</em>'+
                         '                </div>'+
@@ -1580,7 +1667,7 @@ jQuery(document).ready(function () {
 
                         var scrollContentBlock = Zenwork.StreamPopup.content.find('.StreamScrollContent');
                         scrollContentBlock.each(function() {
-                            Zenwork.Plugins.jScrollPane.call(this, {verticalGutter: 0});
+                            Zenwork.Plugins.jScrollPane.call(this, {verticalGutter: 0, contentWidth: '0px'});
                         });
                         scrollContentBlock.bind(
                             'jsp-scroll-y', 
@@ -1866,7 +1953,7 @@ Zenwork.Team = {
                         return false;
                     });
 
-                    Zenwork.Plugins.jScrollPane.call($('#listInvitedPeople').parent(), {verticalGutter: 0});
+                    Zenwork.Plugins.jScrollPane.call($('#listInvitedPeople').parent(), {verticalGutter: 0, contentWidth: '0px'});
                 },
                 error: function (jqXHR, textStatus, errorThrown) {
                     if ( textStatus !== 'abort' ) {

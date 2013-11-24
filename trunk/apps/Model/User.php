@@ -24,21 +24,60 @@
             ),
             'confirm_password' => array(
                 'rule' => 'checkPwdConfirm',
-                'message' => 'Confirm password is not match!'
+                'message' => 'Confirm password do not match!'
             )
             //END. use when in action 'change_pwd'
         );
+
+        /*
+         * register new user into system
+         */
+        public function register ($postData) {
+            $data = array(
+                'User' => $postData['Register']    
+            );
+            $this->validator()
+                ->add('username', 'required', array(
+                    'rule' => 'notEmpty',
+                    'message' => 'Username can not be blank!'
+                ))
+                ->add('email', array(
+                    'required' => array(
+                        'rule' => 'email',
+                        'message' => 'Please enter a valid email'
+                    ),
+                    'uniqueEmail' => array(
+                        'rule' => 'uniqueEmail',
+                        'message' => 'This email already registered<br />Please go to "Sign in to Zenwork" tab to login'
+                    )
+                ));
+            
+            $this->create();
+            $data['User']['fullname'] = $data['User']['username'];
+            $data['User']['online'] = 1;
+            $data['User']['lastLogin'] = time();
+            if ( !$this->save($data) ) {
+                return false;
+            }
+            $data['User']['id'] = $this->getLastInsertId();
+            return $data['User'];
+        }
 
         /**
          * validation methods
          */
         public function checkOldPwd () {
-            $logged_in_user = $this->findById(CakeSession::read("Auth.User.id"));
+            $logged_in_user = $this->findById(CakeSession::read('Auth.User.id'));
             return strcmp(Security::hash($this->data['User']['old_password'], null, true), $logged_in_user['User']['password']) == 0;
         }
         public function checkPwdConfirm () {
             return strcmp($this->data['User']['password'], $this->data['User']['confirm_password']) == 0;
         }
+        public function uniqueEmail () {
+            return $this->find('count', array('conditions'=>array('User.email LIKE' => $this->data['User']['email']))) == 0;
+        }
+
+
         public function beforeSave ($options=array()) {
             //hashing password before save, use in 'change_pwd' action
             if ( !empty($this->data['User']['password']) ) {

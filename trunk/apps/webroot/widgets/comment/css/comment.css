@@ -27,6 +27,9 @@
                 width: 32px;
                 height: 32px;
                 margin: 0 0 0 8px;
+                border-radius: 36px;
+                -webkit-border-radius: 36px;
+                -moz-border-radius: 36px;
             }
             .StreamCommentList li p {
                 font-size: 12px;

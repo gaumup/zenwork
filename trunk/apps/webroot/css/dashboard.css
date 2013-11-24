@@ -201,7 +201,7 @@
                     width: 60px;
                     padding-left: 0;
                     text-align: center;
-                    line-height: 37px;
+                    line-height: 40px;
                     cursor: default;
                     color: #999;
                 }
@@ -212,7 +212,7 @@
                     .TodayTaskList .StreamName em {
                         font-size: 15px;
                         font-style: normal;
-                        padding: 7px 10px 13px;
+                        padding: 9px 10px 13px;
                         display: block;
                     }
                     .TodayTaskList .StreamCommentBtn,
@@ -266,6 +266,22 @@
                     }
                     .TodayTaskList .StreamDetailsBtn:hover {
                     }
+    .StreamOverdue {
+        display: block;
+        width: 16px;
+        height: 0;
+        padding: 16px 0 0;
+        overflow: hidden;
+        text-indent: -1000em;
+        position: absolute;
+        left: 35px;
+        top: 13px;
+        background: url(../images/icon-important.png) no-repeat center 0;
+        z-index: 1;
+    }
+    .StreamOverdue:hover {
+        background-position: center -16px;
+    }
 
     .ZWTodayCompletedTasks {
         font-size: 15px;
@@ -281,7 +297,7 @@
 
     .ZWAddNewBtnCompact {
         position: absolute;
-        top: 7px;
+        top: 9px;
         right: 5px;
         display: block;
         overflow: hidden;
@@ -293,6 +309,11 @@
     }
     .ZWAddNewBtnCompact:hover {
         background-position: center -19px;
+    }
+    .ZWAddNewBtnCompact.Pending,
+    .ZWAddNewBtnCompact.Pending:hover {
+        cursor: default;
+        background: url(../images/icon-loading-tiny.gif) no-repeat center center;
     }
 
     .ZWChartBlock {
@@ -488,6 +509,7 @@
     width: 100%;
     overflow: hidden;
     padding: 0 0 5px;
+    min-height: 39px;
 }
     .TeamMembersChartLegend li {
         float: left;
@@ -508,6 +530,10 @@
             box-sizing: border-box;
             float: left;
             margin: 0 5px 0 0;
+            border-radius: 36px;
+            -webkit-border-radius: 36px;
+            -moz-border-radius: 36px;
+            overflow: hidden;
         }
         .TeamMembersChartLegend li em {
             float: left;
@@ -527,7 +553,15 @@
     border-left: 1px solid #ccc;
 }
 
-
 #myTaskStatistic {
+    width: 100%;
     height: 335px;
+    overflow: hidden;
+}
+
+#teamResourceStatistic,
+#teamMemberWorkloadStatistic {
+    width: 100%;
+    height: 400px;
+    overflow: hidden;
 }

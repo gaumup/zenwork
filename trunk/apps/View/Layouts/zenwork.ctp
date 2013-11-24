@@ -79,7 +79,8 @@
                         } 
                     ?>
 
-                    <a href="#" title="Quick help ?" class="ZWQuickHelpBtn" id="zwQuickHelp">Quick help ?</a>
+                    <!--<a href="#" title="Quick help ?" class="ZWQuickHelpBtn" id="zwQuickHelp">Quick help ?</a>-->
+                    <input class="TextInput GlobalSearchBox" type="text" placeholder="You can search for Task and Plan" id="zwGlobalSearch" />
                 </header>
 
                 <div id="content">

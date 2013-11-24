@@ -112,6 +112,7 @@
                     autoResizeTextbox: 'AutoResizeTextbox',
                     calendarInput: 'CalendarInput'
                 },
+                listPrefix: '',
                 baseIndex: 0,
                 selectable: true,
                 streamContextMenu: $('#streamContextMenu'),
@@ -1907,6 +1908,8 @@
                         Zenwork.StreamPopup.aside.find('.StreamScrollContent').each(function() {
                             Zenwork.Plugins.jScrollPane.call(this, {verticalGutter: 0});
                         });
+
+                        $('.StreamDialogShare').data('stream-prefix', self.options.listPrefix);
                     },
                     error: function (jqXHR, textStatus, errorThrown) {
                         if ( textStatus !== 'abort' ) {
@@ -1939,6 +1942,8 @@
                         Zenwork.StreamPopup.aside.find('.StreamScrollContent').each(function() {
                             Zenwork.Plugins.jScrollPane.call(this, {verticalGutter: 0});
                         });
+
+                        $('.StreamDialogShare').data('stream-prefix', self.options.listPrefix);
                     },
                     error: function (jqXHR, textStatus, errorThrown) {
                         if ( textStatus !== 'abort' ) {

@@ -15,6 +15,10 @@ jQuery(document).ready(function () {
             return false;
         });
 
+        $('.CommonBtn').on('click', function (e) {
+            $(this).addClass('Pending');
+        });
+
         //save hash to cookie
         $.cookie('urlHash', window.location.hash.substr(1), {path: '/'});
     })(jQuery);

@@ -140,7 +140,7 @@
                         <li class="ZWUserStatisticLabelItem01"><span class="ZWUserStatisticLabelImg">&nbsp;</span> <em>planning</em> <span class="ZWHelpPopup QTip QTipPermanent" title="Total workload of all tasks <strong>assigned to you</strong>">help</span></li>
                         <li class="ZWUserStatisticLabelItem02"><span class="ZWUserStatisticLabelImg">&nbsp;</span> <em>actual</em> <span class="ZWHelpPopup QTip QTipPermanent" title="Total workload of all tasks <strong>assigned to team members</strong> and <strong>completed</strong>(actual workload are update by each team members)">help</span></li>
                     </ul>
-                    <div id="teamResourceStatistic" height="420"></div>
+                    <div id="teamResourceStatistic"></div>
                 </div>
             </div>
 
@@ -162,7 +162,7 @@
 
                 <div id="teamMemberWorkloadChartBlock" class="ZWChartBlock ZWChartBlockAlt01 ZWPending">
                     <ul class="TeamMembersChartLegend" id="teamMembersChartLegend"></ul>
-                    <div id="teamMemberWorkloadStatistic" height="420"></div>
+                    <div id="teamMemberWorkloadStatistic"></div>
                 </div>
             </div>
         </div>

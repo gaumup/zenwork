@@ -1,3 +1,4 @@
+<!--
 <div class="ZWFeedbackDialog" id="zwFeedbackDialog">
     <p>Tell us your opinion about ZENWORK.<br />
     Need help? send us an email <a href="mailto:ukhome@gmail.com" title="Send us an email">support</a></p>
@@ -17,3 +18,5 @@
 
     <h3>Send us feedback</h3>
 </div>
+-->
+<a href="mailto:ukhome@gmail.com?Subject=[ZW-Feedback]" title="Send us feedbacks" class="HelpLink">Need help?</a>

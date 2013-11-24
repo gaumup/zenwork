@@ -11,6 +11,7 @@
             $this->Auth->authenticate = array(
                 'Form' => array(
                     'userModel' => 'User',
+                    //'scope' => array('User.is_blocked' => 0),
                     'fields' => array('username' => 'username', 'password' => 'password')
                 )
             );
@@ -18,9 +19,9 @@
                 'controller' => 'auth',
                 'action' => 'login'
             );
-            $this->Auth->allow('register', 'login', 'forgotPwd', 'resetPwd');
+            $this->Auth->allow('register', 'login', 'forgotPwd', 'resetPwd', 'signup');
             $this->Auth->authorize = 'Controller';
-            if ( $this->action !== 'login' ) {
+            if ( $this->action !== 'login' && $this->action !== 'signup' ) {
                 if ( !empty($this->request->query) && $this->action !== 'forgotPwd' ) {
                     $this->Session->write('Auth.redirectUrl', Configure::read('root_url').'/'.$this->request->query['url']);
                 }
@@ -75,6 +76,17 @@
             } catch (NotFoundException $e) {
                 pr('Sorry, file is broken or deleted!');
             }
+        }
+
+        public function search ($keyword, $scope=array()) {
+            $this->layout = 'blank';
+            $this->loadModel('Stream');
+            $this->loadModel('Stream_list');
+            $this->set(array(
+                'keyword' => $keyword,
+                'streams' => $this->Stream->search($keyword, $this->Auth->user('id')),
+                'lists' => $this->Stream_list->search($keyword, $this->Auth->user('id'))
+            ));
         }
 
         /* attachment module */
@@ -292,7 +304,7 @@
                         $this->loadModel('Stream');
                         $stream = $this->Stream->findById($sid, array('Stream.name', 'Creator.email'));
                         $this->notify(
-                            'Post a comment on task "'.$stream['Stream']['name'].'"',
+                            'New comment on task "'.$stream['Stream']['name'].'"',
                             $action,
                             '',
                             '',

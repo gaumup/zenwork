@@ -321,7 +321,7 @@
                 var opts = this.options;
                 var _helper = this._getDefaultTimelineHelper();
                 var timelineWrapper = $('<li class="'+opts.cssClass.timelineWrapper+' DrawingPending"></li>').data('uuid', Core.Algorithm.UUID());
-                this._preAddingTimelineHelper(
+                var timelineBar = this._preAddingTimelineHelper(
                     insertIndex,
                     timelineWrapper,
                     isAjax,
@@ -336,6 +336,7 @@
 
                 return {
                     timelineWrapper: timelineWrapper,
+                    timelineBar: timelineBar,
                     Timeline: [
                         {
                             start: _helper.defaultTimeline.start,
@@ -1364,6 +1365,7 @@
                         var _util_ = function () {
                             self._proceedTimelineQueue($(stream.attr('rel')));
 
+                            config.timelineBar.remove();
                             config.timelineWrapper.removeClass('DrawingPending');
 
                             //update parent stream timeline, recursively
@@ -2623,7 +2625,6 @@
                     if ( !$('.'+opts.cssClass.timelineDrawingBtn).hasClass(opts.cssClass.timelineDrawingBtnDisabled) ) {
                         self.disabledDrawingTimeline = false;
                     }
-                    self.element.removeClass(opts.cssClass.startCreateRelationship);
                     self._clearInterval(self.scrollTimer);
                     self.onDragging = false;
                     $('.'+ui.options.cssClass.relationshipPoint).removeClass(ui.options.cssClass.relationshipPointHint);
@@ -2676,11 +2677,11 @@
                             if ( endTimelineData.uiTimeline != undefined ) {
                                 //start timeline is timeline bar
                                 if ( endTimelineData.uiTimeline != undefined ) {
-                                    endTimeline.timeline('move', offsetMove);
+                                    //endTimeline.timeline('move', offsetMove);
                                 }
                                 //start timeline is milestone
                                 else if ( endTimelineData.uiMilestone != undefined ) {
-                                    endTimeline.milestone('move', offsetMove - Math.round(self.gridUnitSize/2));
+                                    //endTimeline.milestone('move', offsetMove - Math.round(self.gridUnitSize/2));
                                 }
                             }
                             //end timeline is milestone
@@ -2780,6 +2781,7 @@
                         width: 0,
                         height: 0
                     }).addClass('Hidden');
+                    self.element.removeClass(opts.cssClass.startCreateRelationship);
                 }
             },
 

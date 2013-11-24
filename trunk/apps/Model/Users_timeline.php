@@ -115,10 +115,17 @@
                 'fields' => array('Stream.*', 'Timeline.start', 'Timeline.end', 'Timeline.effort', 'Users_timeline.completed', 'Users_timeline.id', 'Users_timeline.effort', 'Stream_list_map.*'),
                 'order' => array('Users_timeline.completed asc', 'Timeline.start asc')
             ));
-            foreach ( $tasklist as $key => $_task ) {
-                $tasklist[$key]['Stream']['slmid'] = $_task['Stream_list_map']['id'];
-                $tasklist[$key]['Stream']['countComment'] = Classregistry::init('Scomment')->find('count', array('conditions'=>array('Scomment.sid'=>$_task['Stream']['id'])));
-                $tasklist[$key]['Stream']['countAttachment'] = Classregistry::init('Attachment')->find('count', array('conditions'=>array('Attachment.sid'=>$_task['Stream']['id'])));
+            $now = time();
+            foreach ( $tasklist as &$_task ) {
+                if ( $_task['Timeline']['end'] < $now ) {
+                    $_task['Stream']['overdue'] = 1;
+                }
+                else {
+                    $_task['Stream']['overdue'] = 0;
+                }
+                $_task['Stream']['slmid'] = $_task['Stream_list_map']['id'];
+                $_task['Stream']['countComment'] = Classregistry::init('Scomment')->find('count', array('conditions'=>array('Scomment.sid'=>$_task['Stream']['id'])));
+                $_task['Stream']['countAttachment'] = Classregistry::init('Attachment')->find('count', array('conditions'=>array('Attachment.sid'=>$_task['Stream']['id'])));
             }
             return $tasklist;
         }
