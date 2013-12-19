@@ -42,9 +42,6 @@ h2 {
                 margin: 0;
                 border: 1px solid #999;
                 padding: 1px;
-                border-radius: 36px;
-                -webkit-border-radius: 36px;
-                -moz-border-radius: 36px;
             }
             #userAccountBox a {
                 float: left;

@@ -530,9 +530,6 @@
             box-sizing: border-box;
             float: left;
             margin: 0 5px 0 0;
-            border-radius: 36px;
-            -webkit-border-radius: 36px;
-            -moz-border-radius: 36px;
             overflow: hidden;
         }
         .TeamMembersChartLegend li em {

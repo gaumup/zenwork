@@ -101,32 +101,37 @@ jQuery(document).ready(function () {
         var _dailyWorkload_ = function (data) {
             var dailyTasks = [];
             var dailyCompletedTasks = [];
-
+            
             $.each(data, function (index, value) {
                 var startOn = new Date(value.Timeline.start*1000);
                 var deadline = new Date(value.Timeline.end*1000);
-                var dailyEffortInPercent = value.Users_timeline.effort*100/(new TimeSpan(deadline - startOn).getDiffDays());
-
+                var taskEffortInPercent = value.Users_timeline.effort*100/(new TimeSpan(deadline - startOn).getDiffDays());
                 var startOnDate = startOn.getDate(); //1->31
                 var deadlineDate = deadline.getDate(); //1->31
 
                 for ( var i = startOnDate-1; i <= deadlineDate-1; i++ ) {
+                    if ( (startOn.getHours() >= 12 && i==startOnDate-1)
+                        || (deadline.getHours() <= 12 && i==deadlineDate-1)
+                    ){
+                        taskEffortInPercent *= .5;
+                    }
+                    if (startOn.getDate()<='3' & deadline.getDate()>=3){console.log(taskEffortInPercent)}
                     //totals workload
                     if ( dailyTasks[i] == undefined ) {
-                        dailyTasks[i] = dailyEffortInPercent;
+                        dailyTasks[i] = taskEffortInPercent;
                     }
                     else {
-                        dailyTasks[i] += dailyEffortInPercent;
+                        dailyTasks[i] += taskEffortInPercent;
                     }
                     dailyTasks[i] = Math.round(dailyTasks[i]*100)/100;
 
                     //totals completed workload
                     if ( value.Users_timeline.completed > 2 ) {
                         if ( dailyCompletedTasks[i] == undefined ) {
-                            dailyCompletedTasks[i] = dailyEffortInPercent;
+                            dailyCompletedTasks[i] = taskEffortInPercent;
                         }
                         else {
-                            dailyCompletedTasks[i] += dailyEffortInPercent;
+                            dailyCompletedTasks[i] += taskEffortInPercent;
                         }
                     }
                     dailyCompletedTasks[i] = isNaN(dailyCompletedTasks[i])
@@ -171,8 +176,10 @@ jQuery(document).ready(function () {
                 //calculate the extend out of month if deadline > last day in month
                 //!warning: recursive until deadline < last day in month
                 var nextMonth = month+1;
+                if ( nextMonth > 11 ) { return true; }
                 var fisrtDayInNextMonth = lastDayInMonth.clone().add({seconds: 1});
                 var lastDayInNextMonth = lastDayInMonth.clone().add({months: 1});
+                lastDayInNextMonth.setDate(Date.getDaysInMonth(year, nextMonth));
                 var effortInNextMonth = new TimeSpan((deadline.isAfter(lastDayInNextMonth) ? lastDayInNextMonth : deadline) - fisrtDayInNextMonth).getDiffDays()*totalEffortInPercent/100;
                 while (effortInNextMonth > 0) {
                     var _workload_ = effortInNextMonth*totalEffortInPercent/Date.getDaysInMonth(year, nextMonth);
@@ -187,8 +194,10 @@ jQuery(document).ready(function () {
                         monthlyCompletedTasks[nextMonth] = Math.round(monthlyCompletedTasks[nextMonth]*100)/100;
                     }
                     nextMonth++;
-                    fisrtDayInNextMonth.addMonths(1);
-                    lastDayInNextMonth.addMonths(1).setDate(Date.getDaysInMonth(year, nextMonth));
+                    if ( nextMonth > 11 ) { return true; }
+                    fisrtDayInNextMonth.add({months: 1});
+                    lastDayInNextMonth.add({months: 1});
+                    lastDayInNextMonth.setDate(Date.getDaysInMonth(year, nextMonth));
                     effortInNextMonth = new TimeSpan((deadline.isAfter(lastDayInNextMonth) ? lastDayInNextMonth : deadline) - fisrtDayInNextMonth).getDiffDays()*totalEffortInPercent/100;
                 }
             });

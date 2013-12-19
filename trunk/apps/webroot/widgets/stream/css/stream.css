@@ -667,9 +667,6 @@ a.StreamCommonLnk:active {
             height: 24px;
             margin: 0 8px 0 0;
             display: block;
-            border-radius: 36px;
-            -webkit-border-radius: 36px;
-            -moz-border-radius: 36px;
         }
         .StreamAuthor {
             font-size: 11px;
