@@ -5,8 +5,13 @@
     $this->Html->script('/plugins/js/chart.js', false);
 ?>
 
-<h2>Current active user(total: <?php echo count($users); ?>)</h2>
-<p class="MonitorParagraph">Recently login users(within 1 hour)</p>
+<p class="MonitorParagraph">Current active user(total: <?php echo count($users); ?>)</p>
+
+<div class="HrWrapper">
+    <hr class="Hr" />
+</div>
+
+<h2>Recently login users(within 1 hour)</h2>
 <ul class="MonitoringActiveUsersList">
     <?php foreach ($users as $_user) : ?>
     <?php
@@ -30,6 +35,78 @@
 <div class="HrWrapper">
     <hr class="Hr" />
 </div>
+
+<h2>Recently login users(within 1 day)</h2>
+<ul class="MonitoringActiveUsersList">
+    <?php foreach ($users as $_user) : ?>
+    <?php
+        if ( $_user['User']['lastLogin'] < (time() - 24*3600) ) {
+            continue;
+        }
+    ?>
+    <li class="QTip" title="<?php echo $this->Time->timeAgoInWords($_user['User']['lastLogin']); ?>" data-qtip-my="bottom left" data-qtip-at="top left">
+        <?php 
+            echo $this->element('avatar', array(
+                'width' => 24,
+                'height' => 24,
+                'user' =>$_user['User']
+            ));
+        ?>
+        <span><?php echo $_user['User']['username']; ?><em>(<?php echo $_user['User']['email']; ?>)</em></span>
+    </li>
+    <?php endforeach; ?>
+</ul>    
+
+<div class="HrWrapper">
+    <hr class="Hr" />
+</div>
+
+<h2>Recently login users(within 1 week)</h2>
+<ul class="MonitoringActiveUsersList">
+    <?php foreach ($users as $_user) : ?>
+    <?php
+        if ( $_user['User']['lastLogin'] < (time() - 7*24*3600) ) {
+            continue;
+        }
+    ?>
+    <li class="QTip" title="<?php echo $this->Time->timeAgoInWords($_user['User']['lastLogin']); ?>" data-qtip-my="bottom left" data-qtip-at="top left">
+        <?php 
+            echo $this->element('avatar', array(
+                'width' => 24,
+                'height' => 24,
+                'user' =>$_user['User']
+            ));
+        ?>
+        <span><?php echo $_user['User']['username']; ?><em>(<?php echo $_user['User']['email']; ?>)</em></span>
+    </li>
+    <?php endforeach; ?>
+</ul>    
+
+<div class="HrWrapper">
+    <hr class="Hr" />
+</div>
+
+<h2>Recently login users(last 30 days)</h2>
+<p class="MonitorParagraph"></p>
+<ul class="MonitoringActiveUsersList">
+    <?php foreach ($users as $_user) : ?>
+    <?php
+        if ( $_user['User']['lastLogin'] < (time() - 30*24*3600) ) {
+            continue;
+        }
+    ?>
+    <li class="QTip" title="<?php echo $this->Time->timeAgoInWords($_user['User']['lastLogin']); ?>" data-qtip-my="bottom left" data-qtip-at="top left">
+        <?php 
+            echo $this->element('avatar', array(
+                'width' => 24,
+                'height' => 24,
+                'user' =>$_user['User']
+            ));
+        ?>
+        <span><?php echo $_user['User']['username']; ?><em>(<?php echo $_user['User']['email']; ?>)</em></span>
+    </li>
+    <?php endforeach; ?>
+</ul>    
 
 <h2>Stream creation monitoring(total: <?php echo count($streams); ?>)</h2>
 <div class="ChartWrapper">

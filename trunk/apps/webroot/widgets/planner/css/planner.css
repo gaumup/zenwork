@@ -111,7 +111,7 @@
             position: absolute;
             z-index: 10000;
             top: 9px;
-            right: 10px;
+            right: 12px;
             padding: 0;
             background: none;
             border: none;
@@ -120,10 +120,16 @@
         .FilterBlock a.EditSListBtn:hover {
             padding: 6px 10px;
             top: 4px;
-            right: 0;
+            right: 2px;
             background: #6D9F43;
             color: #fff;
             text-decoration: none;
+        }
+        .FilterBlock .StreamListSelectionContainer.Expanded a.EditSListBtn {
+            top: 11px;
+        }
+        .FilterBlock .StreamListSelectionContainer.Expanded a.EditSListBtn:hover {
+            top: 6px;
         }
         .FilterBlock a.EditSListBtn.CommonBtnDisabled {
             display: none;
@@ -135,7 +141,7 @@
             float: left;
             position: relative;
         }
-        .StreamListSelection {
+        .StreamListSelectionContainer {
             width: 100%;
             height: 35px;
             padding: 0 1px;
@@ -147,96 +153,81 @@
             z-index: 10000;
             background: #fff;
         }
-        .StreamListSelection.Expanded {
+        .StreamListSelectionContainer.Expanded {
             width: 427px;
             border: 2px solid #666;
             border-top: none;
             height: auto;
             padding: 1px;
-            margin: -2px 0 0 -3px;
+            margin: -2px 0 0 -2px;
         }
-            .StreamListSelection li {
-                float: left;
-                width: 100%;
-                display: none;
-            }
-            .StreamListSelection.Expanded li {
+            .StreamListSelectionContainer .StreamListSelectionTitle {
                 display: block;
             }
-            .StreamListSelection li.Active {
-                display: block;
-                position: absolute;
-                top: 0;
-                left: 0;
+            .StreamListSelectionContainer.Expanded .StreamListSelectionTitle {
+                margin: 1px 0 10px;
             }
-            .StreamListSelection.Expanded li.Active {
-                position: relative;
-            }
-            .StreamListSelection .StreamListSelectionTitle {
-                display: block;
-            }
-            .StreamListSelection.Expanded .StreamListSelectionTitle {
-                padding: 1px 1px 0;
-                margin: 0 0 10px;
-            }
-                .StreamListSelection .StreamListSelectionTitle input {
+                .StreamListSelectionContainer .StreamListSelectionTitle input {
                     width: 425px;
                     font-size: 15px;
                     padding: 6px 10px 7px;
                     color: #000;
                     cursor: default;
                 }
-                .StreamListSelection li a {
-                    display: block;
-                    padding: 12px 10px;
-                    font-size: 15px;
-                    font-weight: bold;
-                    color: #444;
-                    background-color: #fff;
-                }
-                .StreamListSelection li a:hover {
-                    background-color: #efefef;
-                    text-decoration: none;
-                }
-                .StreamListSelection li.Active a {
-                    white-space: nowrap;
-                    padding: 6px 10px 7px;
+            .ListSelectionEdge {
+                display: block;
+                width: 20px;
+                height: 32px;
+                position: absolute;
+                top: 1px;
+                left: 359px;
+                z-index: 10001;
+                background: url(../images/list-selection-edge.png) no-repeat 0 0;
+            }
+            .StreamListSelectionContainer.Expanded .ListSelectionEdge {
+                top: 3px;
+            }
 
-                    background: #fff;
-                    width: 356px;
-                    overflow: hidden;
-                    margin: 1px 0 0 3px;
-
-                    box-shadow: 0 3px 3px #EEEEEE inset;
-                    -moz-box-shadow: 0 3px 3px #EEEEEE inset;
-                    -webkit-box-shadow: 0 3px 3px #EEEEEE inset;
+            .StreamListSelection {
+                width: 100%;
+                max-height: 300px;
+                overflow: hidden;
+                overflow-y: auto;
+                display: none;
+                position: relative;
+            }
+            .StreamListSelectionContainer.Expanded .StreamListSelection {
+                display: block;
+            }
+                .StreamListSelection li {
+                    float: left;
+                    width: 100%;
                 }
-                .StreamListSelection.Expanded li.Active a {
-                    padding: 11px 10px;
-                    width: auto;
-                    box-shadow: none;
-                    -moz-box-shadow: none;
-                    -webkit-box-shadow: none;
-                    margin: 0;
-                }
-                .StreamListSelection.Expanded li.Active a,
-                .StreamListSelection.Expanded li.Active a:hover {
-                    white-space: normal;
-                    color: #fff;
-                    background-color: #aaa;
-                }
-
-                .ListSelectionEdge {
-                    display: block;
-                    width: 20px;
-                    height: 32px;
-                    position: absolute;
-                    top: 1px;
-                    left: 359px;
-                    z-index: 10001;
-                    background: url(../images/list-selection-edge.png) no-repeat 0 0;
-                }
-
+                    .StreamListSelection li a {
+                        display: block;
+                        padding: 12px 10px;
+                        font-size: 15px;
+                        font-weight: bold;
+                        color: #444;
+                        background-color: #fff;
+                    }
+                    .StreamListSelection li a:hover {
+                        background-color: #efefef;
+                        text-decoration: none;
+                    }
+                    .StreamListSelection li.Active a,
+                    .StreamListSelection li.Active a:hover {
+                        padding: 11px 10px;
+                        margin: 0;
+                        overflow: hidden;
+                        color: #fff;
+                        background: #aaa;
+                    }
+                    .StreamListSelection li.Error a {
+                        text-align: center;
+                        font-weight: normal;
+                        cursor: default;
+                    }
 
 .GanttTimelineContainer {
     position: relative;

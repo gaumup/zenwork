@@ -93,7 +93,7 @@
                         'Users_list.uid' => $uid
                     )
                 ),
-                'order' => array('Stream_list.name'),
+                'order' => array('Stream_list.createdOn' => 'desc'),
                 'group' => array('Stream_list.id')
             ));
         }

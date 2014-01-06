@@ -30,16 +30,18 @@
         <div id="ganttTimelineToolbar" class="GanttTimelineToolbar">
             <div class="FilterBlock">
                 <div class="StreamListSelectionWrapper">
-                    <ul id="streamListSelection" class="StreamListSelection">
-                        <li class="StreamListSelectionTitle"><input type="text" class="TextInput QTip" placeholder="Click to select a plan to view" id="streamListSelectionSearch" title="Type search or select a plan to view" data-qtip-my="left center" data-qtip-at="right center" /></li>
-                        <li><a href="1" title="">[default]</a></li>
-                    
-                        <?php foreach ($streamList as $list) : ?>
-                        <li><a data-creator-id="<?php echo $list['Stream_list']['creatorID']; ?>" href="<?php echo $list['Stream_list']['id']; ?>" class="QTip" data-qtip-my="left center" data-qtip-at="right center" title="Click to view plan <strong>'<?php echo htmlspecialchars($list['Stream_list']['name']); ?>'</strong>"><?php echo htmlspecialchars($list['Stream_list']['name']); ?></a></li>
-                        <?php endforeach; ?>
-                    </ul>
-                    <span class="ListSelectionEdge"></span>
-                    <a href="#" id="editSelectedStreamList" title="Edit/delete current selected plan" class="QTip CommonButtonLnk CommonButtonLnkSmall EditSListBtn" data-qtip-my="top center" data-qtip-at="bottom center">Edit</a>
+                    <div id="streamListSelectionContainer" class="StreamListSelectionContainer">
+                        <p class="StreamListSelectionTitle"><input type="text" class="TextInput QTip" placeholder="Select a plan to view" id="streamListSelectionSearch" title="Type search or select a plan to view" data-qtip-my="left center" data-qtip-at="right center" /></p>
+                        <ul class="StreamListSelection" id="streamListSelection">
+                            <li><a href="1" title="">[default]</a></li>
+                            <?php foreach ($streamList as $list) : ?>
+                            <li><a data-creator-id="<?php echo $list['Stream_list']['creatorID']; ?>" href="<?php echo $list['Stream_list']['id']; ?>" class="QTip" data-qtip-my="left center" data-qtip-at="right center" title="Click to view plan <strong>'<?php echo htmlspecialchars($list['Stream_list']['name']); ?>'</strong>"><?php echo htmlspecialchars($list['Stream_list']['name']); ?></a></li>
+                            <?php endforeach; ?>
+                            <li class="Error Hidden"><a href="#" class="Readonly">No such plan with name as above</a></li>
+                        </ul>
+                        <span class="ListSelectionEdge"></span>
+                        <a href="#" id="editSelectedStreamList" title="Edit/delete current selected plan" class="QTip CommonButtonLnk CommonButtonLnkSmall EditSListBtn" data-qtip-my="top center" data-qtip-at="bottom center">Edit</a>
+                    </div>
                 </div>
 
                 <a href="#" id="createNewStreamList" title="Create new plan" class="QTip CommonButtonLnk CommonButtonLnkSmall TextBtn" data-qtip-my="left center" data-qtip-at="right center">Create new plan</a>

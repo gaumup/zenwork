@@ -85,20 +85,20 @@
                 if ( this.limitBefore.length == 0 ) {
                     this.limitBefore = $('<div class="'+opts.cssClass.calendarLimitLine+'" id="calendarLimitLineLeft"></div>');
                 }
-                element.append(this.limitBefore);
+                opts.container.append(this.limitBefore);
                 this.limitBefore.css({
                     left: opts.unitSize*2*opts.timeBefore,
-                    height: element.outerHeight()
+                    height: opts.container.outerHeight()
                 });
 
                 this.limitAfter = $('#calendarLimitLineRight');
                 if ( this.limitAfter.length == 0 ) {
                     this.limitAfter = $('<div class="'+opts.cssClass.calendarLimitLine+'" id="calendarLimitLineRight"></div>');
                 }
-                element.append(this.limitAfter);
+                opts.container.append(this.limitAfter);
                 this.limitAfter.css({
-                    right: opts.unitSize*2*opts.timeAfter,
-                    height: element.outerHeight()
+                    left: element.outerWidth() - opts.unitSize*2*opts.timeAfter,
+                    height: opts.container.outerHeight()
                 });
 
                 //create today highlight column
@@ -170,6 +170,9 @@
                         self._handleSelectingCol();
                     },
                     stop: function(e, ui) {}
+                });
+                opts.dayRow.on('mousedown.calendar', function (e) {
+                    e.stopPropagation();
                 });
                 opts.clip.on('mousedown.calendar', function (e) {
                     self._clearSelectedCol();
@@ -415,11 +418,6 @@
                                     this._util_.createDayBlock.call(this, day, month, year);
                                 }
                             }
-
-                            //set limit line before
-                            this.limitAfter.css({
-                                right: '+='+number*opts.unitSize*2,
-                            });
                         }
                         else if ( position === 'before' ) {
                             var firstColumn = opts.dayRow.getFirstDay();

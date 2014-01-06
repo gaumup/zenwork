@@ -3455,33 +3455,41 @@ jQuery(document).ready(function () { //ensure document is ready
         });
 
         //handle stream list selection
+        var streamListSelectionContainer = $('#streamListSelectionContainer');
         var streamListSelection = $('#streamListSelection');
+        var streamListSelectionHeight;
         var streamListSelectionSearch = $('#streamListSelectionSearch');
-        streamListSelection.on('click', function (e) {
+        var _resetStreamListState_ = function () {
+            streamListSelectionSearch.blur();
+            streamListSelectionContainer.removeClass('Expanded');
+            streamListSelection.find('li.Hidden').removeClass('Hidden');
+            streamListSelectionSearch.val(streamListSelection.find('a[href="'+Zenwork.List.active+'"]').text());
+        }
+        streamListSelectionContainer.on('click', function (e) {
             Zenwork.Planner.pub('afterClickSelectionList.Help.Planner');
 
             Zenwork.Planner.app.planner('option', 'streamList').stream('hideContextMenu');
-            if ( streamListSelection.hasClass('Expanded') ) {
-                streamListSelectionSearch.blur();
+            if ( streamListSelectionContainer.hasClass('Expanded') ) {
+                _resetStreamListState_();
             }
-            streamListSelection.toggleClass('Expanded').find('li.Hidden').removeClass('Hidden');
-            $('#streamListSelectionSearch').val('').focus();
+            else {
+                streamListSelectionContainer.addClass('Expanded');
+                streamListSelectionHeight = streamListSelection.height();
+            }
             e.stopPropagation();
         });
         $(document).on('click', function (e) {
-            streamListSelection.removeClass('Expanded');
+            _resetStreamListState_();
         });
         streamListSelection.on('click', 'a', function (e) {
-            var $target = $(e.currentTarget);
-            var $parent = $target.parent();
-
-            if ( !$parent.hasClass('Active') ) {
-                Zenwork.Planner.pub('afterSelectList.Help.Planner');
-                //set hash on url
-                hasher.setHash($target.attr('href'));
-            }
-
+            if ( $(this).hasClass('Readonly') ) { return false; }
+            Zenwork.Planner.pub('afterSelectList.Help.Planner');
+            //set hash on url
+            hasher.setHash($(e.currentTarget).attr('href')); //cause 'parseHash()'
             e.preventDefault();
+        });
+        streamListSelectionSearch.on('focus', function (e) {
+            this.value = '';
         });
         streamListSelectionSearch.on('keydown', function (e) {
             if ( e.which == 38 //up
@@ -3490,11 +3498,13 @@ jQuery(document).ready(function () { //ensure document is ready
                 var listItem = streamListSelection.find('li a');
                 var currentActive = streamListSelection.find('li.Active');
                 if ( currentActive.length == 0 ) {
-                    currentActive = streamListSelection.find('li:not(".Hidden")').eq(0);
+                    currentActive = streamListSelection.find('li:first-child');
                 }
 
                 if ( e.which == 40 ) { //down
-                    var nextAll = currentActive.nextAll('li:not(".Hidden")');
+                    var nextAll = currentActive.hasClass('Active')
+                        ? currentActive.nextAll('li:not(".Hidden")')
+                        : streamListSelection.find('li:not(".Hidden")');
                     if ( nextAll.length > 0 ) {
                         currentActive.removeClass('Active');
                         currentActive = nextAll.eq(0).addClass('Active');
@@ -3502,20 +3512,30 @@ jQuery(document).ready(function () { //ensure document is ready
                 }
                 else { //e.which == 38 -> up
                     var prevAll = currentActive.prevAll('li:not(".Hidden")');
-                    if ( prevAll.length > 1 ) {
+                    if ( prevAll.length > 0 ) {
                         currentActive.removeClass('Active');
                         currentActive = prevAll.eq(0).addClass('Active');
                     }
                 }
-
-                this.value = currentActive.find('a').text();
-
+                var _basePos = currentActive.position().top;
+                if ( e.which == 40 ) { //down
+                    _basePos += currentActive.outerHeight();
+                    if ( _basePos > streamListSelectionHeight ) {
+                        streamListSelection.scrollTop(streamListSelection.scrollTop() + (_basePos - streamListSelectionHeight));
+                    }
+                }
+                else { //e.which == 38 -> up
+                    if ( _basePos < 0 ) {
+                        streamListSelection.scrollTop(streamListSelection.scrollTop() + _basePos);
+                    }
+                }
                 return false;
             }
         });
         streamListSelectionSearch.on('keyup', function (e) {
             if ( e.which == 38 //up
                 || e.which == 40 //down 
+                || e.which == 27 //escape 
             ) { return false; }
 
             var currentActive = streamListSelection.find('li.Active');
@@ -3523,30 +3543,25 @@ jQuery(document).ready(function () { //ensure document is ready
             if ( e.which == 13 ) { //enter
                 //set hash on url
                 hasher.setHash(currentActive.find('a').attr('href'));
-                streamListSelection.removeClass('Expanded');
+                streamListSelectionContainer.removeClass('Expanded');
                 return true;
             }
 
             currentActive.removeClass('Active');
-            var listItem = streamListSelection.find('li a');
+            var listItem = streamListSelection.find('li:not(".Error") a');
             var search = new RegExp(this.value, 'i');
+            var isFound = false;
             listItem.each(function () {
                 var $this = $(this);
                 if ( !search.test($this.text()) ) {
                     $this.parent().addClass('Hidden');
                 }
                 else {
+                    isFound = true;
                     $this.parent().removeClass('Hidden');
                 }
             });
-        });
-        streamListSelectionSearch.on('blur', function (e) {
-            var currentActive = streamListSelection.find('li.Active').eq(0);
-            if ( currentActive.length == 0 || currentActive.find('a').eq(0).attr('href') != Zenwork.List.active ) {
-                currentActive.removeClass('Active');
-                streamListSelection.find('a[href="'+Zenwork.List.active+'"]:first').parent().removeClass('Hidden').addClass('Active');
-            }
-            this.value = '';
+            streamListSelection.find('li:last-child').toggleClass('Hidden', isFound);
         });
 
         //handle stream filtering
@@ -4063,6 +4078,7 @@ jQuery(document).ready(function () { //ensure document is ready
                     var listItem = $('#streamListSelection li a[href="'+Zenwork.List.active+'"]').eq(0);
                     listItem.parent().addClass('Active');
                     Zenwork.Planner.creatorID = listItem.attr('data-creator-id');
+                    streamListSelectionSearch.val(listItem.text());
                 }
                 _loadApp_(Zenwork.List.active, 1, function () {
                     crossroads.parse(window.location.href.match('/planner.*').toString());
