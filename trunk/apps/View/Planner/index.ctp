@@ -37,7 +37,7 @@
                             <?php foreach ($streamList as $list) : ?>
                             <li><a data-creator-id="<?php echo $list['Stream_list']['creatorID']; ?>" href="<?php echo $list['Stream_list']['id']; ?>" class="QTip" data-qtip-my="left center" data-qtip-at="right center" title="Click to view plan <strong>'<?php echo htmlspecialchars($list['Stream_list']['name']); ?>'</strong>"><?php echo htmlspecialchars($list['Stream_list']['name']); ?></a></li>
                             <?php endforeach; ?>
-                            <li class="Error Hidden"><a href="#" class="Readonly">No such plan with name as above</a></li>
+                            <li class="Error"><a href="#" class="Readonly">No such plan with name as above</a></li>
                         </ul>
                         <span class="ListSelectionEdge"></span>
                         <a href="#" id="editSelectedStreamList" title="Edit/delete current selected plan" class="QTip CommonButtonLnk CommonButtonLnkSmall EditSListBtn" data-qtip-my="top center" data-qtip-at="bottom center">Edit</a>

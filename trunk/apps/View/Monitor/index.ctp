@@ -5,7 +5,7 @@
     $this->Html->script('/plugins/js/chart.js', false);
 ?>
 
-<p class="MonitorParagraph">Current active user(total: <?php echo count($users); ?>)</p>
+<h2>Active users: <?php echo count($users); ?></h2>
 
 <div class="HrWrapper">
     <hr class="Hr" />
@@ -107,6 +107,10 @@
     </li>
     <?php endforeach; ?>
 </ul>    
+
+<div class="HrWrapper">
+    <hr class="Hr" />
+</div>
 
 <h2>Stream creation monitoring(total: <?php echo count($streams); ?>)</h2>
 <div class="ChartWrapper">

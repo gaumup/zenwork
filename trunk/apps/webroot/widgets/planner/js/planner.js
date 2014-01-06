@@ -3463,6 +3463,7 @@ jQuery(document).ready(function () { //ensure document is ready
             streamListSelectionSearch.blur();
             streamListSelectionContainer.removeClass('Expanded');
             streamListSelection.find('li.Hidden').removeClass('Hidden');
+            streamListSelection.find('li.Error').removeClass('ErrorVisible');
             streamListSelectionSearch.val(streamListSelection.find('a[href="'+Zenwork.List.active+'"]').text());
         }
         streamListSelectionContainer.on('click', function (e) {
@@ -3505,7 +3506,7 @@ jQuery(document).ready(function () { //ensure document is ready
                     var nextAll = currentActive.hasClass('Active')
                         ? currentActive.nextAll('li:not(".Hidden")')
                         : streamListSelection.find('li:not(".Hidden")');
-                    if ( nextAll.length > 0 ) {
+                    if ( nextAll.length > 1 ) {
                         currentActive.removeClass('Active');
                         currentActive = nextAll.eq(0).addClass('Active');
                     }
@@ -3561,7 +3562,7 @@ jQuery(document).ready(function () { //ensure document is ready
                     $this.parent().removeClass('Hidden');
                 }
             });
-            streamListSelection.find('li:last-child').toggleClass('Hidden', isFound);
+            streamListSelection.find('li:last-child').toggleClass('ErrorVisible', !isFound);
         });
 
         //handle stream filtering

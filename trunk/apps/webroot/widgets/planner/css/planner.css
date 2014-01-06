@@ -203,6 +203,12 @@
                     float: left;
                     width: 100%;
                 }
+                .StreamListSelection li.Error {
+                    display: none;
+                }
+                .StreamListSelection li.ErrorVisible {
+                    display: block;
+                }
                     .StreamListSelection li a {
                         display: block;
                         padding: 12px 10px;
