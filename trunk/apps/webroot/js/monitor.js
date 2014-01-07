@@ -73,6 +73,76 @@ jQuery(document).ready(function () {
             return api;
         };
 
+        //draw chart: #streamsCreationChart -> monitoring
+        var createdStreamsLiveData = {};
+        var createdStreamsLive = JSON.parse(unescape($('#streamsCreationLiveChartData').val()));
+        $.each(createdStreamsLive, function (index, value) {
+            var _dateObj = new Date(value*1000);
+            var _date = _dateObj.getDate();
+            var _month = _dateObj.getMonth();
+            var _year = _dateObj.getFullYear();
+            var _index = new Date(_year, _month, _date).valueOf();
+            if ( createdStreamsLiveData[_index] === undefined ) {
+                createdStreamsLiveData[_index] = 1;
+            }
+            else {
+                createdStreamsLiveData[_index]++;
+            }
+        });
+        var createdStreamsLiveDataIndexed = [];
+        $.each(createdStreamsLiveData, function (key, value) {
+            createdStreamsLiveDataIndexed.push([Number(key), value]);
+        });
+        $('#streamsCreationLiveChart').highcharts('StockChart', {
+            rangeSelector : {
+                selected : 1
+            },
+            title : {
+                text : 'Streams created monitoring'
+            },
+            series : [{
+                name : 'Streams created monitoring',
+                data : createdStreamsLiveDataIndexed,
+                tooltip: {
+                    valueDecimals: 2
+                }
+            }]
+        });
+
+        //draw chart: #streamsCreationChart
+        var createdStreamListsData = [0, 0, 0, 0, 0, 0, 0];
+        var createdStreamLists = JSON.parse(unescape($('#streamListsCreationChartData').val()));
+        $.each(createdStreamLists, function (index, value) {
+            //Sun = 0
+            var index = new Date(value*1000).getDay();
+            if ( index == 0 ) {
+                index = 6;
+            }
+            else {
+                --index;
+            }
+            createdStreamListsData[index]++;
+        });
+        var streamListsCreationStatisticModel = new Zenwork.Monitor.LineChartModel($('#streamListsCreationChart').removeClass('ZWPending'));
+        streamListsCreationStatisticModel.config({
+            pointValue: true,
+            //scaleOverride: true,
+            //scaleSteps: createdStreamLists.length,
+            //scaleStepWidth: 1,
+            //scaleStartValue: 0,
+            scaleLabel: '<%=value%>'
+        });
+        streamListsCreationStatisticModel.setLabels(['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']);
+        streamListsCreationStatisticModel.setDatasets({
+            created: { //actual
+                fillColor : 'rgba(151, 187, 205, 0.5)',
+                strokeColor : 'rgba(151, 187,205 ,1)',
+                pointColor : 'rgba(151, 187, 205, 1)',
+                pointStrokeColor : '#fff',
+                data : createdStreamListsData
+            }
+        });
+
         //draw chart: #streamsCreationChart
         var createdStreamsData = [0, 0, 0, 0, 0, 0, 0];
         var createdStreams = JSON.parse(unescape($('#streamsCreationChartData').val()));

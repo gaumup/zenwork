@@ -1,8 +1,9 @@
 <?php
     $this->Css->add('/css/monitor.css', false);
 
-    $this->Html->script('/js/monitor.js', false);
     $this->Html->script('/plugins/js/chart.js', false);
+    $this->Html->script('/plugins/js/highstock.js', false);
+    $this->Html->script('/js/monitor.js', false);
 ?>
 
 <h2>Active users: <?php echo count($users); ?></h2>
@@ -113,6 +114,16 @@
 </div>
 
 <h2>Stream creation monitoring(total: <?php echo count($streams); ?>)</h2>
+<div class="ChartWrapper ChartWrapperExpand">
+    <input type="hidden" id="streamsCreationLiveChartData" value="<?php echo urlencode(json_encode($streams)); ?>" />
+    <div id="streamsCreationLiveChart"></div>
+</div>
+
+<div class="HrWrapper">
+    <hr class="Hr" />
+</div>
+
+<h2>Stream creation monitoring(total: <?php echo count($streams); ?>) - weekly distributed</h2>
 <div class="ChartWrapper">
     <input type="hidden" id="streamsCreationChartData" value="<?php echo urlencode(json_encode($streams)); ?>" />
     <canvas id="streamsCreationChart" height="400" />
@@ -139,4 +150,3 @@
     <input type="hidden" id="streamsAttachmentChartData" value="<?php echo urlencode(json_encode($attachments)); ?>" />
     <canvas id="streamsAttachmentChart" height="400" />
 </div>
-

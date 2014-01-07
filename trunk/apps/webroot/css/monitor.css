@@ -6,6 +6,12 @@
     overflow: hidden;
     padding: 0 0 20px;
 }
+.ChartWrapperExpand {
+    width: 90%;
+    min-height: 400px;
+    padding: 0 0 0 20px;
+    background: url(../images/icon-loading.gif) no-repeat center center;
+}
 .MonitoringActiveUsersList {
     width: 100%;
     overflow: hidden;
