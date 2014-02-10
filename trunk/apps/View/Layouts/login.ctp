@@ -19,7 +19,7 @@
 	<div id="outer">
         <div id="header">
             <h1><a href="<?php echo Configure::read("root_url") ?>" title="Zenwork(alpha version)" class="Logo"><img src="<?php echo Configure::read("root_url") ?>/images/logo-zenwork-big.png" alt="Zenwork(alpha version)" /></a></h1>
-            <div class="BoxContact"><a href="mailto:khoant@vng.com.vn" title="Send an email to get support from Zenwork team">Need support?</a></div>
+            <div class="BoxContact"><a href="mailto:zenwork.me@gmail.com?Subject=[ZW-Help]" title="Send an email to get support from Zenwork team">Need support?</a></div>
         </div>
 
         <div id="content">

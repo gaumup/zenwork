@@ -113,7 +113,7 @@
     <hr class="Hr" />
 </div>
 
-<h2>Stream creation monitoring(total: <?php echo count($streams); ?>)</h2>
+<h2>Streams creation daily monitoring(total: <?php echo count($streams); ?>)</h2>
 <div class="ChartWrapper ChartWrapperExpand">
     <input type="hidden" id="streamsCreationLiveChartData" value="<?php echo urlencode(json_encode($streams)); ?>" />
     <div id="streamsCreationLiveChart"></div>
@@ -123,7 +123,7 @@
     <hr class="Hr" />
 </div>
 
-<h2>Stream creation monitoring(total: <?php echo count($streams); ?>) - weekly distributed</h2>
+<h2>Streams creation monitoring(total: <?php echo count($streams); ?>) - weekly distributed</h2>
 <div class="ChartWrapper">
     <input type="hidden" id="streamsCreationChartData" value="<?php echo urlencode(json_encode($streams)); ?>" />
     <canvas id="streamsCreationChart" height="400" />
@@ -139,10 +139,10 @@
     <canvas id="streamListsCreationChart" height="400" />
 </div>
 
-<h2>Comments(total: <?php echo count($comments); ?>)</h2>
-<div class="ChartWrapper">
+<h2>Comments daily monitoring(total: <?php echo count($comments); ?>)</h2>
+<div class="ChartWrapper ChartWrapperExpand">
     <input type="hidden" id="streamsCommentChartData" value="<?php echo urlencode(json_encode($comments)); ?>" />
-    <canvas id="streamsCommentChart" height="400" />
+    <div id="streamsCommentChart"></div>
 </div>
 
 <h2>Files(total: <?php echo count($attachments); ?>)</h2>

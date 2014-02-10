@@ -10,8 +10,8 @@ jQuery(document).ready(function () {
                 $canvas.attr('width', $canvas.parent().width());
                 new Chart(ctx).Line(
                     {
-                        labels : opts.labels,
-                        datasets : opts.datasets
+                        labels: opts.labels,
+                        datasets: opts.datasets
                     },
                     $.extend({}, Zenwork.Chart.Line.defaults, opts.config)
                 );
@@ -22,11 +22,11 @@ jQuery(document).ready(function () {
                 store: {
                     /*
                      * key: {
-                     *    fillColor : 'rgba(220,220,220,0.5)',
-                     *    strokeColor : 'rgba(220,220,220,1)',
-                     *    pointColor : 'rgba(220,220,220,1)',
-                     *    pointStrokeColor : '#fff',
-                     *    data : [100, 80, 90, 95, 110, 100, 50, 0, 0, 0, 0, 0]
+                     *    fillColor: 'rgba(220,220,220,0.5)',
+                     *    strokeColor: 'rgba(220,220,220,1)',
+                     *    pointColor: 'rgba(220,220,220,1)',
+                     *    pointStrokeColor: '#fff',
+                     *    data: [100, 80, 90, 95, 110, 100, 50, 0, 0, 0, 0, 0]
                      * }
                      */
                 },
@@ -94,15 +94,15 @@ jQuery(document).ready(function () {
             createdStreamsLiveDataIndexed.push([Number(key), value]);
         });
         $('#streamsCreationLiveChart').highcharts('StockChart', {
-            rangeSelector : {
-                selected : 1
+            rangeSelector: {
+                selected: 5
             },
-            title : {
-                text : 'Streams created monitoring'
+            title: {
+                text: 'Streams created monitoring'
             },
-            series : [{
-                name : 'Streams created monitoring',
-                data : createdStreamsLiveDataIndexed,
+            series: [{
+                name: 'Streams created monitoring',
+                data: createdStreamsLiveDataIndexed,
                 tooltip: {
                     valueDecimals: 2
                 }
@@ -135,11 +135,11 @@ jQuery(document).ready(function () {
         streamListsCreationStatisticModel.setLabels(['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']);
         streamListsCreationStatisticModel.setDatasets({
             created: { //actual
-                fillColor : 'rgba(151, 187, 205, 0.5)',
-                strokeColor : 'rgba(151, 187,205 ,1)',
-                pointColor : 'rgba(151, 187, 205, 1)',
-                pointStrokeColor : '#fff',
-                data : createdStreamListsData
+                fillColor: 'rgba(151, 187, 205, 0.5)',
+                strokeColor: 'rgba(151, 187,205 ,1)',
+                pointColor: 'rgba(151, 187, 205, 1)',
+                pointStrokeColor: '#fff',
+                data: createdStreamListsData
             }
         });
 
@@ -169,11 +169,11 @@ jQuery(document).ready(function () {
         streamsCreationStatisticModel.setLabels(['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']);
         streamsCreationStatisticModel.setDatasets({
             created: { //actual
-                fillColor : 'rgba(151, 187, 205, 0.5)',
-                strokeColor : 'rgba(151, 187,205 ,1)',
-                pointColor : 'rgba(151, 187, 205, 1)',
-                pointStrokeColor : '#fff',
-                data : createdStreamsData
+                fillColor: 'rgba(151, 187, 205, 0.5)',
+                strokeColor: 'rgba(151, 187,205 ,1)',
+                pointColor: 'rgba(151, 187, 205, 1)',
+                pointStrokeColor: '#fff',
+                data: createdStreamsData
             }
         });
 
@@ -203,46 +203,48 @@ jQuery(document).ready(function () {
         streamListsCreationStatisticModel.setLabels(['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']);
         streamListsCreationStatisticModel.setDatasets({
             created: { //actual
-                fillColor : 'rgba(151, 187, 205, 0.5)',
-                strokeColor : 'rgba(151, 187,205 ,1)',
-                pointColor : 'rgba(151, 187, 205, 1)',
-                pointStrokeColor : '#fff',
-                data : createdStreamListsData
+                fillColor: 'rgba(151, 187, 205, 0.5)',
+                strokeColor: 'rgba(151, 187,205 ,1)',
+                pointColor: 'rgba(151, 187, 205, 1)',
+                pointStrokeColor: '#fff',
+                data: createdStreamListsData
             }
         });
 
         //draw chart: #streamsCommentChart
-        var commentsData = [0, 0, 0, 0, 0, 0, 0];
+        var commentsData = {};
         var comments = JSON.parse(unescape($('#streamsCommentChartData').val()));
         $.each(comments, function (index, value) {
-            //Sun = 0
-            var index = new Date(value*1000).getDay();
-            if ( index == 0 ) {
-                index = 6;
+            var _dateObj = new Date(value*1000);
+            var _date = _dateObj.getDate();
+            var _month = _dateObj.getMonth();
+            var _year = _dateObj.getFullYear();
+            var _index = new Date(_year, _month, _date).valueOf();
+            if ( commentsData[_index] === undefined ) {
+                commentsData[_index] = 1;
             }
             else {
-                --index;
+                commentsData[_index]++;
             }
-            commentsData[index]++;
         });
-        var commentStatisticModel = new Zenwork.Monitor.LineChartModel($('#streamsCommentChart').removeClass('ZWPending'));
-        commentStatisticModel.config({
-            pointValue: true,
-            //scaleOverride: true,
-            //scaleSteps: commentsData.length/10,
-            //scaleStepWidth: 10,
-            //scaleStartValue: 0,
-            scaleLabel: '<%=value%>'
+        var commentsDataIndexed = [];
+        $.each(commentsData, function (key, value) {
+            commentsDataIndexed.push([Number(key), value]);
         });
-        commentStatisticModel.setLabels(['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']);
-        commentStatisticModel.setDatasets({
-            created: { //actual
-                fillColor : 'rgba(151, 187, 205, 0.5)',
-                strokeColor : 'rgba(151, 187,205 ,1)',
-                pointColor : 'rgba(151, 187, 205, 1)',
-                pointStrokeColor : '#fff',
-                data : commentsData
-            }
+        $('#streamsCommentChart').highcharts('StockChart', {
+            rangeSelector: {
+                selected: 5
+            },
+            title: {
+                text: 'Comments monitoring'
+            },
+            series: [{
+                name: 'Comments monitoring',
+                data: commentsDataIndexed,
+                tooltip: {
+                    valueDecimals: 2
+                }
+            }]
         });
 
         //draw chart: #streamsAttachmentChart
@@ -271,11 +273,11 @@ jQuery(document).ready(function () {
         attachmentStatisticModel.setLabels(['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']);
         attachmentStatisticModel.setDatasets({
             created: { //actual
-                fillColor : 'rgba(151, 187, 205, 0.5)',
-                strokeColor : 'rgba(151, 187,205 ,1)',
-                pointColor : 'rgba(151, 187, 205, 1)',
-                pointStrokeColor : '#fff',
-                data : attachmentsData
+                fillColor: 'rgba(151, 187, 205, 0.5)',
+                strokeColor: 'rgba(151, 187,205 ,1)',
+                pointColor: 'rgba(151, 187, 205, 1)',
+                pointStrokeColor: '#fff',
+                data: attachmentsData
             }
         });
     })(jQuery);

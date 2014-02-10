@@ -28,6 +28,16 @@
  */
     Router::connect('/', array('controller' => 'dashboard', 'action' => 'index'));
     Router::connect('/auth', array('controller' => 'pages', 'action' => 'index'));
+    
+    /*
+     * RESTFul Api
+     */
+    Router::connect(
+        '/api/user/:id/task/all',
+        array('controller' => 'api', 'action' => 'getUserTasks'),
+        array('id' => '[0-9]+')
+    );
+
     Router::connect('/:controller', array('controller' => ':controller'));
     Router::connect('/:controller/:action/*', array('controller' => ':controller', 'action' => ':action/*'));
 /**
