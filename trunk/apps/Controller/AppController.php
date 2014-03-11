@@ -8,13 +8,7 @@
         public function beforeFilter () {
             //configure 'Auth' components
             $this->autoRedirect = false;
-            $this->Auth->authenticate = array(
-                'Form' => array(
-                    'userModel' => 'User',
-                    //'scope' => array('User.is_blocked' => 0),
-                    'fields' => array('username' => 'username', 'password' => 'password')
-                )
-            );
+            $this->Auth->authenticate = array('Custom');
             $this->Auth->loginAction = array(
                 'controller' => 'auth',
                 'action' => 'login'
@@ -23,7 +17,13 @@
             $this->Auth->authorize = 'Controller';
             if ( $this->action !== 'login' && $this->action !== 'signup' ) {
                 if ( !empty($this->request->query) && $this->action !== 'forgotPwd' ) {
-                    $this->Session->write('Auth.redirectUrl', Configure::read('root_url').'/'.$this->request->query['url']);
+                    $query = $this->request->query;
+                    unset($query['url']);
+                    $this->Session->write('Auth.redirectUrl',
+                        Configure::read('root_url')
+                            .'/'.$this->request->query['url']
+                            .'?'.http_build_query($query)
+                    );
                 }
                 else {
                     $this->Session->write('Auth.redirectUrl', Configure::read('root_url'));
@@ -282,7 +282,7 @@
                 $now = time();
                 $this->loadModel('Scomment');
                 if ( $this->Scomment->save(array(
-                    'comment' => $postData['comment'],
+                    'comment' => $this->replace_url($postData['comment']),
                     'by' => $this->Auth->User('id'),
                     'when' => $now,
                     'sid' => $sid
@@ -307,7 +307,7 @@
                             'New comment on task "'.$stream['Stream']['name'].'"',
                             $action,
                             '',
-                            '',
+                            Configure::read('root_url').'/planner?sid='.$sid,
                             $this->_recipients($sid, array($stream['Creator']['email']))
                         );
 
@@ -583,12 +583,15 @@
                             }
                         }
 
+                        /* Refactoring 07-Mar-2014: no need $lid in url anymore because stream possible moved to another plan
+                         * after that, so we will get $lid when user click on link in email
                         $this->loadModel('Stream_list_map');
                         list($lid) = array_values($this->Stream_list_map->find('list', array(
                             'conditions' => array('Stream_list_map.sid' => $timeline['Stream']['id']),
                             'fields' => array('Stream_list_map.lid'),
                             'limit' => 1
                         )));
+                        */
 
                         //send mail to user
                         if ( $this->Auth->User('email') != $assignee['email'] ) {
@@ -602,7 +605,7 @@
                             $email->viewVars(array(
                                 'stream' => $timeline['Stream'],
                                 'assigner' => $this->Auth->User('username'),
-                                'url' => Configure::read('root_url').'/planner#!'.$lid.'?sid='.$timeline['Stream']['id']
+                                'url' => Configure::read('root_url').'/planner?sid='.$timeline['Stream']['id']
                             ));
                             $email->delivery = 'smtp';
                             $email->send();
@@ -739,18 +742,21 @@
                     $this->loadModel('User');
                     $creator = $this->User->findById($timeline['Stream']['creatorID'], array('User.username', 'User.email'));
 
+                    /* Refactoring 07-Mar-2014: no need $lid in url anymore because stream possible moved to another plan
+                     * after that, so we will get $lid when user click on link in email
                     $this->loadModel('Stream_list_map');
                     list($lid) = array_values($this->Stream_list_map->find('list', array(
                         'conditions' => array('Stream_list_map.sid' => $timeline['Stream']['id']),
                         'limit' => 1
                     )));
+                    */
 
                     //send email notification to creator
                     $this->notify(
                         $this->Auth->User('username').' '.($completed == 3 ? 'completed' : 'uncompleted').' task "'.$timeline['Stream']['name'].'"',
                         ($completed == 3 ? 'completed' : 'uncompleted').' task "'.($timeline['Stream']['name']).'". Timeline from "'.date('d-M-Y', $timeline['Timeline']['start']).'" to "'.date('d-M-Y', $timeline['Timeline']['end']).'"',
                         '',
-                        Configure::read('root_url').'/planner#!'.$lid.'?sid='.$timeline['Stream']['id'],
+                        Configure::read('root_url').'?sid='.$timeline['Stream']['id'],
                         $this->_recipients($timeline['Stream']['id'], array($creator['User']['email']))
                     );
 
@@ -926,6 +932,26 @@
             }
             return array_unique(array_merge($this->Stream_follower->getFollowersEmail($sid), $assigneeEmail, $recipients));
         }
+
+        protected function get_bitly_url ($url) {
+            $this->autoRender = false;
+            $bitly = new BitlyConsumer();
+            return $bitly->get_bitly_short_url($url);
+        }
+
+        private function replace_url_bitly ($matches) {
+            return $this->get_bitly_url($matches[0]);
+            
+            //$url = $this->get_bitly_url($matches[0]);
+            //return '<a href="'.$url.'">'.$url.'</a>';
+        }
+        private function replace_url ($html) {
+            return preg_replace_callback(
+                '(https?://([-\w\.]+)+(:\d+)?(/([\w/_\.]*(\?\S+)?)?)?)',
+                'self::replace_url_bitly',
+                $html
+            );
+        }
     }
 
     /**
@@ -937,4 +963,36 @@
      * Exception class for illegal request
      */
     class IllegalException extends CakeException {}
+
+    class BitlyConsumer {
+        private $token = 'e4fee321359cc64321cb95468d41471e7eec35df';
+        private $clientID = 'c7c375ac8369582dca3ce8b9bd98e40b6ea1e01e';
+        private $clientSecret = '5bb77aaadb6d1b5d9d8904f25688306494ff9749';
+        private $login = 'ukhome';
+        private $appkey = 'R_e50eb30b580448a18ea065b33ffb351f';
+
+        /* returns the shortened url */
+        public function get_bitly_short_url ($url, $format='txt') {
+            $connectURL = 'http://api.bit.ly/v3/shorten?login='.$this->login.'&apiKey='.$this->appkey.'&uri='.urlencode($url).'&format='.$format;
+            return $this->curl_get_result($connectURL);
+        }
+
+        /* returns expanded url */
+        public function get_bitly_long_url ($url, $format='txt') {
+            $connectURL = 'http://api.bit.ly/v3/expand?login='.$this->login.'&apiKey='.$this->appkey.'&shortUrl='.urlencode($url).'&format='.$format;
+            return $this->curl_get_result($connectURL);
+        }
+
+        /* returns a result form url */
+        private function curl_get_result ($url) {
+            $ch = curl_init();
+            $timeout = 5;
+            curl_setopt($ch,CURLOPT_URL,$url);
+            curl_setopt($ch,CURLOPT_RETURNTRANSFER,1);
+            curl_setopt($ch,CURLOPT_CONNECTTIMEOUT,$timeout);
+            $data = curl_exec($ch);
+            curl_close($ch);
+            return $data;
+        }
+    }
 ?>

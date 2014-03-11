@@ -37,6 +37,17 @@
 
             $this->loadModel('Help');
             $this->set('myHelp', $this->Help->getUserHelp($this->Auth->user('id'), $this->params['controller']));
+
+            $this->set('defaultPlanID', $this->Auth->user('defaultPlanID'));
+
+            if ( isset($this->request->query['sid']) ) {
+                $this->loadModel('Stream_list_map');
+                list($lid) = array_values($this->Stream_list_map->find('list', array(
+                    'conditions' => array('Stream_list_map.sid' => $this->request->query['sid']),
+                    'fields' => array('Stream_list_map.lid')
+                )));
+                $this->redirect(Configure::read('root_url').'/planner#!'.$lid.'?sid='.$this->request->query['sid']);
+            }
         }
 
         /** stream
@@ -275,6 +286,23 @@
 
                 $this->set(compact('lid', 'postData'));
                 $this->render('filter_stream_list');
+            }
+        }
+
+        public function setDefaultPlan ($lid) {
+            $this->autoRender = false;
+            if ( $this->request->isAjax() ) {
+                //need to be validated list ID before saving: user joined list or not? list id exists or not?
+                $this->loadModel('User');
+                $this->User->id = $this->Auth->user('id');
+                if ( $this->User->save(array(
+                    'User' => array(
+                        'defaultPlanID' => $lid
+                    )
+                )) ) {
+                     $this->Session->write('Auth.User.defaultPlanID', $lid);
+                    return true;
+                }
             }
         }
         

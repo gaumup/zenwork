@@ -79,6 +79,7 @@
                     streamOutdentBtn: 'StreamOutdentBtn',
                     streamAttachmentBtn: 'StreamAttachmentBtn',
                     streamDeleteBtn: 'StreamDeleteBtn',
+                    streamDeleteBtnPopup: 'StreamDeleteBtnPopup',
                     streamCompletionBtn: 'StreamCompletionBtn',
                     streamCompletionDisabledBtn: 'StreamCompletionDisabledBtn',
                     streamCompletedBtn: 'StreamCompletedBtn',
@@ -1620,6 +1621,12 @@
                 //workload estimation(planning) control
                 this._initWorkloadPlanningControl();
                 
+                //delete stream button
+                Zenwork.StreamPopup.wrapper.on('click.stream', '.'+opts.cssClass.streamDeleteBtnPopup, function (e) {
+                    self._deleteStream(e, stream, true, function() {});
+                    return false;
+                });
+
                 //init completion, delete, calendar & assignee control
                 Zenwork.StreamPopup.wrapper.on('click.stream', '.StreamTimelineBlockDelete', function (e) {
                     if ( Zenwork.Dialog !== undefined ) {

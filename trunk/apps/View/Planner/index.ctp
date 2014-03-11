@@ -31,7 +31,7 @@
             <div class="FilterBlock">
                 <div class="StreamListSelectionWrapper">
                     <div id="streamListSelectionContainer" class="StreamListSelectionContainer">
-                        <p class="StreamListSelectionTitle"><input type="text" class="TextInput QTip" placeholder="Select a plan to view" id="streamListSelectionSearch" title="Type search or select a plan to view" data-qtip-my="left center" data-qtip-at="right center" /></p>
+                        <p class="StreamListSelectionTitle"><input type="text" class="TextInput QTip" placeholder="Select a plan to view" id="streamListSelectionSearch" title="Type search or select a plan to view" data-qtip-my="left center" data-qtip-at="right center" data-default-plan-id="<?php echo $defaultPlanID; ?>" /></p>
                         <ul class="StreamListSelection" id="streamListSelection">
                             <li><a href="1" title="">[default]</a></li>
                             <?php foreach ($streamList as $list) : ?>
@@ -45,6 +45,12 @@
                 </div>
 
                 <a href="#" id="createNewStreamList" title="Create new plan" class="QTip CommonButtonLnk CommonButtonLnkSmall TextBtn" data-qtip-my="left center" data-qtip-at="right center">Create new plan</a>
+
+                <label class="GanttToolbarBtn QTip QTipPermanent GanttToolbarCheckbox" for="setDefaultPlanBtn" data-qtip-my="left center" data-qtip-at="right center" title="Set current opened plan as default view plan when you visit planner page">
+                    <span class="ZWHelpPopup ZWHelpPopupAlt01">help</span>
+                    <input type="checkbox" id="setDefaultPlanBtn" autocomplete="off">
+                    Set as default plan
+                </label>
 
                 <a href="#" title="Filter task view by people or keyword" class="QTip CommonButtonLnk CommonButtonLnkSmall CommonButtonLnkCompact GanttFilter GanttToolbarBtn" id="filterStreamList" data-qtip-my="left center" data-qtip-at="right center">Filter view</a>
 

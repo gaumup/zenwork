@@ -37,9 +37,15 @@
                 'User' => $postData['Register']    
             );
             $this->validator()
-                ->add('username', 'required', array(
-                    'rule' => 'notEmpty',
-                    'message' => 'Username can not be blank!'
+                ->add('username', array(
+                    'required' => array(
+                        'rule' => 'alphaNumeric',
+                        'message' => 'Username can not be blank!'
+                    ),
+                    'uniqueUsername' => array(
+                        'rule' => 'uniqueUsername',
+                        'message' => 'Sorry, this username already taken<br />Please choose a different name.'
+                    )
                 ))
                 ->add('email', array(
                     'required' => array(
@@ -73,10 +79,12 @@
         public function checkPwdConfirm () {
             return strcmp($this->data['User']['password'], $this->data['User']['confirm_password']) == 0;
         }
+        public function uniqueUsername () {
+            return $this->find('count', array('conditions'=>array('User.username LIKE' => $this->data['User']['username']))) == 0;
+        }
         public function uniqueEmail () {
             return $this->find('count', array('conditions'=>array('User.email LIKE' => $this->data['User']['email']))) == 0;
         }
-
 
         public function beforeSave ($options=array()) {
             //hashing password before save, use in 'change_pwd' action

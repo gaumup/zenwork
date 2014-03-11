@@ -431,7 +431,11 @@
             $this->autoRender = false;
             if ( $this->request->isAjax() ) {
                 $this->loadModel('Users_timeline');
-                return json_encode($this->Users_timeline->getUsersFollowedTaskList($this->Auth->User('id')));
+                $followedTaskList = $this->Users_timeline->getUsersFollowedTaskList($this->Auth->User('id'));
+                foreach ( $followedTaskList as &$task ) {
+                    $task['Stream']['deadline'] = date('d-M-Y', $task['Timeline']['end']);
+                }
+                return json_encode($followedTaskList);
             }
         }
 
@@ -467,6 +471,7 @@
             return $filter; 
         }
         private function _applyFilter (&$item, $filterBy, $time) {
+            $item['Stream']['deadline'] = date('d-M-Y', $item['Timeline']['end']);
             switch ($filterBy) {
                 case 'today':
                     if ( $item['Timeline']['end'] < $time ) {

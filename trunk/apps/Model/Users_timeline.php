@@ -55,15 +55,33 @@
             );
             if ( !empty($timeBounce) ) {
                 $conditions = array_merge($conditions, array(
-                    'Timeline.start >=' => $timeBounce[0],   
-                    'Timeline.end <=' => $timeBounce[1]      
+                    'OR' => array(
+                        array(
+                            'AND' => array(
+                                'Timeline.start >=' => $timeBounce[0],   
+                                'Timeline.start <=' => $timeBounce[1]
+                            )
+                        ),
+                        array(
+                            'AND' => array(
+                                'Timeline.end >=' => $timeBounce[0],   
+                                'Timeline.end <=' => $timeBounce[1]
+                            )
+                        ),
+                        array(
+                            'AND' => array(
+                                'Timeline.start <=' => $timeBounce[0],   
+                                'Timeline.end >=' => $timeBounce[1]
+                            )
+                        )
+                    )
                 ));
             }
             $tasklist = $this->find('all', array(
                 'conditions' => $conditions,
                 'joins' => $joins,
                 'fields' => array('Stream.*', 'Timeline.start', 'Timeline.end', 'Timeline.effort', 'Users_timeline.completed', 'Users_timeline.id', 'Users_timeline.effort', 'Stream_list_map.*'),
-                'order' => array('Users_timeline.completed asc', 'Timeline.start asc')
+                'order' => array('Timeline.end asc', 'Users_timeline.completed asc', 'Timeline.start asc')
             ));
             foreach ( $tasklist as $key => $_task ) {
                 $tasklist[$key]['Stream']['slmid'] = $_task['Stream_list_map']['id'];
@@ -113,7 +131,7 @@
                 'conditions' => array('Stream_follower.uid'=>$uid),
                 'joins' => $joins,
                 'fields' => array('Stream.*', 'Timeline.start', 'Timeline.end', 'Timeline.effort', 'Users_timeline.completed', 'Users_timeline.id', 'Users_timeline.effort', 'Stream_list_map.*'),
-                'order' => array('Users_timeline.completed asc', 'Timeline.start asc')
+                'order' => array('Timeline.end asc', 'Users_timeline.completed asc', 'Timeline.start asc')
             ));
             $now = time();
             foreach ( $tasklist as &$_task ) {

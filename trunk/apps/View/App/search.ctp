@@ -21,7 +21,7 @@
                 );
                 echo '</a>';
                 $description = urldecode($_r['Stream']['description']);
-                echo '    <p>'.(strlen($description) < $maxlength ? $description : substr($description, 0, $maxlength).'...').'</p>';
+                echo '    <p>'.htmlspecialchars(strlen($description) < $maxlength ? $description : mb_substr($description, 0, $maxlength).'...').'</p>';
                 echo '    <p class="TextAlt01">Created by</strong>&nbsp;'.$_r['Creator']['username'].'</p>';
                 echo '</li>';
             }

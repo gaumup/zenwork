@@ -115,7 +115,6 @@ jQuery(document).ready(function () {
                     ){
                         taskEffortInPercent *= .5;
                     }
-                    if (startOn.getDate()<='3' & deadline.getDate()>=3){console.log(taskEffortInPercent)}
                     //totals workload
                     if ( dailyTasks[i] == undefined ) {
                         dailyTasks[i] = taskEffortInPercent;
@@ -292,7 +291,7 @@ jQuery(document).ready(function () {
             },
             error: function (jqXHR, textStatus, errorThrown) {
                 if ( textStatus !== 'abort' ) {
-                    alert('Really sorry for this, network error! Please try again!');
+                    //alert('Really sorry for this, network error! Please try again!');
                 }
             }
         });
@@ -419,7 +418,7 @@ jQuery(document).ready(function () {
             },
             error: function (jqXHR, textStatus, errorThrown) {
                 if ( textStatus !== 'abort' ) {
-                    alert('Really sorry for this, network error! Please try again!');
+                    //alert('Really sorry for this, network error! Please try again!');
                 }
             }
         });
@@ -756,7 +755,7 @@ jQuery(document).ready(function () {
                 },
                 error: function (jqXHR, textStatus, errorThrown) {
                     if ( textStatus !== 'abort' ) {
-                        alert('Really sorry for this, network error! Please try again!');
+                        //alert('Really sorry for this, network error! Please try again!');
                     }
                 }
             });
@@ -1018,7 +1017,7 @@ jQuery(document).ready(function () {
                     var sid = opts.listPrefix+self.PREFIX+data.id;
                     //DOM
                     var streamElement = $(
-                        '<li class="'+opts.cssClass.streamElement+' '+opts.cssClass.streamLeaf+' '+(isCreator ? opts.cssClass.streamCreator : '')+' '+(isAjax ? opts.cssClass.unassignedTask : '')+'">'+
+                        '<li title="Deadline: '+data.deadline+'" class="QTip '+opts.cssClass.streamElement+' '+opts.cssClass.streamLeaf+' '+(isCreator ? opts.cssClass.streamCreator : '')+' '+(isAjax ? opts.cssClass.unassignedTask : '')+'">'+
                         '    <div id='+sid+' class="StreamRow">'+
                         '        <a href="#'+sid+'" title="" class="'+opts.cssClass.streamActionBtn+' '+opts.cssClass.streamDetailsBtn+'">Click to see stream\'s details</a>'+
                         '        <a href="#'+sid+'" rel="comment" title="Comment" class="'+opts.cssClass.streamActionBtn+' '+opts.cssClass.streamCommentBtn+'"><span>'+data.countComment+'<span></a>'+
@@ -1073,7 +1072,7 @@ jQuery(document).ready(function () {
                             }
                         },
                         error: function (jqXHR, textStatus, errorThrown) {
-                            alert('Really sorry for this, network error! Please try again!');
+                            //alert('Really sorry for this, network error! Please try again!');
                         }
                     });
                 }
@@ -1131,7 +1130,7 @@ jQuery(document).ready(function () {
                     },
                     error: function (jqXHR, textStatus, errorThrown) {
                         if ( textStatus !== 'abort' ) {
-                            alert('Really sorry for this, network error! Please try again!');
+                            //alert('Really sorry for this, network error! Please try again!');
                         }
                     },
                     complete: function (jqXHR, textStatus) {}
@@ -1152,7 +1151,7 @@ jQuery(document).ready(function () {
                     },
                     error: function (jqXHR, textStatus, errorThrown) {
                         if ( textStatus !== 'abort' ) {
-                            alert('Really sorry for this, network error! Please try again!');
+                            //alert('Really sorry for this, network error! Please try again!');
                         }
                     },
                     complete: function (jqXHR, textStatus) {}
@@ -1541,7 +1540,7 @@ jQuery(document).ready(function () {
                         },
                         error: function (jqXHR, textStatus, errorThrown) {
                             if ( textStatus !== 'abort' ) {
-                                alert('Really sorry for this, network error! Please try again!');
+                                //alert('Really sorry for this, network error! Please try again!');
                             }
                         },
                         complete: function (jqXHR, textStatus) {}
@@ -1614,7 +1613,7 @@ jQuery(document).ready(function () {
                             },
                             error: function (jqXHR, textStatus, errorThrown) {
                                 if ( textStatus !== 'abort' ) {
-                                    alert('Really sorry for this, network error! Please try again!');
+                                    //alert('Really sorry for this, network error! Please try again!');
                                 }
                             }
                         });
@@ -1692,7 +1691,7 @@ jQuery(document).ready(function () {
                     },
                     error: function (jqXHR, textStatus, errorThrown) {
                         if ( textStatus !== 'abort' ) {
-                            alert('Really sorry for this, network error! Please try again!');
+                            //alert('Really sorry for this, network error! Please try again!');
                         }
                     }
                 });
@@ -1853,7 +1852,7 @@ Zenwork.Team = {
                             },
                             error: function (jqXHR, textStatus, errorThrown) {
                                 if ( textStatus !== 'abort' ) {
-                                    alert('Really sorry for this, network error! Please try again!');
+                                    //alert('Really sorry for this, network error! Please try again!');
                                 }
                             }
                         });
@@ -1886,7 +1885,7 @@ Zenwork.Team = {
                                     },
                                     error: function (jqXHR, textStatus, errorThrown) {
                                         if ( textStatus !== 'abort' ) {
-                                            alert('Really sorry for this, network error! Please try again!');
+                                            //alert('Really sorry for this, network error! Please try again!');
                                         }
                                     }
                                 }); 
@@ -1900,7 +1899,7 @@ Zenwork.Team = {
                 },
                 error: function (jqXHR, textStatus, errorThrown) {
                     if ( textStatus !== 'abort' ) {
-                        alert('Really sorry for this, network error! Please try again!');
+                        //alert('Really sorry for this, network error! Please try again!');
                     }
                 }
             });
@@ -1966,7 +1965,7 @@ Zenwork.Team = {
                 },
                 error: function (jqXHR, textStatus, errorThrown) {
                     if ( textStatus !== 'abort' ) {
-                        alert('Really sorry for this, network error! Please try again!');
+                        //alert('Really sorry for this, network error! Please try again!');
                     }
                 }
             });
@@ -2039,7 +2038,7 @@ Zenwork.Team = {
                 },
                 error: function (jqXHR, textStatus, errorThrown) {
                     if ( textStatus !== 'abort' ) {
-                        alert('Really sorry for this, network error! Please try again!');
+                        //alert('Really sorry for this, network error! Please try again!');
                     }
                 },
                 complete: function (jqXHR, textStatus) {
@@ -2062,7 +2061,7 @@ Zenwork.Team = {
                 },
                 error: function (jqXHR, textStatus, errorThrown) {
                     if ( textStatus !== 'abort' ) {
-                        alert('Really sorry for this, network error! Please try again!');
+                        //alert('Really sorry for this, network error! Please try again!');
                     }
                 }
             });
@@ -2088,7 +2087,7 @@ Zenwork.Team = {
                 },
                 error: function (jqXHR, textStatus, errorThrown) {
                     if ( textStatus !== 'abort' ) {
-                        alert('Really sorry for this, network error! Please try again!');
+                        //alert('Really sorry for this, network error! Please try again!');
                     }
                 }
             });

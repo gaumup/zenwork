@@ -7,6 +7,10 @@
             <p class="StreamAuthor">Created by <?php echo $stream['Creator']['username']; ?><br />
             <small><?php echo $this->Time->timeAgoInWords($stream['Stream']['createdOn']); ?></small>
             </p>
+
+            <?php if ( $isCreator ) : ?>
+            <a href="<?php echo $stream['Stream']['id']; ?>" title="Delete this task" class="CommonButtonLnk CommonButtonLnkSmall CommonButtonLnkDialog StreamDeleteBtnPopup">Delete this task</a>
+            <?php endif; ?>
         </div>
 
         <div class="StreamBlock">

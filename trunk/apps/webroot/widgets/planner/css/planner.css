@@ -86,7 +86,7 @@
         background-color: #efefef;
     }
     .FilterBlock {
-        width: 635px;
+        width: 825px;
         margin: -3px 0 0 0;
         padding: 0;
         float: left;
@@ -792,3 +792,16 @@
             margin: 8px 4px 0 10px;
         }
 
+.GanttToolbarCheckbox {
+    float: right;
+    color: #444444;
+    font-size: 16px;
+    margin: 9px 10px 0 10px;
+}
+    .GanttToolbarCheckbox input {
+        float: left;
+        margin: 5px 5px 0 0;
+    }
+    .GanttToolbarCheckbox .ZWHelpPopup {
+        margin: 3px 5px 0 0 !important;
+    }

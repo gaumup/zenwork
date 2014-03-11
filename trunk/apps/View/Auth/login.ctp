@@ -32,7 +32,7 @@
                     </div>
 
                     <div class="FormRow">
-                        <input class="TextInput" value="<?php echo (!empty($this->data['User']) ? $this->data['User']['username'] : ""); ?>" type="text" name="data[User][username]" id="username" tabindex="1" placeholder="Username" autocomplete="off" />
+                        <input class="TextInput" value="<?php echo (!empty($this->data['User']) ? $this->data['User']['username'] : ""); ?>" type="text" name="data[User][username]" id="username" tabindex="1" placeholder="Username or Email" autocomplete="off" />
                     </div>
 
                     <div class="FormRow">

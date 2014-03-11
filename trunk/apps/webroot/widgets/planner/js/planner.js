@@ -3436,6 +3436,8 @@ Core.Mediator.installTo(Zenwork.Planner);
 
 jQuery(document).ready(function () { //ensure document is ready
     (function ($) {
+        var defaultPlanId = $('#streamListSelectionSearch').data('defaultPlanId');
+
         $('body').css({
             overflow: 'hidden'
         });
@@ -3674,6 +3676,22 @@ jQuery(document).ready(function () { //ensure document is ready
                 }
             });
             return false;
+        });
+        $('#setDefaultPlanBtn').on('change', function (e) {
+            Zenwork.Notifier.notify('Updating...', 0);
+            $.ajax({
+                type: 'POST',
+                url: Zenwork.Root+'/planner/setDefaultPlan/'+($(this).is(':checked') ? Zenwork.List.active : 0),
+                dataType: 'json', //receive from server
+                success: function (data, textStatus, jqXHR) {
+                    Zenwork.Notifier.notify('Updated', 0);
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    if ( textStatus !== 'abort' ) {
+                        alert('Really sorry for this, network error! Please try again!');
+                    }
+                }
+            });
         });
 
         //gant dialog
@@ -4032,6 +4050,12 @@ jQuery(document).ready(function () { //ensure document is ready
 
                     //init gantt control
                     _initGantControl_();
+                    if ( defaultPlanId != id ) {
+                        $('#setDefaultPlanBtn').removeAttr('checked');
+                    }
+                    else {
+                        $('#setDefaultPlanBtn').attr('checked', 'checked');
+                    }
 
                     //render data
                     _lazy_(data, lazyLimit, function () {
@@ -4088,11 +4112,17 @@ jQuery(document).ready(function () { //ensure document is ready
             }
         }
         hasher.prependHash = '!';
-        hasher.initialized.add(parseHash); //parse initial hash
         hasher.changed.add(parseHash); //parse hash changes
+        hasher.initialized.add(parseHash); //parse initial hash
         hasher.init(); //start listening for history change
 
         //setup Crossroads
+        crossroads.addRoute('/planner', function() {
+            //load default plan
+            if( defaultPlanId != 0 ) {
+                hasher.setHash(defaultPlanId);
+            }
+        });
         crossroads.addRoute('/planner#!{id}{?query}', function(id, query) {
             // query strings are decoded into objects
             Zenwork.Planner.app.planner('viewStream', query.sid);

@@ -33,7 +33,7 @@
      * RESTFul Api
      */
     Router::connect(
-        '/api/user/:id/task/all',
+        '/api/user/:id/task/all/:from/:to',
         array('controller' => 'api', 'action' => 'getUserTasks'),
         array('id' => '[0-9]+')
     );
