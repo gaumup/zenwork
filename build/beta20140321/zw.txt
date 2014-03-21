@@ -1,0 +1,24 @@
+﻿- PHP: version 5.3.20
+- Server: Apache/2.2.3 (CentOS)
+- MySQL server: version 5.0.77 via TCP/IP
+- MySQL client version: 5.0.77
+- MySQL charset: UTF-8 Unicode (utf8)
+- PHP extension: mysqli
+-------------------------------------
+.htaccess(root)
+
+php_value memory_limit 64M
+
+#Set the Maximum Input time
+php_value max_input_time 1000
+
+#Maximum size allowed in Post method
+php_value post_max_size 64M
+
+#Set the Maximum Execution Time for Script
+php_value max_execution_time 1000
+
+#Set the Maximum Upload Filesize
+php_value upload_max_filesize 64M
+-------------------------------------
+API: hiện tại cung cấp REST API cho 1 site là IMS(traffic concurrent tầm 50 users, tần suất không cao/day)

@@ -12,8 +12,6 @@
 
         public function beforeFilter () {
             parent::beforeFilter();
-
-            //check auth token
         }
         
         /*

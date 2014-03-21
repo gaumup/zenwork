@@ -3,12 +3,14 @@
 
     $this->Css->add('/widgets/countdown/fonts/stylesheet.css', false);
     $this->Css->add('/widgets/countdown/css/style.css', false);
-
+    
+    /* //use for maintenance
     $this->Html->script('/widgets/countdown/js/modernizr.custom.js', false);
     $this->Html->script('/widgets/countdown/js/jquery.countdown.js', false);
     $this->Html->script('/widgets/countdown/js/script.js', false);
+    */
 ?>
-<?php if ( time() >= mktime(9, 0, 0, 8, 12, 2013) ) : ?>
+<?php if (true) : ?>
 <ul class="AuthTab" id="authTab">
     <li <?php if (empty($this->data['Register'])) { echo 'class="Active"'; } ?>><a href="#signin" title="Sign in to Zenwork with your registered account" class="QTip" data-qtip-my="right center" data-qtip-at="left center" data-qtip-ajust="4px 0">Sign in to Zenwork</a></li>
     <li <?php if (!empty($this->data['Register'])) { echo 'class="Active"'; } ?>><a href="#signup" class="QTip" title="Currently not available on 'alpha' version" data-qtip-at="right center" data-qtip-my="left center">Create a free account</a></li>

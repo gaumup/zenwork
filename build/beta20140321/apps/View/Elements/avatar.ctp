@@ -1,0 +1,3 @@
+<?php
+    echo '<img onerror="this.src=\''.Configure::read('root_url').'/images/default-avatar.png\''.'" src="'.Configure::read('root_url').'/'.(empty($user['avatar']) ? 'images/default-avatar.png' : Configure::read('upload_path').'/'.$user['avatar']).'" title="'.(isset($title) ? $title : $user['username']).'" alt="'.$user['username'].'"'.(isset($width) ? ' width="'.$width.'"' : '').(isset($height) ? ' height="'.$height.'"' : '').(isset($id) ? ' id="'.$id.'"' : '').' '.(isset($class) ? ' class="'.$class.'"' : '').' />';
+?>

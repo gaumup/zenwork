@@ -1,0 +1,36 @@
+.MonitorParagraph {
+    padding: 0 0 0 22px;
+}
+.ChartWrapper {
+    width: 800px;
+    overflow: hidden;
+    padding: 0 0 20px;
+}
+.ChartWrapperExpand {
+    width: 90%;
+    min-height: 400px;
+    padding: 0 0 0 20px;
+    background: url(../images/icon-loading.gif) no-repeat center center;
+}
+.MonitoringActiveUsersList {
+    width: 100%;
+    overflow: hidden;
+}
+    .MonitoringActiveUsersList li {
+        float: left;
+        margin: 0 10px 10px 22px;
+        cursor: default;
+    }
+        .MonitoringActiveUsersList li img {
+            float: left;
+            border: 1px solid #999;
+            padding: 1px;
+        }
+        .MonitoringActiveUsersList li span {
+            font-size: 16px;
+            float: left;
+            margin: 3px 0 0 7px;
+        }
+            .MonitoringActiveUsersList li span em {
+                text-decoration: underline;
+            }
