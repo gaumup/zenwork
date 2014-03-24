@@ -756,7 +756,7 @@
                         $this->Auth->User('username').' '.($completed == 3 ? 'completed' : 'uncompleted').' task "'.$timeline['Stream']['name'].'"',
                         ($completed == 3 ? 'completed' : 'uncompleted').' task "'.($timeline['Stream']['name']).'". Timeline from "'.date('d-M-Y', $timeline['Timeline']['start']).'" to "'.date('d-M-Y', $timeline['Timeline']['end']).'"',
                         '',
-                        Configure::read('root_url').'?sid='.$timeline['Stream']['id'],
+                        Configure::read('root_url').'planner?sid='.$timeline['Stream']['id'],
                         $this->_recipients($timeline['Stream']['id'], array($creator['User']['email']))
                     );
 
