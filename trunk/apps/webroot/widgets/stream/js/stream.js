@@ -483,8 +483,11 @@
                     });
                     //close stream context menu
                     $(document).on('click.stream', function (e) {
-                        _closeUtil_();
-                        self._clearSelectedStream(e);
+                        if (e.which == 3) { e.stopPropagation(); }
+                        else {
+                            _closeUtil_();
+                            self._clearSelectedStream(e);
+                        }
                     });
                 }
                 
@@ -1567,6 +1570,9 @@
                     Zenwork.StreamPopup.wrapper.off(Zenwork.AssigneeDialog.EVENT.UPDATE);
                 }
                 Zenwork.StreamPopup.wrapper.off('click.stream');
+                Zenwork.StreamPopup.wrapper.on('contextmenu click mouseup mousedown', function(e) {
+                    e.stopPropagation();
+                });
 
                 var self = this;
                 var opts = this.options;

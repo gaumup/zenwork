@@ -1965,7 +1965,10 @@ Zenwork.Popup = {
             e.stopPropagation();
         });
         $(document).on('click', function (e) {
-            self.close.call(self, true);
+            if (e.which == 3) { e.stopPropagation(); }
+            else {
+                self.close.call(self, true);
+            }
         });
 
         this.wrapper.on('mouseenter', function (e) {
