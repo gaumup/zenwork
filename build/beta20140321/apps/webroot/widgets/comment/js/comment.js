@@ -97,8 +97,10 @@ Zenwork.Comment = { //Singleton
             });
         }
 
+        //already init, return
         if ( Zenwork.Comment.isInit ) { return Zenwork.Comment; }
         Zenwork.Comment.isInit = true;
+
         Zenwork.Comment.render = function (data, attachment) {
             attachment = attachment !== undefined ? attachment : 0;
             Zenwork.Comment.tmpData = '';
