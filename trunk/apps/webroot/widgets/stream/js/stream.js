@@ -1570,9 +1570,6 @@
                     Zenwork.StreamPopup.wrapper.off(Zenwork.AssigneeDialog.EVENT.UPDATE);
                 }
                 Zenwork.StreamPopup.wrapper.off('click.stream');
-                Zenwork.StreamPopup.wrapper.on('contextmenu click mouseup mousedown', function(e) {
-                    e.stopPropagation();
-                });
 
                 var self = this;
                 var opts = this.options;
