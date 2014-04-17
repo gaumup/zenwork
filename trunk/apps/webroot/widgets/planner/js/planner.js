@@ -4102,7 +4102,7 @@ jQuery(document).ready(function () { //ensure document is ready
                 },
                 error: function (jqXHR, textStatus, errorThrown) {
                     if ( textStatus !== 'abort' ) {
-                        alert('Really sorry for this, network error! Please try again!');
+                        //alert('Really sorry for this, network error! Please try again!');
                     }
                 }
             });
