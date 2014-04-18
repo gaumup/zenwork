@@ -1,22 +1,49 @@
-<!--
-<div class="ZWFeedbackDialog" id="zwFeedbackDialog">
-    <p>Tell us your opinion about ZENWORK.<br />
-    Need help? send us an email <a href="mailto:ukhome@gmail.com" title="Send us an email">support</a></p>
+<script>
+// Include the UserVoice JavaScript SDK (only needed once on a page)
+UserVoice=window.UserVoice||[];(function(){var uv=document.createElement('script');uv.type='text/javascript';uv.async=true;uv.src='//widget.uservoice.com/REK0Yjf5zUmFkzhBlzufA.js';var s=document.getElementsByTagName('script')[0];s.parentNode.insertBefore(uv,s)})();
 
-    <form action="#" id="zwFeedbackForm">
-        <fieldset>
-            <div class="FormRow">
-                <textarea spellcheck="false" placeholder="Type in your message..." id="zwFeedbackContent" class="Textarea"></textarea>
-            </div>
+//
+// UserVoice Javascript SDK developer documentation:
+// https://www.uservoice.com/o/javascript-sdk
+//
 
-            <div class="FormRow ButtonRow">
-                <a href="#" class="CommonButtonLnk" title="Send" id="zwSendFeedback">Send</a>
-                <a href="#" class="CommonButtonText" title="Send" id="zwCancelFeedback">Cancel</a>
-            </div>
-        </fieldset>
-    </form>
+// Set colors
+UserVoice.push(['set', {
+  accent_color: '#6aba2e',
+  trigger_color: '#6aba2e',
+  trigger_background_color: '#ffffff'
+}]);
 
-    <h3>Send us feedback</h3>
-</div>
--->
-<a href="mailto:zenwork.me@gmail.com?Subject=[ZW-Feedback]" title="Send us feedbacks" class="HelpLink">Need help?</a>
+// Identify the user and pass traits
+// To enable, replace sample data with actual user traits and uncomment the line
+UserVoice.push(['identify', {
+  //email:      'john.doe@example.com', // User’s email address
+  //name:       'John Doe', // User’s real name
+  //created_at: 1364406966, // Unix timestamp for the date the user signed up
+  //id:         123, // Optional: Unique id of the user (if set, this should not change)
+  //type:       'Owner', // Optional: segment your users by type
+  //account: {
+  //  id:           123, // Optional: associate multiple users with a single account
+  //  name:         'Acme, Co.', // Account name
+  //  created_at:   1364406966, // Unix timestamp for the date the account was created
+  //  monthly_rate: 9.99, // Decimal; monthly rate of the account
+  //  ltv:          1495.00, // Decimal; lifetime value of the account
+  //  plan:         'Enhanced' // Plan name for the account
+  //}
+}]);
+
+// Add default trigger to the bottom-right corner of the window:
+UserVoice.push(['addTrigger', { mode: 'contact', trigger_position: 'top-right' }]);
+
+// Or, use your own custom trigger:
+//UserVoice.push(['addTrigger', '#id', { mode: 'contact' }]);
+
+// Autoprompt for Satisfaction and SmartVote (only displayed under certain conditions)
+UserVoice.push(['autoprompt', {}]);
+</script>
+<style type="text/css">
+.uv-icon.uv-top-right {
+    top: 2px !important;
+    right: 4px !important;
+}
+</style>
