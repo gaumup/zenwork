@@ -44,7 +44,7 @@
          * arguments: listID
          * return streams via ajax in json format
          */
-        public function getTaskList () {
+        public function getTaskList ($year=null) {
             /* return json
              *    [ //array of 'Stream'
              *        {
@@ -77,7 +77,7 @@
                 $postData = $this->request->input('json_decode', true);
                 $this->loadModel('Users_timeline');
                 $tasks = $this->Users_timeline->getUserTaskList($this->Auth->User('id'));
-                $filter = $this->_filter($tasks, array('today', 'completed', 'todayCompleted'));
+                $filter = $this->_filter($tasks, array('today', 'completed', 'todayCompleted', 'currentYear'));
 
                 //TODO: get my created task which not assign to anybody or move into any plan
                 $this->loadModel('Stream');
@@ -89,7 +89,8 @@
                     'today' => $filter['today'],
                     'all' => $tasks,
                     'completed' => $filter['completed'],
-                    'todayCompleted' => $filter['todayCompleted']
+                    'todayCompleted' => $filter['todayCompleted'],
+                    'currentYear' => $filter['currentYear']
                 ));
             }
         }
@@ -489,6 +490,11 @@
                     break;
                 case 'completed':
                     return $item['Users_timeline']['completed'] >= 3;
+                    break;
+                case 'currentYear':
+                    $currentYear = date('Y', time());
+                    return date('Y', $item['Timeline']['start']) == $currentYear 
+                        || date('Y', $item['Timeline']['end']) == $currentYear;
                     break;
             }
         }

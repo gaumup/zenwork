@@ -12,6 +12,16 @@
     <hr class="Hr" />
 </div>
 
+<h2>User daily register</h2>
+<div class="ChartWrapper ChartWrapperExpand">
+    <input type="hidden" id="userRegisterLiveChartData" value="<?php echo urlencode(json_encode($users)); ?>" />
+    <div id="userRegisterLiveChart"></div>
+</div>
+
+<div class="HrWrapper">
+    <hr class="Hr" />
+</div>
+
 <h2>Recently login users(within 1 hour)</h2>
 <ul class="MonitoringActiveUsersList">
     <?php foreach ($users as $_user) : ?>

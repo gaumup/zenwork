@@ -266,7 +266,7 @@ jQuery(document).ready(function () {
                 todayTaskListjsp.removeClass('ZWPending').data('jsp').reinitialise();
 
                 //preparing data for user monthly statistic chart
-                var monthlyTasks = _monthlyWorkload_(data.all);
+                var monthlyTasks = _monthlyWorkload_(data.currentYear);
 
                 //draw chart
                 $('#myTaskStatisticChartBlock').removeClass('ZWPending');

@@ -3,7 +3,6 @@
     $this->Html->script('/lib/js/jquery-core.js', false);
     $this->Html->script('/js/iframe-file-upload.js', false);
 ?>
-
 <form id="upload_avatar" name="upload_avatar" method="post" action="" enctype="multipart/form-data">
     <input type="file" name="data[User][avatar]" id="input_upload_avatar" class="InputFileUpload" />
 </form>

@@ -58,20 +58,16 @@ h2 {
     /* User account setting box */
         #accountSettingBoxContainer {
             float: left;
-            height: 126px;
-            padding: 0 0 0 95px;
             overflow: hidden;
-            background: url(../images/profile-setting-box-left.png) no-repeat 0 0;
             position: absolute;
             z-index: 10001;
-            top: 40px;
-            left: 0;
+            top: 43px;
+            left: 5px;
         }
         #accountSettingBox {
             float: left;
-            height: 113px;
-            padding: 13px 0 0;
-            background: url(../images/profile-setting-box-right.png) no-repeat right 0;
+            background: #f4f4f4;
+            border: 1px solid #ccc;
         }
             #accountSettingBox li {
                 width: 100%;
@@ -83,7 +79,6 @@ h2 {
                     font-size: 12px;
                     line-height: 16px;
                     color: #333333;
-                    margin: 0 4px 0 -91px;
                     border-bottom: 1px solid #dddddd;
                     white-space: nowrap;
                 }
@@ -177,6 +172,8 @@ h2 {
 
 #mainSection {
     padding: 0 0 0 50px;
+    position: relative;
+    z-index: 1;
 }
     .MainSectionWrapper {
         width: 100%;

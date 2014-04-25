@@ -62,6 +62,17 @@
             <div class="ZWSection ZWSectionTriple ZWSectionTripleAlt01">
                 <div class="ZWBlockHeader">
                     <h2>Your monthly workload</h2><span class="ZWHelpPopup ZWHelpPopupAlt01 QTip QTipPermanent" title="This chart will show your monthly workload. It contains 2 lines: 'planning' and 'completed'. It auto update every 5 minutes" data-qtip-my="left top" data-qtip-at="right top">help</span>
+
+                    <select id="yourMonthlyWorkloadSelection" disabled="disabled">
+                        <option <?php if ( date('Y', $now) == '2013') { echo 'selected="selected"'; } ?> value="2013">2013</option>
+                        <option <?php if ( date('Y', $now) == '2014') { echo 'selected="selected"'; } ?> value="2014">2014</option>
+                        <option <?php if ( date('Y', $now) == '2015') { echo 'selected="selected"'; } ?> value="2015">2015</option>
+                        <option <?php if ( date('Y', $now) == '2016') { echo 'selected="selected"'; } ?> value="2016">2016</option>
+                        <option <?php if ( date('Y', $now) == '2017') { echo 'selected="selected"'; } ?> value="2017">2017</option>
+                        <option <?php if ( date('Y', $now) == '2018') { echo 'selected="selected"'; } ?> value="2018">2018</option>
+                        <option <?php if ( date('Y', $now) == '2019') { echo 'selected="selected"'; } ?> value="2019">2019</option>
+                        <option <?php if ( date('Y', $now) == '2020') { echo 'selected="selected"'; } ?> value="2020">2020</option>
+                    </select>
                 </div>
 
                 <div id="myTaskStatisticChartBlock" class="ZWChartBlock ZWLeft ZWPending">

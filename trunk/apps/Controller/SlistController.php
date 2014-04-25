@@ -156,6 +156,7 @@
 
                 $validRecipients = array();
                 $invalidRecipients = array();
+                $sendMailRecipients = array();
                 foreach ( $recipients as $key => $email ) {
                     if ( Validation::email($email, true) ) {
                         array_push($validRecipients, $email);
@@ -178,33 +179,42 @@
                             continue;
                         }
                         //add user to list
-                        $this->Users_list->create();
-                        $this->Users_list->save(array(
-                            'Users_list' => array(
-                                'uid' => $user['User']['id'],
-                                'lid' => $lid
-                            )
-                        ));
-                        array_push($invited, $user);
+                        $conditions = array(
+                            'Users_list.uid' => $user['User']['id'],
+                            'Users_list.lid' => $lid
+                        );
+                        if ( !$this->Users_list->hasAny($conditions) ) {
+                            $this->Users_list->create();
+                            $this->Users_list->save(array(
+                                'Users_list' => array(
+                                    'uid' => $user['User']['id'],
+                                    'lid' => $lid
+                                )
+                            ));
+                            array_push($invited, $user);
+                            array_push($sendMailRecipients, $email);
+                        }
                     }
 
-                    /*------  Begin Send mail -------------*/
-                    $email = new CakeEmail(Configure::read('email_config'));
-                    $email->to($validRecipients);
-                    $email->replyTo($this->Auth->User('email'));
-                    $email->subject('Invite to join a plan');
-                    //use template in '//View/Emails' with layout in '//View/Layouts/Emails'
-                    $email->template('invite_user_list', 'default');
-                    $this->loadModel('Stream_list');
-                    $email->viewVars(array(
-                        'username' => $this->Auth->User('username'),
-                        'url' => Configure::read('root_url').'/planner#!'.$lid,
-                        'list' => $this->Stream_list->findById($lid),
-                        'message' => $postData['message']
-                    ));
-                    $email->delivery = 'smtp';
-                    $email->send();
-                    /*------  End Send mail -------------*/
+                    if ( count($sendMailRecipients) > 0 ) {
+                        /*------  Begin Send mail -------------*/
+                        $email = new CakeEmail(Configure::read('email_config'));
+                        $email->to($sendMailRecipients);
+                        $email->replyTo($this->Auth->User('email'));
+                        $email->subject('Invite to join a plan');
+                        //use template in '//View/Emails' with layout in '//View/Layouts/Emails'
+                        $email->template('invite_user_list', 'default');
+                        $this->loadModel('Stream_list');
+                        $email->viewVars(array(
+                            'username' => $this->Auth->User('username'),
+                            'url' => Configure::read('root_url').'/planner#!'.$lid,
+                            'list' => $this->Stream_list->findById($lid),
+                            'message' => $postData['message']
+                        ));
+                        $email->delivery = 'smtp';
+                        $email->send();
+                        /*------  End Send mail -------------*/
+                    }
                 }
 
                 return json_encode(array(

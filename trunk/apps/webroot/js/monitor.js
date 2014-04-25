@@ -73,6 +73,42 @@ jQuery(document).ready(function () {
             return api;
         };
 
+        //draw chart: #userRegisterLiveChart -> monitoring
+        var userRegisterLiveData = {};
+        var userRegisterLive = JSON.parse(unescape($('#userRegisterLiveChartData').val()));
+        $.each(userRegisterLive, function (index, userData) {
+            var _dateObj = new Date(userData.User.createdOn*1000);
+            var _date = _dateObj.getDate();
+            var _month = _dateObj.getMonth();
+            var _year = _dateObj.getFullYear();
+            var _index = new Date(_year, _month, _date).valueOf();
+            if ( userRegisterLiveData[_index] === undefined ) {
+                userRegisterLiveData[_index] = 1;
+            }
+            else {
+                userRegisterLiveData[_index]++;
+            }
+        });
+        var userRegisterLiveDataIndexed = [];
+        $.each(userRegisterLiveData, function (key, value) {
+            userRegisterLiveDataIndexed.push([Number(key), value]);
+        });
+        $('#userRegisterLiveChart').highcharts('StockChart', {
+            rangeSelector: {
+                selected: 5
+            },
+            title: {
+                text: 'User daily register'
+            },
+            series: [{
+                name: 'User daily register',
+                data: userRegisterLiveDataIndexed,
+                tooltip: {
+                    valueDecimals: 2
+                }
+            }]
+        });
+
         //draw chart: #streamsCreationChart -> monitoring
         var createdStreamsLiveData = {};
         var createdStreamsLive = JSON.parse(unescape($('#streamsCreationLiveChartData').val()));

@@ -34,7 +34,7 @@
          */
         public function register ($postData) {
             $data = array(
-                'User' => $postData['Register']
+                'User' => $postData['Register']    
             );
             $this->validator()
                 ->add('username', array(
@@ -57,11 +57,13 @@
                         'message' => 'This email already registered<br />Please go to "Sign in to Zenwork" tab to login'
                     )
                 ));
-
+            
+            $now = time();
             $this->create();
             $data['User']['fullname'] = $data['User']['username'];
             $data['User']['online'] = 1;
-            $data['User']['lastLogin'] = time();
+            $data['User']['createdOn'] = $now;
+            $data['User']['lastLogin'] = $now;
             if ( !$this->save($data) ) {
                 return false;
             }
@@ -93,7 +95,7 @@
             }
             return true; //MUST return TRUE to perform save action
         }
-        public function afterSave($created, $options = array()) {
+        public function afterSave($created) {
             if ( $created ) {
                 $data = $this->read();
                 $aro = array(

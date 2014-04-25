@@ -80,13 +80,14 @@
             ));
 
             $this->Auth->logout();
+
             $cookie = $this->Cookie->read('Auth.User');
             if (!is_null($cookie)) {
-                $this->Cookie->delete('Auth.User');
+                $this->Cookie->destroy('Auth.User');
             }
             $this->Session->destroy();
 
-            $this->redirect(Configure::read('root_url').'/auth/login');
+            return $this->redirect(Configure::read('root_url').'/auth/login');
         }
 
         /* change_pwd

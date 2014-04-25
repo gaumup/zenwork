@@ -1570,7 +1570,7 @@
                     Zenwork.StreamPopup.wrapper.off(Zenwork.AssigneeDialog.EVENT.UPDATE);
                 }
                 Zenwork.StreamPopup.wrapper.off('click.stream');
-
+                
                 var self = this;
                 var opts = this.options;
                 var streamData = stream.data();

@@ -1882,20 +1882,24 @@ Zenwork.List = {
                     var msg = '';
                     if ( data.valid !== '' ) {
                         //append
-                        $.each(data.invited, function () {
-                            $('#listInvitedPeople').append(
-                                '<li id="invited'+this.User.id+'" class="QTip" title="Participant" data-qtip-my="right center" data-qtip-at="left center">'+
-                                '    <img onerror="this.src=\''+Zenwork.Root+'/images/default-avatar.png\'" src="'+Zenwork.Root+(this.User.avatar ? '/upload_files/'+this.User.avatar : '/images/default-avatar.png')+'" alt="'+this.User.username+'">'+
-                                '    <span>'+this.User.username+'</span>'+
-                                '    <a class="QTip RemoveUserList" href="'+this.User.id+'" rel="#invited'+this.User.id+'" title="Remove '+this.User.username+' from this plan">Remove '+this.User.username+' from this plan</a>'+
-                                '</li>'
-                            );
-                        });
+                        if ( data.invited.length > 0 ) {
+                            $.each(data.invited, function () {
+                                $('#listInvitedPeople').append(
+                                    '<li id="invited'+this.User.id+'" class="QTip" title="Participant" data-qtip-my="right center" data-qtip-at="left center">'+
+                                    '    <img onerror="this.src=\''+Zenwork.Root+'/images/default-avatar.png\'" src="'+Zenwork.Root+(this.User.avatar ? '/upload_files/'+this.User.avatar : '/images/default-avatar.png')+'" alt="'+this.User.username+'">'+
+                                    '    <span>'+this.User.username+'</span>'+
+                                    '    <a class="QTip RemoveUserList" href="'+this.User.id+'" rel="#invited'+this.User.id+'" title="Remove '+this.User.username+' from this plan">Remove '+this.User.username+' from this plan</a>'+
+                                    '</li>'
+                                );
+                            });
 
-                        msg += 'Invitation have been sent';
+                            msg += 'Invitation have been sent.';
+                        }
+                        else {
+                            msg += 'Recipients already invited.';
+                        }
                         invitedEmails.removeClass('Error').val(data.valid);
                         if ( data.invalid !== '' ) {
-                            msg += ' but contains some errors'
                             invitedEmails.addClass('Error').focus();
                             invalidInvitedEmailsError
                                 .removeClass('Hidden')

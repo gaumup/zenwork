@@ -24,7 +24,7 @@
             $this->loadModel('User');
             $users = $this->User->find('all', array(
                 'conditions' => array('User.lastLogin >' => 0),
-                'order' => array('User.lastLogin desc')
+                'order' => array('User.createdOn asc', 'User.lastLogin desc')
             ));
             
             //task monitoring
