@@ -68,6 +68,8 @@ jQuery(document).ready(function () {
                 var options = options || {};
                 options.isMultiple = options.isMultiple || false;
                 options.remoteDatasource = options.remoteDatasource || '';
+                options.data = options.data || {};
+                console.log(options);
                 var selectMenu = false;
                 var dataSource;
                 var cache = {};
@@ -83,9 +85,9 @@ jQuery(document).ready(function () {
                                     return;
                                 }
 
-                                $.getJSON(dataSource, {
+                                $.getJSON(dataSource, $.extend({}, {
                                     term: Zenwork.Plugins.extractLast(request.term)
-                                }, function (data, status, xhr) {
+                                }, options.data), function (data, status, xhr) {
                                     _response(data, request, response);
                                     cache[term] = data;
                                 });
@@ -1809,6 +1811,9 @@ Zenwork.List = {
                             remoteDatasource: Zenwork.Root+'/auth/searchEmail',
                             autocomplete: {
                                 minLength: 0
+                            },
+                            data: {
+                                networkRestricted: invitedEmails.data('networkRestricted')   
                             }
                         });
                         

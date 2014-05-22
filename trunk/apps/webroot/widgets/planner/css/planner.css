@@ -134,7 +134,7 @@
         .FilterBlock a.EditSListBtn.CommonBtnDisabled {
             display: none;
         }
-        
+
         .StreamListSelectionWrapper {
             width: 427px;
             height: 35px;
@@ -450,7 +450,7 @@
             top: -14px;
             left: 0;
             font-size: 12px;
-        } 
+        }
         .GanttTimelineBarDecoration {
             height: 17px;
             border: 2px solid #666;
@@ -728,6 +728,7 @@
     position: absolute;
     top: 0;
     left: 0;
+    z-index: 2;
     background: #fff;
     padding: 0;
     border: 2px solid #666;

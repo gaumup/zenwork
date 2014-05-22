@@ -424,6 +424,7 @@ a.StreamCommonLnk:active {
     position: absolute;
     top: 0;
     left: 0;
+    z-index: 2;
     background: url(../images/icon-reorder.png) no-repeat 0 0;
 }
 .StreamDraggingHelperError {
@@ -440,6 +441,7 @@ a.StreamCommonLnk:active {
     top: 0;
     left: 0;
     background: url(../images/icon-add-row.png) no-repeat 0 0;
+    z-index: 2;
 }
 .StreamRowAddingHelper:active {
     background-position: 0 -16px;

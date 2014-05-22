@@ -4,6 +4,7 @@
     class AppController extends Controller {
         public $components = array('Auth', 'Cookie', 'Session', 'Acl');
         public $helpers = array('Html', 'Form', 'Css', 'Msgbox', 'Session', 'Time', 'Number');
+        public $userNetwork = array();
 
         public function beforeFilter () {
             //configure 'Auth' components
@@ -16,7 +17,7 @@
             $this->Auth->allow('register', 'login', 'forgotPwd', 'resetPwd', 'signup', 'getUserTasks');
             $this->Auth->authorize = 'Controller';
             if ( $this->action !== 'login' && $this->action !== 'signup' ) {
-                if ( !empty($this->request->query) && $this->action !== 'forgotPwd' ) {
+                if ( !empty($this->request->query) && isset($this->request->query['url']) && $this->action !== 'forgotPwd' ) {
                     $query = $this->request->query;
                     unset($query['url']);
                     $this->Session->write('Auth.redirectUrl',
@@ -32,7 +33,7 @@
             else if ( !$this->Session->check('Auth.redirectUrl') ) {
                 $this->Session->write('Auth.redirectUrl', Configure::read('root_url'));
             }
-            
+
             //get server time
             $this->set('serverTime', time());
 
@@ -44,6 +45,12 @@
 
             $this->loadModel('Help');
             $this->set('startUpTour', $this->Help->getUserHelp($this->Auth->user('id'), 'app'));
+
+            //get logged in user network
+            if ( $this->Auth->user() && !$this->Session->check('User.network') ) {
+                $this->loadModel('User');
+                $this->Session->write('User.network', $this->User->getUserNetwork($this->Auth->user('id')));
+            }
         }
 
         public function checkParams ($pass_params, $accept_params) {
@@ -108,7 +115,7 @@
                 $stream = $this->Stream->find('first', array(
                     'conditions' => array('Stream.id'=>$sid),
                     'fields' => array('Stream.id'),
-                    'contain' => array('Attachment.id', 'Scomment.id', 'Stream_follower.uid')    
+                    'contain' => array('Attachment.id', 'Scomment.id', 'Stream_follower.uid')
                 ));
                 $this->layout = 'blank';
                 $this->set(compact(array('sid', 'stream')));
@@ -220,7 +227,7 @@
                     //log
                     $this->loadModel('Stream_log');
                     $this->Stream_log->saveStreamLog($attachment['Attachment']['sid'], 'delete file '.$attachment['Attachment']['name'], $this->Auth->user('id'), $now);
-                    
+
                     //post as a comment
                     $this->loadModel('Scomment');
                     $this->Scomment->save(array(
@@ -261,9 +268,9 @@
                 $stream = $this->Stream->find('first', array(
                     'conditions' => array('Stream.id'=>$sid),
                     'fields' => array('Stream.id'),
-                    'contain' => array('Attachment.id', 'Scomment.id', 'Stream_follower.uid')    
+                    'contain' => array('Attachment.id', 'Scomment.id', 'Stream_follower.uid')
                 ));
-                
+
                 $this->layout = 'blank';
                 $this->set(compact(array('sid', 'stream')));
                 return $this->render('/Elements/comment');
@@ -326,8 +333,8 @@
                         $uploadingQueue[$cid] = array(
                             'sid' => $sid,
                             'time' => $now,
-                            'comment' => 'post a comment "'.$comment['Scomment']['comment'].'" with attachment:', 
-                            'listAttachment' => '', 
+                            'comment' => 'post a comment "'.$comment['Scomment']['comment'].'" with attachment:',
+                            'listAttachment' => '',
                             'link' => array()
                         );
                         $this->Session->write('uploadingQueue', $uploadingQueue);
@@ -443,7 +450,7 @@
             }
         }
         /* END. comment module */
-        
+
 
         /** timeline
          * received: client send post data = { json
@@ -492,7 +499,7 @@
                         $this->Timeline->id = $postData['id'];
                         $timeline = $this->Timeline->read();
                         $timeline['Timeline']['assignee'] = array();
-                        
+
                         $htmlView = new View($this, false);
                         $htmlView->layout = 'blank';
                         $htmlView->set(array(
@@ -629,6 +636,7 @@
         }
         public function unassignUserTimeline ($uid, $tid) {
             $this->autoRender = false;
+            if ( is_null($uid) ) { return true; }
             if ( $this->request->isAjax() && !empty($uid) && !empty($tid) ) {
                 $this->loadModel('Timeline');
                 if ( !$this->Timeline->exists($tid) ) {
@@ -639,7 +647,7 @@
                 if ( $this->Users_timeline->deleteAll(array(
                         'Users_timeline.uid' => $uid,
                         'Users_timeline.tid' => $tid
-                    )) 
+                    ))
                 ) {
                     $this->loadModel('User');
                     $assignee = $this->User->findById($uid, array('User.username', 'User.email'));
@@ -648,27 +656,31 @@
                     $timeline = $this->Timeline->findById($tid, array('Stream.id', 'Stream.name', 'Stream.description', 'Timeline.start', 'Timeline.end'));
 
                     //send mail to user
-                    if ( $this->Auth->User('email') != $assignee['User']['email'] ) {
-                        /*------  Begin Send mail -------------*/
-                        $email = new CakeEmail(Configure::read('email_config'));
-                        $email->to($assignee['User']['email']);
-                        $email->replyTo($this->Auth->User('email'));
-                        $email->subject('Assign a new task');
-                        //use template in '//View/Emails' with layout in '//View/Layouts/Emails'
-                        $email->template('unassign_notify', 'default');
-                        $email->viewVars(array(
-                            'stream' => $timeline['Stream'],
-                            'timeline' => $timeline['Timeline'],
-                            'assigner' => $this->Auth->User('username')
-                        ));
-                        $email->delivery = 'smtp';
-                        $email->send();
-                        /*------  End Send mail -------------*/
-                    }
+                    if ( count($assignee) > 0 ) {
+                        if ( $this->Auth->User('email') != $assignee['User']['email']
+                            && Validation::email($assignee['User']['email'], true)
+                        ) {
+                            /*------  Begin Send mail -------------*/
+                            $email = new CakeEmail(Configure::read('email_config'));
+                            $email->to($assignee['User']['email']);
+                            $email->replyTo($this->Auth->User('email'));
+                            $email->subject('Assign a new task');
+                            //use template in '//View/Emails' with layout in '//View/Layouts/Emails'
+                            $email->template('unassign_notify', 'default');
+                            $email->viewVars(array(
+                                'stream' => $timeline['Stream'],
+                                'timeline' => $timeline['Timeline'],
+                                'assigner' => $this->Auth->User('username')
+                            ));
+                            $email->delivery = 'smtp';
+                            $email->send();
+                            /*------  End Send mail -------------*/
+                        }
 
-                    //log
-                    $this->loadModel('Stream_log');
-                    $this->Stream_log->saveStreamLog($timeline['Stream']['id'], 'unassign '.$assignee['User']['username'].' from this', $this->Auth->user('id'), time());
+                        //log
+                        $this->loadModel('Stream_log');
+                        $this->Stream_log->saveStreamLog($timeline['Stream']['id'], 'unassign '.$assignee['User']['username'].' from this', $this->Auth->user('id'), time());
+                    }
 
                     return $uid;
                 }
@@ -731,7 +743,7 @@
                         'Users_timeline.tid' => $tid
                     )
                 ) ? true : false;
-                
+
                 if ( $isSuccess ) {
                     $timeline = $this->Timeline->find('first', array(
                         'conditions' => array('Timeline.id'=>$tid),
@@ -873,9 +885,17 @@
                 array_splice($recipients, array_search($this->Auth->User('email'), $recipients), 0);
             }
 
+            //check valid email
+            $validRecipients = array();
+            foreach ( $recipients as $_rp ) {
+                if ( Validation::email($_rp, true) ) {
+                    array_push($validRecipients, $_rp);
+                }
+            }
+
             /*------  Begin Send mail -------------*/
             $email = new CakeEmail(Configure::read('email_config'));
-            $email->to($recipients);
+            $email->to($validRecipients);
             $email->replyTo($this->Auth->User('email'));
             $email->subject($title);
             //use template in '//View/Emails' with layout in '//View/Layouts/Emails'
@@ -928,7 +948,7 @@
             )));
             $assigneeEmail = array();
             foreach ( $this->Users_timeline->getUsersTimeline($tid) as $userTimeline ) {
-               array_push($assigneeEmail, $userTimeline['User']['email']); 
+               array_push($assigneeEmail, $userTimeline['User']['email']);
             }
             return array_unique(array_merge($this->Stream_follower->getFollowersEmail($sid), $assigneeEmail, $recipients));
         }
@@ -941,7 +961,7 @@
 
         private function replace_url_bitly ($matches) {
             return $this->get_bitly_url($matches[0]);
-            
+
             //$url = $this->get_bitly_url($matches[0]);
             //return '<a href="'.$url.'">'.$url.'</a>';
         }

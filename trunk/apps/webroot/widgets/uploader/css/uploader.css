@@ -174,3 +174,13 @@
                 right: 8px;
             }
 /* END. */
+.UploadProgress {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 45px;
+    background: #ccc;
+    opacity: 0.4;
+    -moz-opacity: 0.4;
+    filter: alpha(opacity=40);
+}

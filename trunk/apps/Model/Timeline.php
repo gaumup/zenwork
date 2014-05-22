@@ -21,7 +21,7 @@
             )
         );
 
-        public function afterSave ($options=array()) {
+        public function afterSave ($created, $options = array()) {
             //use to update parent(recursively) start/end if current save node has parent
             if ( isset($this->data['Timeline']['start']) || isset($this->data['Timeline']['end']) ) {
                 $this->_updateParentTimeline_($this->data['Timeline']);
@@ -64,7 +64,7 @@
 
                 //get all children of its parent
                 $children = $streamListMapModel->children(
-                    $parentStream['Stream_list_map']['id'], 
+                    $parentStream['Stream_list_map']['id'],
                     true, //only direct children
                     array('Stream_list_map.sid') //fields
                 );
@@ -78,7 +78,7 @@
                     $conditions['Timeline.id <>'] = $data['id'];
                 }
                 $childrenTimeline = $this->find('all', array(
-                    'conditions' => $conditions 
+                    'conditions' => $conditions
                 ));
                 $startTimeArr = array();
                 $endTimeArr = array();

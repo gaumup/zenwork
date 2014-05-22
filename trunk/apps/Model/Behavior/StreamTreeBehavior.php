@@ -8,8 +8,8 @@
      */
 
     class StreamTreeBehavior extends TreeBehavior {
-        public function afterSave(Model $Model, $created) {
-            if ( isset($Model->data['Stream_list_map']['offset']) 
+        public function afterSave(Model $Model, $created, $options = array()) {
+            if ( isset($Model->data['Stream_list_map']['offset'])
                 && $Model->data['Stream_list_map']['offset'] != 0
             ) { //index changes
                 if ( $Model->data['Stream_list_map']['offset'] > 0 ) {

@@ -7,7 +7,7 @@
             'Creator' => array(
                 'className' => 'User',
                 'foreignKey' => 'creatorID'
-            )    
+            )
         );
         public $hasAndBelongsToMany = array(
             'User' => array(
@@ -19,7 +19,7 @@
                 'fields' => 'User.id, User.username, User.email'
             )
         );
-        
+
         public function getStreams ($lid, $uid=0) {
             $streamModel = ClassRegistry::init('Stream');
             $streamListMapModel = ClassRegistry::init('Stream_list_map');
@@ -35,7 +35,7 @@
                 'fields' => array('Stream_list_map.sid')
             ));
             $cond['Stream.id'] = $streamIDs;
-            
+
             $streamModel->bindModel(array(
                 'hasOne' => array(
                     'Stream_list_map' => array(
@@ -67,7 +67,7 @@
                 ),
                 'order' => array('Stream_list_map.left')
             ));
-            
+
             $counter = 0;
             foreach ( $streams as $key => $_stream) {
                 $streams[$key]['Stream']['index'] = ++$counter;
@@ -76,7 +76,7 @@
             }
             return $streams;
         }
-        
+
         public function getUsersLists ($uid) {
             $this->bindModel(array(
                 'hasOne' => array(
@@ -153,7 +153,8 @@
             return $lists;
         }
 
-        public function clear ($lid, $uid=0) {
+        public function clear ($lid=0, $uid=0) {
+            if ( $lid == 0 ) { return true; }
             $streamListMapModel = ClassRegistry::init('Stream_list_map');
             $streamsListID = $streamListMapModel->find('list', array(
                 'conditions' => array('Stream_list_map.lid'=>$lid),
@@ -161,7 +162,7 @@
                 'group' => array('Stream_list_map.sid')
             ));
             $cond = array(
-                'Stream.id' => $streamsListID   
+                'Stream.id' => $streamsListID
             );
             if ( $lid == 1 && $uid != 0 ) {
                 $cond['Stream.creatorID'] = $uid;
@@ -171,7 +172,7 @@
 
         public function isCreator ($lid, $uid) {
             return $this->find('count', array(
-                'conditions' => array('Stream_list.id' => $lid, 'Stream_list.creatorID' => $uid)    
+                'conditions' => array('Stream_list.id' => $lid, 'Stream_list.creatorID' => $uid)
             )) > 0;
         }
 

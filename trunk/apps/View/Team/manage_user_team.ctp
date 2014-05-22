@@ -36,7 +36,7 @@
 
         <div class="StreamContentInsideBlock02">
             <div class="StreamBlock">
-                <input type="text" class="TextInput" placeholder="Invite people by emails seperate emails by commas" id="invitedEmails" />
+                <input type="text" class="TextInput" placeholder="Invite people by emails seperate emails by commas" id="invitedEmails" data-network-restricted="false" />
                 <div id="invalidInvitedEmailsError" class="MsgBoxWrapper ErrorBox Hidden">
                     <div class="MsgBox">
                         <p></p>

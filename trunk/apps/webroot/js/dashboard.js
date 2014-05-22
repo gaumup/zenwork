@@ -1931,6 +1931,9 @@ Zenwork.Team = {
                         remoteDatasource: Zenwork.Root+'/auth/searchEmail',
                         autocomplete: {
                             minLength: 0
+                        },
+                        data: {
+                            networkRestricted: invitedEmails.data('networkRestricted')   
                         }
                     });
                     

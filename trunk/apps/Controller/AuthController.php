@@ -488,7 +488,13 @@
             $this->autoRender = false;
             if ( $this->request->isAjax() ) {
                 $this->loadModel('User');
-                return json_encode($this->User->searchEmail($_GET['term']));
+                return json_encode($this->User->searchEmail(
+                    $_GET['term'],
+                    isset($_GET['networkRestricted']) 
+                        ? filter_var($_GET['networkRestricted'], FILTER_VALIDATE_BOOLEAN)
+                        : true
+                    )
+                );
             }
             return 0;
         }
@@ -500,7 +506,13 @@
             $this->autoRender = false;
             if ( $this->request->isAjax() ) {
                 $this->loadModel('User');
-                return json_encode($this->User->searchUsername($_GET['term']));
+                return json_encode($this->User->searchUsername(
+                    $_GET['term'],
+                    isset($_GET['networkRestricted']) 
+                        ? filter_var($_GET['networkRestricted'], FILTER_VALIDATE_BOOLEAN)
+                        : true
+                    )
+                );
             }
             return 0;
         }
@@ -512,7 +524,13 @@
             $this->autoRender = false;
             if ( $this->request->isAjax() ) {
                 $this->loadModel('User');
-                return json_encode($this->User->searchByUsernameOrEmail($_GET['term']));
+                return json_encode($this->User->searchByUsernameOrEmail(
+                    $_GET['term'],
+                    isset($_GET['networkRestricted']) 
+                        ? filter_var($_GET['networkRestricted'], FILTER_VALIDATE_BOOLEAN)
+                        : true
+                    )
+                );
             }
             return 0;
         }

@@ -34,7 +34,7 @@
          */
         public function register ($postData) {
             $data = array(
-                'User' => $postData['Register']    
+                'User' => $postData['Register']
             );
             $this->validator()
                 ->add('username', array(
@@ -57,7 +57,7 @@
                         'message' => 'This email already registered<br />Please go to "Sign in to Zenwork" tab to login'
                     )
                 ));
-            
+
             $now = time();
             $this->create();
             $data['User']['fullname'] = $data['User']['username'];
@@ -95,7 +95,7 @@
             }
             return true; //MUST return TRUE to perform save action
         }
-        public function afterSave($created) {
+        public function afterSave($created, $options = array()) {
             if ( $created ) {
                 $data = $this->read();
                 $aro = array(
@@ -109,30 +109,51 @@
             }
         }
 
-        public function searchEmail ($keyword) {
+        public function searchEmail ($keyword, $networkRestricted=true) {
             //return sequential indexed array
             return array_values($this->find('list', array(
-                'conditions' => array('User.email LIKE'=>'%'.$keyword.'%', 'User.is_blocked' => 0),
+                'conditions' => array_merge(
+                    array(
+                        'User.email LIKE'=>'%'.$keyword.'%',
+                        'User.is_blocked' => 0
+                    ),
+                    $networkRestricted 
+                        ? array('User.id' => $this->Session->read('User.network'))
+                        : array()
+                ),
                 'order' => array('User.email ASC'),
                 'fields' => array('User.email')
             )));
         }
-        public function searchUsername ($keyword) {
+        public function searchUsername ($keyword, $networkRestricted=true) {
             //return sequential indexed array
             return array_values($this->find('list', array(
-                'conditions' => array('User.username LIKE'=>'%'.$keyword.'%', 'User.is_blocked' => 0),
+                'conditions' => array_merge(
+                    array(
+                        'User.username LIKE'=>'%'.$keyword.'%',
+                        'User.is_blocked' => 0
+                    ),
+                    $networkRestricted 
+                        ? array('User.id' => $this->Session->read('User.network'))
+                        : array()
+                ),
                 'order' => array('User.username ASC'),
                 'fields' => array('User.username')
             )));
         }
-        public function searchByUsernameOrEmail ($keyword) {
+        public function searchByUsernameOrEmail ($keyword, $networkRestricted=true) {
             $results = $this->find('all', array(
-                'conditions' => array(
-                    'OR' => array(
-                        'User.username LIKE'=>'%'.$keyword.'%',
-                        'User.email LIKE'=>'%'.$keyword.'%'
+                'conditions' => array_merge(
+                    array(
+                        'OR' => array(
+                            'User.username LIKE'=>'%'.$keyword.'%',
+                            'User.email LIKE'=>'%'.$keyword.'%'
+                        ),
+                        'User.is_blocked' => 0
                     ),
-                    'User.is_blocked' => 0
+                    $networkRestricted 
+                        ? array('User.id' => $this->Session->read('User.network'))
+                        : array()
                 ),
                 'order' => array('User.username ASC'),
                 'fields' => array('User.id, User.username, User.email')
@@ -142,6 +163,30 @@
                 $users[$user['User']['id']] = $user['User']['username'].'('.$user['User']['email'].')';
             }
             return $users;
+        }
+
+        public function getUserNetwork ($uid) {
+            $network = array(); //format: array( uid => array(user-info) )
+            
+            //own list/plan -> get all lists -> get all members
+            $streamListModel = ClassRegistry::init('Stream_list');
+            $usersLists = $streamListModel->getUsersLists($uid);
+            foreach ( $usersLists as $_ul ) {
+                foreach ( $_ul['User'] as $_u ) {
+                    array_push($network, $_u['id']);
+                }
+            }
+
+            //own team -> get all teams -> get all members
+            $teamModel = ClassRegistry::init('Team');
+            $usersTeams = $teamModel->getUsersTeams($uid);
+            foreach ( $usersTeams as $_ut ) {
+                foreach ( $_ut['User'] as $_u ) {
+                    array_push($network, $_u['id']);
+                }
+            }
+
+            return array_unique($network);
         }
     }
 ?>

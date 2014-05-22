@@ -28,7 +28,7 @@
             ));
         }
 
-        public function searchByUserTeam ($uid, $keyword) {
+        public function searchByUserTeam ($uid, $keyword='') {
             $this->bindModel(array(
                 'hasOne' => array(
                     'Users_team' => array(
@@ -57,6 +57,28 @@
                 ));
             }
             return $results;
+        }
+
+        public function getUsersTeams ($uid) {
+            $this->bindModel(array(
+                'hasOne' => array(
+                    'Users_team' => array(
+                        'className' => 'Users_team',
+                        'foreignKey' => 'tid'
+                    )
+                )
+            ));
+            $teams = $this->find('all', array(
+                'conditions' => array(
+                    'OR' => array(
+                        'Team.creatorID' => $uid,
+                        'Users_team.uid' => $uid
+                    )
+                ),
+                'order' => array('Team.name ASC'),
+                'group' => array('Team.id')
+            ));
+            return $teams;
         }
 
         public function isCreator ($tid, $uid) {
