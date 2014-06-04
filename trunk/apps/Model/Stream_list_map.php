@@ -61,7 +61,7 @@
                     }
                 }
             }
-            
+
             if ( $isPermitted ) {
                 //continue saving normally
                 return parent::save($data, $validate, $fieldList);
@@ -158,7 +158,9 @@
 
         public function fix ($lid) {
             $this->Behaviors->load('StreamTree', array('scope' => 'Stream_list_map.lid = '.$lid));
-            $this->recover();
+            if ( is_array($this->verify()) ) {
+                $this->recover();
+            }
         }
     }
 ?>

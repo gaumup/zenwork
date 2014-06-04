@@ -391,7 +391,7 @@
                         if ( $this->Session->check('uploadingQueue.'.$cid) ) {
                             $uploadingQueue = $this->Session->read('uploadingQueue.'.$cid);
                             $uploadingQueue['listAttachment'] .= chr(13).chr(10).'-'.$this->data['name'];
-                            array_push($uploadingQueue['link'], '<a href="'.(Configure::read('root_url').'/'.Configure::read('upload_path').'/'.$filename).'" title="">'.$this->data['name'].'</a>');
+                            array_push($uploadingQueue['link'], '<a href="'.(Configure::read('root_url').'/app/download/'.$filename.'/'.$this->data['name']).'" title="">'.$this->data['name'].'</a>');
                             $this->Session->write('uploadingQueue.'.$cid, $uploadingQueue);
                         }
                     }
@@ -768,7 +768,7 @@
                         $this->Auth->User('username').' '.($completed == 3 ? 'completed' : 'uncompleted').' task "'.$timeline['Stream']['name'].'"',
                         ($completed == 3 ? 'completed' : 'uncompleted').' task "'.($timeline['Stream']['name']).'". Timeline from "'.date('d-M-Y', $timeline['Timeline']['start']).'" to "'.date('d-M-Y', $timeline['Timeline']['end']).'"',
                         '',
-                        Configure::read('root_url').'planner?sid='.$timeline['Stream']['id'],
+                        Configure::read('root_url').'/planner?sid='.$timeline['Stream']['id'],
                         $this->_recipients($timeline['Stream']['id'], array($creator['User']['email']))
                     );
 

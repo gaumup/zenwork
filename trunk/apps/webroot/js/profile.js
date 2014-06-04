@@ -197,7 +197,6 @@ $(document).ready(function () {
                             }
                         });
                     $('#save_changes_avatar').html('<span>'+avatar_model_save_btn.status.updated+'</span>').addClass('CommonBtnDisabled');
-                    console.log(img)
                 }
                 img.src = $('img#avatar').attr('src');
                 $('#avatar_edit_image').html(img);
@@ -234,7 +233,7 @@ $(document).ready(function () {
                     _showErrorMsg(data.error);
                 }
             }
-            
+
             //constructor
             if ( $('#edit_avatar').length > 0 ) {
                 $('#upload_avatar_modal').dialog({

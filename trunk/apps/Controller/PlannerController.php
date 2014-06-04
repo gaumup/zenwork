@@ -105,7 +105,7 @@
 
                 //get streams
                 $postData = $this->request->input('json_decode', true);
-                
+
                 if ( $listID == 1 ) {
                     $streams = $this->Stream_list->getStreams($listID, $this->Auth->user('id'));
                 }
@@ -116,7 +116,7 @@
                 //load relationship table
                 $this->loadModel('Timeline_dependancy');
                 $timelineDependancies = $this->Timeline_dependancy->find('all', array(
-                    'conditions' => array('Timeline_dependancy.scopeID' => $listID)    
+                    'conditions' => array('Timeline_dependancy.scopeID' => $listID)
                 ));
 
                 //get timeline range
@@ -129,7 +129,7 @@
                 }
 
                 $this->Session->write('Auth.User.activeListID', $listID);
-                
+
                 return json_encode(array(
                     'timeRange' => empty($timeline) ? array() : array(min($timeline), max($timeline)),
                     'streams' => $streams,
@@ -191,7 +191,7 @@
                 $this->Stream->create();
                 if ( $this->Stream->save(array('Stream' => $streamPostData)) ) {
                     $postData['id'] = $this->Stream->getLastInsertId();
-                    
+
                     //add entry to 'Stream_list_map'
                     $this->Stream_list_map->create();
                     $this->Stream_list_map->save(array(
@@ -204,7 +204,7 @@
                     ));
                     $postData['slmid'] = $this->Stream_list_map->getLastInsertId();
                     $postData['tag'] = '';
-                    
+
                     $this->loadModel('Stream_log');
                     $this->Stream_log->saveStreamLog($postData['id'], 'create this', $this->Auth->user('id'), $postData['createdOn']);
                     return json_encode($postData);
@@ -269,7 +269,7 @@
                 $this->loadModel('Stream_list');
                 $this->Stream_list->id = $lid;
                 $this->set('list', $this->Stream_list->read());
-                
+
                 $this->loadModel('Users_list');
                 $this->Users_list->bindModel(array(
                     'belongsTo' => array(
@@ -277,7 +277,7 @@
                             'className' => 'User',
                             'foreignKey' => 'uid'
                         )
-                    )    
+                    )
                 ));
                 $this->set('usersList', $this->Users_list->find('all', array(
                     'conditions' => array('Users_list.lid'=>$lid),
@@ -305,7 +305,7 @@
                 }
             }
         }
-        
+
         private function _validateTree ($lid) {
             $this->loadModel('Stream_list_map');
             $this->Stream_list_map->fix($lid);
