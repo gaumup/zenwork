@@ -281,8 +281,8 @@
                     var stream = $this.parent().parent();
                     if ( String(stream.data('creatorID')) !== Zenwork.Auth.User.id
                         && Zenwork.Planner !== undefined && Zenwork.Planner.creatorID !== Zenwork.Auth.User.id ) { return false; }
-                    
-                    if ( this.value == '' || stream.data('name') === this.value ) { 
+
+                    if ( this.value == '' || stream.data('name') === this.value ) {
                         return false;
                     } //no change or empty
 
@@ -370,7 +370,7 @@
                         var $currentSelectedStream = $('.'+opts.cssClass.uiSelected);
                         $currentSelectedStream.removeClass(opts.cssClass.uiSelected);
                         self._trigger(self.EVENT.UNSELECTING, e, $currentSelectedStream);
-                        
+
                         //select new row
                         $stream.addClass(opts.cssClass.uiSelected);
                         self._trigger(self.EVENT.SELECTING, e, $stream);
@@ -474,7 +474,7 @@
                     opts.streamAddingRowHelper.on('mouseout.stream', function (e) {
                         Zenwork.Plugins.Tip.hideTip(); //force hide
                     });
-                    
+
                     //hide add row icon
                     $(document).on('mouseover.stream', function (e) {
                         if ( !opts.onSorting ) {
@@ -490,7 +490,7 @@
                         }
                     });
                 }
-                
+
                 //stream context menu action
                 opts.streamContextMenu.on('click.stream', 'a', function (e, callback) {
                     var $this = $(this);
@@ -552,7 +552,7 @@
                     $this.blur();
                     return false;
                 });
-               
+
                 var scrollIdle;
                 element.parent().on('scroll.stream', function (e) {
                     var target = $(e.currentTarget);
@@ -626,7 +626,7 @@
                     streamData.countComment += 1;
                     Zenwork.StreamPopup.updateCommentView(+1);
                 });
-                
+
                 //init stream dialog
                 this._initStreamDialog();
 
@@ -830,7 +830,7 @@
                         '    <div class="'+opts.cssClass.streamField+' '+opts.cssClass.streamPlaceHolder+'"><a href="#'+sid+'" class="QTip '+opts.cssClass.streamActionBtn+' '+opts.cssClass.streamTag+'" title="Tags: '+tag+'" data-qtip-ajust="0 10px" data-sid="'+data.id+'">'+tag+'</a></div>'+
                         '    <div class="'+opts.cssClass.streamField+' '+opts.cssClass.streamPlaceHolder+'"><a href="#'+sid+'" title="" class="'+opts.cssClass.streamActionBtn+' '+opts.cssClass.streamContextBtn+'">Context menu</a></div>'+
                         '    <div class="'+opts.cssClass.streamField+' '+opts.cssClass.streamName+'">'+
-                        '        <input '+(isCreator ? '' : 'readonly="readonly"')+' tabindex="'+data.index+'" class="QTip" title="'+data.name+'" type="text" value="'+data.name+'" spellcheck="false" />'+
+                        '        <input '+(isCreator ? '' : 'readonly="readonly"')+' tabindex="'+data.index+'" class="QTip" title="'+Zenwork.Util.htmlSpecialChar(data.name)+'" type="text" value="'+Zenwork.Util.htmlSpecialChar(data.name)+'" spellcheck="false" />'+
                         '        <a href="#'+sid+'" title="" class="'+opts.cssClass.streamActionBtn+' '+opts.cssClass.streamToggleBtn+'">Click to expand/collapse stream</a>'+
                         '    </div>'+
                         '    <div class="'+opts.cssClass.streamField+' '+opts.cssClass.streamCompletion+'"><a href="#'+sid+'" title="" class="'+opts.cssClass.streamCompletionBtn+(data.completed == 1 ? ' '+opts.cssClass.streamCompletedBtn : '')+' '+(isCreator ? '' : opts.cssClass.streamCompletionDisabledBtn)+'">Toggle stream completion</a></div>'+
@@ -840,7 +840,7 @@
                     _appendHelper_(streamElement, appendAtBottom ? undefined : data.index);
                     /*
                      * HOT FIX: concurrently editing plan
-                     * cause lost parent or rendered order cause child rendered before parent inserted 
+                     * cause lost parent or rendered order cause child rendered before parent inserted
                      * -> solution: check for parent before performing child->parent insert action
                      */
                     if ( data.parentID != 0 && appendAtBottom ) {
@@ -857,7 +857,7 @@
                         'clientID': sid,
                         'parentClientID': data.parentID == 0 ? 0 : self.PREFIX+data.parentID
                     }));
-                    
+
                     $('#'+sid+' .'+opts.cssClass.streamName).trigger('focus.stream');
                     //set data object {} to stream element <div id="sid">
                     if ( callback !== undefined ) {
@@ -907,8 +907,8 @@
                     - streamDialogBoxModel.borderBottom
                     - opts.streamDialogOffset.y;
                 opts.streamDialog.css({
-                    width: $(window).width() 
-                        - streamContainerBoxDimension.width 
+                    width: $(window).width()
+                        - streamContainerBoxDimension.width
                         - streamContainerBoxDimension.leftAbs
                         - 30,
                     height: streamDialogHeight
@@ -945,7 +945,7 @@
                         - streamScrollContentBoxModel.paddingBottom
                 });
                 streamScrollContent.on('scroll', function (e) {
-                    if ( Zenwork.Planner !== undefined 
+                    if ( Zenwork.Planner !== undefined
                         && Zenwork.Dialog !== undefined
                     ) {
                         Zenwork.Dialog.close();
@@ -1069,10 +1069,10 @@
                         droppedElementLevel--;
                         droppedElement = droppedElement.parent().parent();
                     }
-                    return !(droppedElement.find('.'+this.options.cssClass.streamRow).data('parentID') 
+                    return !(droppedElement.find('.'+this.options.cssClass.streamRow).data('parentID')
                         === draggingElement.find('.'+this.options.cssClass.streamRow).data('id'));
                 }
-            }, 
+            },
 
             /**
              * descender: $(<li>)
@@ -1097,7 +1097,7 @@
                         descenderLevel--;
                         descender = descender.parent().parent();
                     }
-                    return descender.find('.'+this.options.cssClass.streamRow).data('parentID') 
+                    return descender.find('.'+this.options.cssClass.streamRow).data('parentID')
                         === ancestor.find('.'+this.options.cssClass.streamRow).data('id');
                 }
             },
@@ -1184,7 +1184,7 @@
                     }
                 }
                 if ( ajaxPost ) {
-                    Zenwork.Window.confirm('Confirm delete?', 
+                    Zenwork.Window.confirm('Confirm delete?',
                         _deleteConfirmed_,
                         function () { if ( callback !== undefined ) { callback(false); } }
                     )
@@ -1267,8 +1267,8 @@
                     var newParentStreamID = oldParentStreamID;
                     var newIndex = parseInt(droppedStream.data('index'));
                     if ( oldIndex < newIndex ) { //move downward, shift newIndex by a negative offset
-                        newIndex -= (self._isLeaf(reorderedStream) 
-                            ? 1 
+                        newIndex -= (self._isLeaf(reorderedStream)
+                            ? 1
                             : (reorderedStream.next('ul').find('li').length+1)
                             //1 is reorderedStream itself
                         );
@@ -1280,7 +1280,7 @@
                         case 'after':
                             newIndex += (droppedElement.find('li').length+1);
                             //reoderedStream is already inside droppedStream
-                            if ( self._checkAncestor(reorderedStreamWrapper, droppedElement) ) { 
+                            if ( self._checkAncestor(reorderedStreamWrapper, droppedElement) ) {
                                 newIndex -= (self._isLeaf(reorderedStream)
                                     ? 1
                                     : (reorderedStream.next('ul').find('li').length+1)
@@ -1292,7 +1292,7 @@
                         case 'inside':
                             newIndex += (droppedElement.find('li').length+1);
                             //reoderedStream is already inside droppedStream
-                            if ( self._checkAncestor(reorderedStreamWrapper, droppedElement) ) { 
+                            if ( self._checkAncestor(reorderedStreamWrapper, droppedElement) ) {
                                 newIndex -= (self._isLeaf(reorderedStream)
                                     ? 1
                                     : (reorderedStream.next('ul').find('li').length+1)
@@ -1309,7 +1309,7 @@
                         var oldParentStream = oldParentStreamID != 0
                             ? $('#'+reorderedStream.data('parentClientID'))
                             : null;
-                        
+
                         //move streams
                         self._addStream(droppedElement, reorderedStreamWrapper, droppedAt, function () {
                             if ( oldParentStreamID !== newParentStreamID ) {
@@ -1335,7 +1335,7 @@
                                 self._nodeToLeaf(oldParentStreamWrapper);
                             }
                         }
-                
+
                         //restructure stream list
                         if ( oldIndex !== newIndex ) {
                             var from = oldIndex-1;
@@ -1392,7 +1392,7 @@
                 element.on('mouseenter.stream', '.'+opts.cssClass.streamRow, function (e) { //check 'isValid'
                     if ( opts.onSorting ) {
                         var currentTarget = $(e.currentTarget)
-                        if ( helper.data('sClientID') == currentTarget.data('clientID') ) { 
+                        if ( helper.data('sClientID') == currentTarget.data('clientID') ) {
                             helper.addClass('Hidden');
                             isValid = false;
                             return false;
@@ -1412,7 +1412,7 @@
                 element.on('mousemove.stream', '.'+opts.cssClass.streamRow, function (e) { //handling indicator
                     if ( opts.onSorting ) {
                         var currentTarget = $(e.currentTarget);
-                        if ( helper.data('sClientID') == currentTarget.data('clientID') ) { 
+                        if ( helper.data('sClientID') == currentTarget.data('clientID') ) {
                             _disable_();
                             return false;
                         }
@@ -1455,7 +1455,7 @@
                 });
             },
 
-            /** 
+            /**
              * notice: 'from, to' is array index, starting from 0
              */
             _indexStreams: function (from, to, addBuffer) {
@@ -1570,7 +1570,7 @@
                     Zenwork.StreamPopup.wrapper.off(Zenwork.AssigneeDialog.EVENT.UPDATE);
                 }
                 Zenwork.StreamPopup.wrapper.off('click.stream');
-                
+
                 var self = this;
                 var opts = this.options;
                 var streamData = stream.data();
@@ -1585,7 +1585,7 @@
                     syncInput.val(e.currentTarget.value);
                     syncInput.trigger('keyup.stream');
                 });
-                
+
                 //auto expand textarea
                 Zenwork.StreamPopup.wrapper.find('.AutoResizeTextbox')
                     .autoresize({
@@ -1598,7 +1598,7 @@
                     .filter('.AutoSync').bind('keyup.stream', function (e) {
                         if ( String(streamData.creatorID) !== Zenwork.Auth.User.id ) { return false; }
 
-                        if ( streamData.description === this.value ) { 
+                        if ( streamData.description === this.value ) {
                             return false;
                         } //no change
                         streamData.description = this.value;
@@ -1623,7 +1623,7 @@
 
                 //workload estimation(planning) control
                 this._initWorkloadPlanningControl();
-                
+
                 //delete stream button
                 Zenwork.StreamPopup.wrapper.on('click.stream', '.'+opts.cssClass.streamDeleteBtnPopup, function (e) {
                     self._deleteStream(e, stream, true, function() {});
@@ -1680,7 +1680,7 @@
                         function (e, start, end) {
                             //update to timeline
                             timeline.trigger(Zenwork.TimelineDialog.EVENT.UPDATE, [start, end]);
-                            
+
                             target.attr('data-start', start/1000);
                             target.attr('data-end', end/1000);
                             //TODO: calculate exactly duration
@@ -1713,7 +1713,7 @@
                             }
                         });
                     Zenwork.StreamPopup.wrapper.on( //click on button
-                        'click.stream', 
+                        'click.stream',
                         '.StreamTimelineBlockEditTimeline',
                         function (e) {
                             if ( $(e.currentTarget).hasClass('ZWDialogBtnActive') ) {
@@ -1742,7 +1742,7 @@
                             return false;
                         }); //end. timeline dialog
                 }
-            
+
                 if ( Zenwork.AssigneeDialog !== undefined ) {
                     /**
                      * assignee dialog
@@ -1761,7 +1761,7 @@
                              *     username: value,
                              *     email: value
                              *     avatar: value
-                             *     Users_timeline: { 
+                             *     Users_timeline: {
                              *         effort: value
                              *         id: value
                              *         tid: value
@@ -1803,7 +1803,7 @@
                             listAssignee.find('[data-completion-id="'+uid+'"]').toggleClass('Hidden', completed < 3);
                         });
                     Zenwork.StreamPopup.wrapper.on( //click on button
-                        'click.stream', 
+                        'click.stream',
                         '.StreamTimelineBlockEditAssignee',
                         function (e) {
                             if ( $(e.currentTarget).hasClass('ZWDialogBtnActive') ) {
@@ -1824,7 +1824,7 @@
                             return false;
                         }); //end. assignee
                 }
-                
+
                 Zenwork.StreamPopup.wrapper.on('click.stream', function (e) {
                     if ( Zenwork.Dialog !== undefined ) {
                         Zenwork.Dialog.close();
@@ -1850,10 +1850,10 @@
                                     'addStreamTimelineBar', //method name
                                     //params
                                     $(stream.attr('rel')),
-                                    stream, 
+                                    stream,
                                     [data.json], //timelineConfig: [{...}, {...}]
-                                    'timeline', 
-                                    false, //isAjax -> false 
+                                    'timeline',
+                                    false, //isAjax -> false
                                     function () {
                                         $target.removeClass('Pending');
                                         Zenwork.StreamPopup.content.find('.StreamTimelineBlockDelete').removeClass('Hidden');
@@ -1943,7 +1943,7 @@
                         }
 
                         Zenwork.StreamPopup.show({aside: data});
-                        
+
                         //init upload plugin
                         Zenwork.Uploader.init();
 
@@ -1977,7 +1977,7 @@
                 //mark all children stream as completed
                 var streamWrapper = completedStream.parent();
                 streamWrapper.find('.'+opts.cssClass.streamCompletionBtn).addClass(opts.cssClass.streamCompletedBtn);
-                
+
                 var childrenStream = streamWrapper.find('> ul .'+opts.cssClass.streamRow);
                 //add changes data to model buffer
                 childrenStream.each(function () {
@@ -2028,7 +2028,7 @@
                 var opts = this.options;
                 uncompletedStream.data('completed', 0);
                 checkbox.addClass(opts.cssClass.streamCompletedBtn);
-                
+
                 //add changes data to model buffer
                 Zenwork.Model.addBuffer({
                     id: uncompletedStream.data('id'),
@@ -2117,7 +2117,7 @@
             },
 
             _notFoundException: function (stream) {
-                var self = this;                
+                var self = this;
                 var opts = this.options;
 
                 Zenwork.StreamPopup.show({content: '<p class="ExceptionNotFound">'+Zenwork.Exception.MESSAGE['404']+'&nbsp;&nbsp;<a href="#s'+stream.data('id')+'" title="remove from plan">remove from plan</a></p>'});
@@ -2196,7 +2196,7 @@
                         .text(stream.data('countComment')).end()
                     .find('.'+this.options.cssClass.streamAttachmentBtn+' > span')
                         .text(stream.data('countAttachment'));
-                
+
                 var isCreator = String(stream.data('creatorID')) === Zenwork.Auth.User.id;
                 if ( Zenwork.Planner !== undefined ) {
                     isCreator = isCreator || Zenwork.Planner.creatorID === Zenwork.Auth.User.id;
@@ -2242,7 +2242,7 @@
                 var streamElement = stream.parent();
                 var oldParentStream = $('#'+this.PREFIX+oldParentID);
                 var oldParentStreamElement = oldParentStream.parent();
-                
+
                 //do outdentation
                 this._addStream(oldParentStreamElement, streamElement, 'after', function () {
                     //after outdented
@@ -2261,7 +2261,7 @@
 
                 //update parent stream completion status, recursively
                 this._updateStreamCompletion(e, parentStreamElement.find('.'+this.options.cssClass.streamRow).eq(0));
-                 
+
                 this._trigger(this.EVENT.INDENTED, e, stream);
 
                 //flush data from model buffer
@@ -2315,14 +2315,14 @@
                 ) {
                     //mark stream as complete
                     this._markSingleStreamAsCompleted(stream);
-                    
+
                     //callback
                     this._trigger(this.EVENT.SINGLE_COMPLETED, e, [stream]);
                 }
                 else {
                     //mark stream as uncomplete
                     this._markSingleStreamAsUnCompleted(stream);
-                    
+
                     //callback
                     this._trigger(this.EVENT.SINGLE_UNCOMPLETED, e, [stream]);
                 }
@@ -2346,7 +2346,7 @@
                     stream
                 );
             },
-            
+
             _toggleAllStreamsView: function (e) {
                 var self = this;
                 var opts = this.options;

@@ -10,7 +10,7 @@ jQuery(document).ready(function () {
 
         //global search
         var _search_ = function (keyword) {
-            if ( keyword == '' ) { 
+            if ( keyword == '' ) {
                 alert('Please enter keyword');
                 return false;
             }
@@ -69,7 +69,6 @@ jQuery(document).ready(function () {
                 options.isMultiple = options.isMultiple || false;
                 options.remoteDatasource = options.remoteDatasource || '';
                 options.data = options.data || {};
-                console.log(options);
                 var selectMenu = false;
                 var dataSource;
                 var cache = {};
@@ -271,7 +270,7 @@ jQuery(document).ready(function () {
                         api.reinitialise();
                     }
                 });
-                
+
                 $this.bind('jsp-scroll-y', function(e, scrollPositionY, isAtTop, isAtBottom) {
                     Zenwork.Plugins.Tip.hideTip();
                 });
@@ -489,7 +488,7 @@ jQuery(document).ready(function () {
                                 resizeOnStart: true,
                                 onresize: function () {}
                             });
-                            
+
                             //init sharing
                             var sharedEmailsInput = $('#sharedEmails');
                             Zenwork.Plugins.autocomplete(sharedEmailsInput, null, {
@@ -569,7 +568,7 @@ jQuery(document).ready(function () {
         Zenwork.Preview.bind({
             on: '.ZWPreview' //selector
         });
-        
+
         //clipboard
         if ( ZeroClipboard !== undefined ) {
             Zenwork.Clipboard = ZeroClipboard;
@@ -669,7 +668,7 @@ jQuery(document).ready(function () {
                 var timelineDialogStartTime = $('#timelineDialogStartTime');
                 var timelineDialogEndTime = $('#timelineDialogEndTime');
                 var remoteTarget;
-                
+
                 this.EVENT = {
                     SELECT: 'select.timelineDialog',
                     UPDATE: 'update.timelineDialog',
@@ -726,7 +725,7 @@ jQuery(document).ready(function () {
                         if ( inst.id == 'timelineDialogStartTimeCalendar' ) {
                             timelineDialogStartTime.val(dateStr);
                             if ( new Date(timelineDialogEndTimeCalendar.datepicker('getDate')).valueOf()
-                                < new Date(dateStr).valueOf() 
+                                < new Date(dateStr).valueOf()
                             ) {
                                 timelineDialogEndTime.val(dateStr);
                             }
@@ -758,7 +757,7 @@ jQuery(document).ready(function () {
                      *     username: value,
                      *     email: value
                      *     avatar: value
-                     *     Users_timeline: { 
+                     *     Users_timeline: {
                      *         effort: value
                      *         id: value
                      *     }
@@ -793,7 +792,7 @@ jQuery(document).ready(function () {
                             collision: 'flipfit'
                         });
                 }
-                
+
                 this.EVENT = {
                     ASSIGN: 'assign.assigneeDialog',
                     UNASSIGN: 'unassign.assigneeDialog',
@@ -858,7 +857,7 @@ jQuery(document).ready(function () {
                                 alert('Really sorry for this, network error! Please try again!');
                             }
                         }
-                    }); 
+                    });
                 }
                 var _unassign = function (e, uid, callback) {
                     var onTimelineData = onTimeline.data();
@@ -876,7 +875,7 @@ jQuery(document).ready(function () {
                                  *     username: value,
                                  *     email: value
                                  *     avatar: value
-                                 *     Users_timeline: { 
+                                 *     Users_timeline: {
                                  *         effort: value
                                  *         id: value
                                  *     }
@@ -903,7 +902,7 @@ jQuery(document).ready(function () {
                                 alert('Really sorry for this, network error! Please try again!');
                             }
                         }
-                    }); 
+                    });
                 }
                 var _updateEffort = function (e, uid, effort, callback) {
                     var onTimelineData = onTimeline.data();
@@ -921,7 +920,7 @@ jQuery(document).ready(function () {
                                  *     username: value,
                                  *     email: value
                                  *     avatar: value
-                                 *     Users_timeline: { 
+                                 *     Users_timeline: {
                                  *         effort: value
                                  *         id: value
                                  *     }
@@ -942,7 +941,7 @@ jQuery(document).ready(function () {
                                 alert('Really sorry for this, network error! Please try again!');
                             }
                         }
-                    }); 
+                    });
                 }
                 var _toggleCompletion = function (e, uid, completed, effort, callback) {
                     Zenwork.Notifier.notify('Updating...');
@@ -960,7 +959,7 @@ jQuery(document).ready(function () {
                                  *     username: value,
                                  *     email: value
                                  *     avatar: value
-                                 *     Users_timeline: { 
+                                 *     Users_timeline: {
                                  *         effort: value
                                  *         id: value
                                  *     }
@@ -985,7 +984,7 @@ jQuery(document).ready(function () {
                                 alert('Really sorry for this, network error! Please try again!');
                             }
                         }
-                    }); 
+                    });
                 }
                 assigneeDialogSelect.autocomplete({
                     autoFocus: true,
@@ -1075,7 +1074,7 @@ jQuery(document).ready(function () {
                                 parent.remove();
                                 _updateView_();
                             });
-                        }, 
+                        },
                         function () { //not confirmed
                             return false;
                         }
@@ -1121,7 +1120,7 @@ jQuery(document).ready(function () {
                         || e.which == 35 /* end */
                         || e.which == 36 /* home */
                         || e.which == 116 /* F5 */
-                        || ((e.which == 110 || e.which == 190) && e.currentTarget.value.search(/\./g) === -1 ) 
+                        || ((e.which == 110 || e.which == 190) && e.currentTarget.value.search(/\./g) === -1 )
                         /* . -> allow only 1 dot, warning, dot in normal keyboard and dot when 'Numlock ON' */
                     ) {
                         return true;
@@ -1143,7 +1142,7 @@ jQuery(document).ready(function () {
                 var streamData = stream.data();
                 var streamApi = $('#'+streamData.ui);
                 tagInput.val(streamData.tag);
-                if ( tagInput.data('uiTagit') !== undefined ) { 
+                if ( tagInput.data('uiTagit') !== undefined ) {
                     tagInput.data('uiTagit').tagList.remove();
                     tagInput.tagit('destroy');
                 }
@@ -1175,13 +1174,13 @@ jQuery(document).ready(function () {
                         collision: 'flipfit'
                     });
             }
-            
+
             Zenwork.Dialog.add(tagDialog.data('ui', this));
             return {
                 show: _show
             }
         }
-        
+
         //browser screen
         Zenwork.Screen = {
             fullscreen: function () {
@@ -1193,7 +1192,7 @@ jQuery(document).ready(function () {
                         || el.msRequestFullScreen;
                 if ( rfs !== undefined && rfs ) {
                     rfs.call(el);
-                } 
+                }
                 else if( window.ActiveXObject !== undefined ) {
                   //for Internet Explorer
                   var wscript = new ActiveXObject('WScript.Shell');
@@ -1274,7 +1273,7 @@ jQuery(document).ready(function () {
 
         //helpers
         $('.ZWContainer').appendTo('body');
-        
+
         $(window).bind('mousewheel', function (e) {
             if ( !Zenwork.Window.windowScrolling ) { e.preventDefault(); }
         });
@@ -1392,7 +1391,7 @@ jQuery(document).ready(function () {
                     scope: 'app'
                 })
             });
-                
+
             return false;
         });
     })(jQuery);
@@ -1402,12 +1401,12 @@ jQuery(document).ready(function () {
 Zenwork.Chart = {
     Line: {
         defaults: {
-            //Boolean - If we show the scale above the chart data            
+            //Boolean - If we show the scale above the chart data
             scaleOverlay: false,
-            
+
             //Boolean - If we want to override with a hard coded scale
             scaleOverride: false,
-            
+
             //** Required if scaleOverride is true **
             //Number - The number of steps in a hard coded scale
             scaleSteps: null,
@@ -1416,69 +1415,69 @@ Zenwork.Chart = {
             //Number - The scale starting value
             scaleStartValue: null,
 
-            //String - Colour of the scale line    
+            //String - Colour of the scale line
             scaleLineColor: 'rgba(219, 219, 219, 1)',
-            
-            //Number - Pixel width of the scale line    
+
+            //Number - Pixel width of the scale line
             scaleLineWidth: 1,
 
-            //Boolean - Whether to show labels on the scale    
+            //Boolean - Whether to show labels on the scale
             scaleShowLabels: true,
-            
+
             //Interpolated JS string - can access value
             scaleLabel: '<%=value%>',
-            
+
             //String - Scale label font declaration for the scale label
             scaleFontFamily: '"Trebuchet MS"',
-            
-            //Number - Scale label font size in pixels    
+
+            //Number - Scale label font size in pixels
             scaleFontSize: 12,
-            
-            //String - Scale label font weight style    
+
+            //String - Scale label font weight style
             scaleFontStyle: 'normal',
-            
-            //String - Scale label font colour    
-            scaleFontColor: '#444',    
-            
+
+            //String - Scale label font colour
+            scaleFontColor: '#444',
+
             ///Boolean - Whether grid lines are shown across the chart
             scaleShowGridLines: true,
-            
+
             //String - Colour of the grid lines
             scaleGridLineColor: 'rgba(219, 219, 219, 1)',
-            
+
             //Number - Width of the grid lines
-            scaleGridLineWidth: 1,    
-            
+            scaleGridLineWidth: 1,
+
             //Boolean - Whether the line is curved between points
             bezierCurve: true,
-            
+
             //Boolean - Whether to show a dot for each point
             pointDot: true,
 
             //Boolean - Whether to show value on each point
             pointValue: false,
-            
+
             //Number - Radius of each point dot in pixels
             pointDotRadius: 4,
-            
+
             //Number - Pixel width of point dot stroke
             pointDotStrokeWidth: 1,
-            
+
             //Boolean - Whether to show a stroke for datasets
             datasetStroke: true,
-            
+
             //Number - Pixel width of dataset stroke
             datasetStrokeWidth: 2,
-            
+
             //Boolean - Whether to fill the dataset with a colour
             datasetFill: true,
-            
+
             //Boolean - Whether to animate the chart
             animation: true,
 
             //Number - Number of animation steps
             animationSteps: 30,
-            
+
             //String - Animation easing effect
             animationEasing: 'easeOutQuart',
 
@@ -1488,12 +1487,12 @@ Zenwork.Chart = {
     },
     Bar: {
         defaults: {
-            //Boolean - If we show the scale above the chart data            
+            //Boolean - If we show the scale above the chart data
             scaleOverlay : false,
-            
+
             //Boolean - If we want to override with a hard coded scale
             scaleOverride : false,
-            
+
             //** Required if scaleOverride is true **
             //Number - The number of steps in a hard coded scale
             scaleSteps : null,
@@ -1502,57 +1501,57 @@ Zenwork.Chart = {
             //Number - The scale starting value
             scaleStartValue : null,
 
-            //String - Colour of the scale line    
+            //String - Colour of the scale line
             scaleLineColor : 'rgba(0,0,0,.1)',
-            
-            //Number - Pixel width of the scale line    
+
+            //Number - Pixel width of the scale line
             scaleLineWidth : 1,
 
-            //Boolean - Whether to show labels on the scale    
+            //Boolean - Whether to show labels on the scale
             scaleShowLabels : false,
-            
+
             //Interpolated JS string - can access value
             scaleLabel : '<%=value%>',
-            
+
             //String - Scale label font declaration for the scale label
             scaleFontFamily : '"Trebuchet MS"',
-            
-            //Number - Scale label font size in pixels    
+
+            //Number - Scale label font size in pixels
             scaleFontSize : 12,
-            
-            //String - Scale label font weight style    
+
+            //String - Scale label font weight style
             scaleFontStyle : 'normal',
-            
-            //String - Scale label font colour    
-            scaleFontColor : '#666',    
-            
+
+            //String - Scale label font colour
+            scaleFontColor : '#666',
+
             ///Boolean - Whether grid lines are shown across the chart
             scaleShowGridLines : true,
-            
+
             //String - Colour of the grid lines
             scaleGridLineColor : 'rgba(0,0,0,.05)',
-            
-            //Number - Width of the grid lines
-            scaleGridLineWidth : 1,    
 
-            //Boolean - If there is a stroke on each bar    
+            //Number - Width of the grid lines
+            scaleGridLineWidth : 1,
+
+            //Boolean - If there is a stroke on each bar
             barShowStroke : true,
-            
-            //Number - Pixel width of the bar stroke    
+
+            //Number - Pixel width of the bar stroke
             barStrokeWidth : 2,
-            
+
             //Number - Spacing between each of the X value sets
             barValueSpacing : 5,
-            
+
             //Number - Spacing between data sets within X values
             barDatasetSpacing : 1,
-            
+
             //Boolean - Whether to animate the chart
             animation : true,
 
             //Number - Number of animation steps
             animationSteps : 60,
-            
+
             //String - Animation easing effect
             animationEasing : 'easeOutQuart',
 
@@ -1591,7 +1590,7 @@ Zenwork.Chart = {
                 else { //click others
                     element.find('li').addClass('ZWChartLegendInvisible');
                     $this.addClass('ZWChartLegendActive').removeClass('ZWChartLegendInvisible');
-                    
+
                     _datasets[key] = datasets[key];
 
                     var _selector_ = [];
@@ -1635,7 +1634,7 @@ Zenwork.List = {
         this.hookAction[this.EVENT.CREATE] = [];
         this.hookAction[this.EVENT.UPDATE] = [];
         this.hookAction[this.EVENT.DELETE] = [];
-    
+
         //buttons
         var createNewStreamListBtn = this.buttons.create = $('#createNewStreamList');
         var editSelectedStreamListBtn = this.buttons.edit = $('#editSelectedStreamList');
@@ -1645,7 +1644,7 @@ Zenwork.List = {
             at: 'center top+60',
             of: window
         };
-        
+
         //create, edit, delete stream list document
         var _CUStreamList_ = function (CU) {
             var postUrl = Zenwork.Root+'/slist/cu';
@@ -1662,7 +1661,7 @@ Zenwork.List = {
                 data: JSON.stringify(ajaxGetData),
                 success: function (data, textStatus, jqXHR) {
                     Zenwork.Popup.show(data);
-                    
+
                     //init autoresize textarea
                     Zenwork.Popup.wrapper.find('.AutoResizeTextbox').autoresize({
                         container: 'tmpContainer',
@@ -1675,7 +1674,7 @@ Zenwork.List = {
                     var newPlanNameField = $('#newPlanName').focus();
                     var newPlanDescriptionField = $('#newPlanDescription');
                     var newPlanBelongsToField = $('#newPlanBelongsTo');
-                    
+
                     //validate form and submit
                     $('#submitPlanFormBtn').on('click', function (e) {
                         var $target = $(e.currentTarget).addClass('Pending');
@@ -1717,7 +1716,7 @@ Zenwork.List = {
 
                                 if ( CU === Zenwork.List.EVENT.CREATE ) {
                                     Zenwork.Popup.close(true);
-                                    
+
                                     if ( Zenwork.List.hookAction[CU] !== undefined && Zenwork.List.hookAction[CU] !== null ) {
                                         Zenwork.List.hookAction[CU][Zenwork.List.onListener](data);
                                     }
@@ -1750,7 +1749,7 @@ Zenwork.List = {
                                             $target.removeClass('Pending');
 
                                             $('#streamListSelection li.Active').remove();
-                                            
+
                                             Zenwork.List.active = 0;
                                             editSelectedStreamListBtn.addClass('CommonBtnDisabled');
                                             if ( Zenwork.List.hookAction[Zenwork.List.EVENT.DELETE] !== undefined && Zenwork.List.hookAction[Zenwork.List.EVENT.DELETE] !== null ) {
@@ -1764,7 +1763,7 @@ Zenwork.List = {
                                                 alert('Really sorry for this, network error! Please try again!');
                                             }
                                         }
-                                    }); 
+                                    });
                                 },
                                 function () {
                                     $target.removeClass('Pending');
@@ -1813,10 +1812,10 @@ Zenwork.List = {
                                 minLength: 0
                             },
                             data: {
-                                networkRestricted: invitedEmails.data('networkRestricted')   
+                                networkRestricted: invitedEmails.data('networkRestricted')
                             }
                         });
-                        
+
                         //init autoresize textarea
                         Zenwork.Popup.wrapper.find('.AutoResizeTextbox').autoresize({
                             container: 'tmpContainer',
@@ -2004,7 +2003,7 @@ Zenwork.Popup = {
             $('#tmpContainer').empty();
             Zenwork.Overlays.hide();
         }
-        
+
         if ( !this.wrapper.hasClass('Hidden') ) {
             if ( animate ) {
                 this.wrapper.animate({
@@ -2070,7 +2069,7 @@ Zenwork.StreamPopup = $.extend(true, {}, Zenwork.Popup, {
     init: function () {
         if ( this.isInit ) { return this; }
         if ( !this._super.isInit ) { this._super.init.call(this); }
-        
+
         var self = this;
         this.aside = $('#streamDialogAside');
         this.wrapper.on('click', '.StreamDialogViewComment', function (e) {
@@ -2185,13 +2184,13 @@ Zenwork.Dialog = {
                     .trigger(dialogData.ui.EVENT.CLOSE);
                 dialogData.removeData('observer');
             } catch (err) {}
-        } 
+        }
     },
     add: function (dialog, _options_) {
         this.options = $.extend(this.options, _options_);
         this.dialogs = this.dialogs.add(dialog);
         dialog.on('click mousedown', function (e) {
-            e.stopPropagation();            
+            e.stopPropagation();
         });
     },
     close: function (dialog) {
@@ -2370,12 +2369,29 @@ Zenwork.Model = {
                 }
             },
             complete: function (jqXHR, textStatus) {}
-        }); 
+        });
     }
 }
 Zenwork.Model.createModel('Stream_log', function (data) {
     return { 'Stream_log': $.extend({}, data) };
 });
+
+Zenwork.Util = {
+    htmlSpecialChar: function (string) {
+        var entityMap = {
+            "&": "&amp;",
+            "<": "&lt;",
+            ">": "&gt;",
+            '"': '&quot;',
+            "'": '&#39;',
+            "/": '&#x2F;'
+        };
+
+        return String(string).replace(/[&<>\"\'\/]/g, function (s) {
+            return entityMap[s];
+        });
+    }
+};
 
 //override window.alert|confirm|prompt
 /*
@@ -2397,7 +2413,7 @@ Zenwork.Model.createModel('Stream_log', function (data) {
  */
 Zenwork.Debug = {
     timer: null,
-    
+
     //call stack trace
     stack: new function () {
         // Domain Public by Eric Wendelin http://eriwen.com/ (2008)
@@ -2845,8 +2861,8 @@ Zenwork.Debug = {
                 return '(?)';
             }
         };
-    
-    
+
+
         return {
             trace: function () {
                 console.log(printStackTrace({}));
@@ -2857,7 +2873,7 @@ Zenwork.Debug = {
     startStopwtach: function () {
         this.timer = new Date();
     },
-    
+
     //track time
     endStopwtach: function () {
         Zenwork.Notifier.notify('Loaded in '+((new Date() - this.timer)/1000)+'s', 2);
