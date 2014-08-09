@@ -1,4 +1,4 @@
-<h3 id="streamDialogTitle"><span class="StreamDetailsTitle"><input type="text" <?php echo $isCreator ? '' : 'readonly="readonly"'; ?> class="TextInput TextInputAlt01 <?php if ($isCreator) : ?>QTip<?php endif; ?>" <?php if ($isCreator) : ?>title="Task name: click to edit"<?php endif; ?> value="<?php echo $stream['Stream']['name']; ?>" <?php if ($isCreator) : ?>data-qtip-my="right center" data-qtip-at="left center"<?php endif; ?> /></span></h3>
+<h3 id="streamDialogTitle"><span class="StreamDetailsTitle"><input type="text" <?php echo $isCreator ? '' : 'readonly="readonly"'; ?> class="TextInput TextInputAlt01 <?php if ($isCreator) : ?>QTip<?php endif; ?>" <?php if ($isCreator) : ?>title="Task name: click to edit"<?php endif; ?> value="<?php echo htmlspecialchars($stream['Stream']['name']); ?>" <?php if ($isCreator) : ?>data-qtip-my="right center" data-qtip-at="left center"<?php endif; ?> /></span></h3>
 <div class="StreamContentWrapper StreamScrollContent">
     <div class="StreamContentInside">
         <div class="StreamBlock">
@@ -11,11 +11,11 @@
             <a href="<?php echo $stream['Stream']['id']; ?>" title="Delete this task" class="CommonButtonLnk CommonButtonLnkSmall CommonButtonLnkDialog StreamDeleteBtn">Delete this task</a>
             <?php endif; ?>
         </div>
-        
+
         <div class="StreamBlock">
             <?php
                 $listNameFull = !empty($stream['Stream_list'])
-                    ? $stream['Stream_list'][0]['name']
+                    ? htmlspecialchars($stream['Stream_list'][0]['name'])
                     : '[default]';
 
                 $lid = !empty($stream['Stream_list']) ? $stream['Stream_list'][0]['id'] : 1;

@@ -967,7 +967,7 @@
         }
         private function replace_url ($html) {
             return preg_replace_callback(
-                '(https?://([-\w\.]+)+(:\d+)?(/([\w/_\.]*(\?\S+)?)?)?)',
+                '/((http|https)\:\/\/)[a-zA-Z0-9\.\/\?\:@\-_=#]+\.([a-zA-Z0-9\.\/\?\:@\-_=#])*/',
                 'self::replace_url_bitly',
                 $html
             );

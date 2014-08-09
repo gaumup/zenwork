@@ -1,4 +1,4 @@
-<h3 id="streamDialogTitle"><span class="StreamDetailsTitle"><input type="text" <?php echo $isCreator ? '' : 'readonly="readonly"'; ?> class="TextInput TextInputAlt01 <?php if ($isCreator) : ?>QTip<?php endif; ?>" <?php if ($isCreator) : ?>title="Click to edit"<?php endif; ?> value="<?php echo $stream['Stream']['name']; ?>" <?php if ($isCreator) : ?>data-qtip-my="right center" data-qtip-at="left center"<?php endif; ?> /></span></h3>
+<h3 id="streamDialogTitle"><span class="StreamDetailsTitle"><input type="text" <?php echo $isCreator ? '' : 'readonly="readonly"'; ?> class="TextInput TextInputAlt01 <?php if ($isCreator) : ?>QTip<?php endif; ?>" <?php if ($isCreator) : ?>title="Click to edit"<?php endif; ?> value="<?php echo htmlspecialchars($stream['Stream']['name']); ?>" <?php if ($isCreator) : ?>data-qtip-my="right center" data-qtip-at="left center"<?php endif; ?> /></span></h3>
 
 <div class="StreamContentWrapper StreamScrollContent">
     <div class="StreamContentInside">
@@ -14,7 +14,7 @@
         </div>
 
         <div class="StreamBlock">
-            <label class="ListSelectionLabel"><span class="ZWHelpPopup ZWHelpPopupAlt01 QTip QTipPermanent" title="Plan is a document which contains tasks, you can create your own plan by clicking 'Create new plan' button<br /><br />You can move it to another plan by clicking on 'move to plan' link">help</span> Belongs to plan <span class="StreamCurrentList QTip QTipPermanent" title="<?php echo $stream['Stream_list'][0]['name']; ?>" id="belongsToList" data-lid="<?php if ( !empty($stream['Stream_list']) ) { echo $stream['Stream_list'][0]['id']; } else { echo 0; } ?>"><?php echo $stream['Stream_list'][0]['name']; ?></span></label>
+            <label class="ListSelectionLabel"><span class="ZWHelpPopup ZWHelpPopupAlt01 QTip QTipPermanent" title="Plan is a document which contains tasks, you can create your own plan by clicking 'Create new plan' button<br /><br />You can move it to another plan by clicking on 'move to plan' link">help</span> Belongs to plan <span class="StreamCurrentList QTip QTipPermanent" title="<?php echo htmlspecialchars($stream['Stream_list'][0]['name']); ?>" id="belongsToList" data-lid="<?php if ( !empty($stream['Stream_list']) ) { echo $stream['Stream_list'][0]['id']; } else { echo 0; } ?>"><?php echo htmlspecialchars($stream['Stream_list'][0]['name']); ?></span></label>
             <input type="text" id="listSelection" name="" value="" placeholder="move to plan" class="ReassignBox ReassignBoxAlt01" spellcheck="false" />
         </div>
 
@@ -33,7 +33,7 @@
             <input type="text" class="TagInput" id="sTag<?php echo $stream['Stream']['id']; ?>" placeholder="enter tag name" value="<?php echo $stream['Stream']['tag']; ?>" />
         </div>
 
-        <?php 
+        <?php
             foreach ( $stream['Timeline'] as $key => $timeline ) {
                 echo $this->element('stream_timeline_block', array(
                     'timeline' => $timeline,
